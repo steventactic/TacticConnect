@@ -9,7 +9,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
   });
 }])
 
-.controller('editarOrdenCtrl',  [ '$scope', '$http','datatable','$mdDialog','$mdMedia','$mdToast','$location','Scopes','$rootScope' , '$q',function($scope  , $http ,datatable ,  $mdDialog, $mdMedia , $mdToast ,$location ,Scopes  , $rootScope , $q) {
+.controller('editarOrdenCtrl',  [ '$scope', '$http','datatable','$mdDialog','$mdMedia','$mdToast','$location','Scopes','$rootScope' , '$q','$base64',function($scope  , $http ,datatable ,  $mdDialog, $mdMedia , $mdToast ,$location ,Scopes  , $rootScope , $q , $base64) {
   Scopes.store('editarOrdenCtrl', $scope);
   $scope.mensajeServidor = []; 
  
@@ -25,9 +25,23 @@ angular.module('myApp.editarOrden', ['ngRoute'])
       }
 
   }
+  
+ 
+  $scope.file_changed = function(element) {
 
-
-        
+     var photofile = element.files[0];
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $scope.$apply(function() {
+                $scope.prev_img = e.target.result;
+                $scope.encoded = $base64.encode($scope.prev_img);
+                console.log("foto");
+                console.log( $scope.encoded);
+            });
+        };
+        reader.readAsDataURL(photofile);        
+        console.log(photofile);
+};
 
 
   if(window.localStorage.getItem("usuario") === "" ||
@@ -48,6 +62,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
   $scope.bloquearBotonGuardar =  false ; 
  // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
   }
+  
   var textoProductoOrden = "";
    // $scope.login = Scopes.get('loginCtrl').login ; 
   //$scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
@@ -82,21 +97,21 @@ $scope.cambiaEstado = function (){
 }
 
 $scope.entregas = [
-                    { id:  1 , nombre :'Manifiesto de importación'},
-                    { id:  2 , nombre :'Certificado de Calidad'},
-                    { id:  3 , nombre :'Certificado Invima'},
-                    { id:  4 , nombre :'Albarán'}
+                    { id:  1 , nombre :'Manifiesto de importación',checked :false},
+                    { id:  2 , nombre :'Certificado de Calidad',checked :false},
+                    { id:  3 , nombre :'Certificado Invima',checked :false},
+                    { id:  4 , nombre :'Albarán',checked :false}
 
                   ];
 
 $scope.maquila = [
-                    { id:  1 , nombre :'Estampillado'},
-                    { id:  2 , nombre :'Termoformado'},
-                    { id:  4 , nombre :'Armado de ofertas'},
-                    { id:  3 , nombre :'Desensamble de ofertas.'},
-                    { id:  5 , nombre :'Colocación de etiquetas salud'},
-                    { id:  6 , nombre :'Colocación de etiquetas importe '},
-                    { id:  7 , nombre :'Colocación de etiquetas distribuido'}
+                    { id:  1 , nombre :'Estampillado',checked :false},
+                    { id:  2 , nombre :'Termoformado',checked :false},
+                    { id:  4 , nombre :'Armado de ofertas',checked :false},
+                    { id:  3 , nombre :'Desensamble de ofertas.',checked :false},
+                    { id:  5 , nombre :'Colocación de etiquetas salud',checked :false},
+                    { id:  6 , nombre :'Colocación de etiquetas importe ',checked :false},
+                    { id:  7 , nombre :'Colocación de etiquetas distribuido',checked :false}
 
                   ];
 
@@ -111,7 +126,9 @@ $scope.maquila = [
                   else {
                     list.push(item);
                   }
-                };
+                  console.log("seleccionados =>");
+                  console.log($scope.selected);
+            };
                 $scope.exists = function (item, list) {
 
                   return list.indexOf(item) > -1;
@@ -721,8 +738,8 @@ $scope.maquila = [
 
                               console.log(angular.toJson( $scope.productoAddTabla, true));
                               promise.resolve(rowEntity);
-
                               $scope.gridApi.rowEdit.setSavePromise( rowEntity, promise.promise );
+                             // $rootScope.contarProductosPorUnidad();
                                $scope.bloquearBotonGuardar =  false ; 
                                 // fake a delay of 3 seconds whilst the save occurs, return error if gender is "male"
                               
@@ -1049,7 +1066,25 @@ $scope.maquila = [
 
           });    
 
-        }      
+        }   
+
+
+        $scope.mostrarMensajeFechaNoConfirmada = function (){
+
+            var confirm = $mdDialog.confirm().title('Información')
+                                             .textContent('Recuerde que si usted no indica la fecha de la cita, su pedido no sera procesado hasta que sea confirmada.')
+                                             .ariaLabel('Mensaje')
+                                             .targetEvent()
+                                             .ok('ok')
+                                             .cancel('Cancelar');
+                                              $mdDialog.show(confirm).then(function() {
+                                                console.log("no hace");
+                                                       
+                                              }, function() {
+                                                
+                                                console.log("no hace nada");
+                                              });
+        }  
          /*******************************Combo destino  *********************************************/
    
         $scope.destino = [];
@@ -1114,24 +1149,24 @@ $scope.maquila = [
 
                       }else{
 
-                        var confirm = $mdDialog.confirm()
+                      /*  var confirm = $mdDialog.confirm()
                               .title('Informacion')
                               .textContent('Desea reemplazar los datos de contacto.')
                               .ariaLabel('Mensaje')
                               .targetEvent()
                               .ok('ok')
                               .cancel('Cancelar');
-                        $mdDialog.show(confirm).then(function() {
+                        $mdDialog.show(confirm).then(function() {*/
                                 //$scope.jsonEnvio.direccion =  $rootScope.direccionShipDest;
                                  $scope.jsonEnvio.nombre =   $rootScope.nombreShipDest;
                                  //$scope.jsonEnvio.indicacionesDireccion =  $rootScope.indicacionesShipDest ;
                                  $scope.jsonEnvio.telefonos =  $rootScope.telefonoShipDest ;
                                  $scope.jsonEnvio.email =   $rootScope.emailShipDest;     
                                  
-                        }, function() {
+                      /*  }, function() {
                           
                           console.log("no hace nada");
-                        });
+                        });*/
 
                   
                     }
@@ -2580,7 +2615,7 @@ $scope.maquila = [
             templateUrl: './ordenesVenta/agregarDestinoOrigen.tmpl.html',
             parent: angular.element(document.body),
             targetEvent: ev,
-            clickOutsideToClose:true,
+            clickOutsideToClose:false,
             fullscreen: useFullScreen,
              locals: { serverData: $scope.serverData ,
                        jsonFacturacion :$scope.jsonFacturacion , 

@@ -162,7 +162,12 @@
                     </md-input-container>-->
 
                      <!--  autocompletar de  DESTINATARIO  -->
-                     <label>¿Quien solicita el servicio?</label>
+                     <label>   
+                        <md-tooltip md-direction="bottom">
+                            ¿Quien solicita el servicio?
+                        </md-tooltip> 
+                            ¿Quien solicita el servicio?
+                      </label>
                      <md-autocomplete
                           md-selected-item="seg.selectedItem"
                           md-search-text="seg.searchText.nombre"
@@ -178,6 +183,7 @@
                           {{ seg.nombre }}
                         </span>
                       </md-item-template>
+
                     </md-autocomplete>
                       <div layout-gt-sm="row">
                            <!-- <md-autocomplete
@@ -201,12 +207,18 @@
                         <md-input-container class="md-block" flex-gt-sm>
                         <label>Cliente destino*</label>
                         <md-select ng-model="jsonFacturacion.destinatario" ng-change="cargaCiudadEnvio()">
+                            <md-tooltip md-direction="bottom">
+                                Cliente destino*
+                            </md-tooltip> 
                              <md-option ng-repeat="dest in destinatario" value="{{dest.id}}">
                               {{dest.nombre}} - {{dest.numeroIdentificacion}}
                             </md-option>
                           </md-select>
                     </md-input-container>
                         <md-input-container>
+                         <md-tooltip md-direction="bottom">
+                                Agregar Nuevo destino
+                            </md-tooltip> 
                           <md-button ng-disabled="false" class="md-fab md-mini md-primary" aria-label="agregar destino origen"  ng-click="showAdvancedDestinosBillTo()">
                              <md-icon md-svg-src="img/add-song.svg"                  style="color greenyellow;"></md-icon>
                           </md-button>
@@ -240,18 +252,27 @@
                        <!-- campo  nombre-->
                        <md-input-container class="md-block" flex-gt-sm>
                          <md-icon md-svg-src="img/city.svg" class="email"></md-icon>
+                          <md-tooltip md-direction="bottom">
+                              Ciudad
+                          </md-tooltip> 
                           <label>Ciudad</label>
                           <input ng-model="jsonFacturacion.ciudad" >
                       </md-input-container>
                        <!-- campo  telefonos-->
                        <md-input-container class="md-block" flex-gt-sm>
                          <md-icon md-svg-src="img/gps.svg" class="email"></md-icon>
+                         <md-tooltip md-direction="bottom">
+                              Dirección
+                          </md-tooltip> 
                           <label>Dirección</label>
                           <input  ng-model="jsonFacturacion.direccion">
                       </md-input-container>                
                        <!-- campo  email-->
                        <md-input-container class="md-block" flex-gt-sm>
                          <md-icon md-svg-src="img/indicacionesDireccion.svg" class="email"></md-icon>
+                         <md-tooltip md-direction="bottom">
+                              Indicaciones direccion
+                          </md-tooltip> 
                           <label>Indicaciones direccion</label>
                           <input  ng-model="jsonFacturacion.indicaciones">
                       </md-input-container>
@@ -259,19 +280,28 @@
                      <div layout="column" style="width: 50%;"> 
                        <!-- campo  nombre-->
                        <md-input-container class="md-block" flex-gt-sm>
-                         <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
+                        <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
+                         <md-tooltip md-direction="bottom">
+                              Nombre contacto
+                          </md-tooltip> 
                           <label>Nombre contacto</label>
                           <input ng-model="jsonFacturacion.nombre" >
                       </md-input-container>
                        <!-- campo  telefonos-->
                        <md-input-container class="md-block" flex-gt-sm>
-                         <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
+                        <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
+                          <md-tooltip md-direction="bottom">
+                              Telefonos contacto
+                          </md-tooltip> 
                           <label>Telefonos contacto</label>
                           <input  ng-model="jsonFacturacion.telefonos">
                       </md-input-container>                
                        <!-- campo  email-->
                        <md-input-container class="md-block" flex-gt-sm>
                          <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
+                         <md-tooltip md-direction="bottom">
+                              Email contacto
+                          </md-tooltip> 
                           <label>Email contacto</label>
                           <input  ng-model="jsonFacturacion.email">
                       </md-input-container>

@@ -45,6 +45,16 @@
   height: 250px;
   
 }
+
+table {
+   width: 100%;
+    padding: 10px 50px 10px 50px;
+}
+td {
+   height: 50px;
+   padding-left: 15px;
+
+}
 .watermark {
     position: absolute;
     top: 50%;                    <---- Center vertically in the parent element,

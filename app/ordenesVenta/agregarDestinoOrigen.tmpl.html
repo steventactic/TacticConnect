@@ -60,6 +60,9 @@
                 </md-input-container>-->
                 <!-- campo de nombre -->
                 <md-input-container class="md-block" flex-gt-sm>
+                   <md-tooltip md-direction="bottom">
+                              Nombre del punto de destino
+                   </md-tooltip> 
                   <label>Nombre del punto de destino</label>
                   <input   ng-model="jsonDestinoOrigen.nombre" >
                 </md-input-container>
@@ -69,8 +72,13 @@
             <legend>Datos de contacto del punto de entrega</legend>
               <div layout="row" >
                   <div layout="column" style="width: 50%;">
+                   
                     <md-input-container class="md-block" flex-gt-sm>
-                      <label>ciudad</label>
+                     <md-icon md-svg-src="img/city.svg" class="email"></md-icon>
+                     <md-tooltip md-direction="bottom">
+                              Ciudad
+                   </md-tooltip> 
+                      <label>Ciudad</label>
                        <!--  autocompletar de ciudad -->                      
                       <md-autocomplete style="width: 100%"
                           md-selected-item="ciudad.selectedItem"
@@ -95,12 +103,20 @@
                     <br>
                     <!-- campo de direccion -->
                     <md-input-container class="md-block" flex-gt-sm>
-                      <label>Direccion</label>
+                      <md-icon md-svg-src="img/gps.svg" class="email"></md-icon>
+                       <md-tooltip md-direction="bottom">
+                              Dirección
+                      </md-tooltip>
+                      <label>Dirección</label>
                       <input   ng-model="jsonDestinoOrigen.direccion" >
                     </md-input-container>
 
                     <!-- campo de indicaciones -->
                     <md-input-container class="md-block" flex-gt-sm>
+                    <md-icon md-svg-src="img/indicacionesDireccion.svg" class="email"></md-icon>
+                       <md-tooltip md-direction="bottom">
+                              Indicaciones
+                      </md-tooltip>
                       <label>Indicaciones</label>
                       <input   ng-model="jsonDestinoOrigen.indicaciones" >
                     </md-input-container>      
@@ -109,6 +125,9 @@
                        <!-- campo de Nombres -->
                         <md-input-container class="md-block" flex-gt-sm>
                           <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
+                            <md-tooltip md-direction="bottom">
+                              Nombres
+                            </md-tooltip>
                           <label>Nombres</label>
                           <input   ng-model="jsonDestinoOrigen.nombres" >
                         </md-input-container>
@@ -116,13 +135,19 @@
                           <!-- campo de email -->
                         <md-input-container class="md-block" flex-gt-sm>
                           <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
+                          <md-tooltip md-direction="bottom">
+                              Email
+                          </md-tooltip>
                           <label>Email</label>
                           <input   ng-model="jsonDestinoOrigen.email" >
                         </md-input-container>
 
                          <!-- campo de  telefono -->
                         <md-input-container class="md-block" flex-gt-sm>
-                            <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
+                          <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
+                          <md-tooltip md-direction="bottom">
+                              Telefono
+                          </md-tooltip>
                           <label>Telefono</label>
                           <input   ng-model="jsonDestinoOrigen.telefono" >
                         </md-input-container>

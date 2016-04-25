@@ -62,7 +62,7 @@
                       <div class="md-toolbar-tools" style="width: 100%">
                       
                         <h2>
-                          <span>Gestion de Ordenes</span>
+                          <span>{{ 'GESTION_ORDENES' | translate }}</span>
                         </h2>
                                         
                        <span flex></span>
@@ -95,21 +95,14 @@
                               </md-tooltip>
                               <md-icon md-svg-src="img/update-arrows.svg"></md-icon>
                             </md-button>
-                             <!-- Combo de  Tipos de servicio -->
-                          <md-input-container class="md-block" flex-gt-sm>
-                                <label style="color:white;">Estado de la orden</label>
-                                   <md-select ng-model="jsonListaOrdenes.estadoOrden" ng-change="cargarOrdenes()">
-                                     <md-option ng-repeat="td in estadoOrden" value="{{td.id}}">
-                                      {{td.nombre}}
-                                    </md-option>
-                                  </md-select>
-                            </md-input-container>
-                               
-                               
-                               <!-- Combo de  Tipos de servicio -->
+
+                              <!-- Combo de  Tipos de servicio -->
                           <md-input-container class="md-block" flex-gt-sm>
                                 <label style="color:white;">Cliente</label>
                                 <md-select ng-model="jsonListaOrdenes.idCliente" ng-change="cargarOrdenes()">
+                            <md-tooltip md-direction="bottom">
+                                Cliente
+                            </md-tooltip> 
                                 <md-option value="">TODOS</md-option>
                                      <md-option ng-repeat="td in clientes" value="{{td.id}}">
                                       {{td.nombre}}
@@ -121,11 +114,29 @@
                           <md-input-container class="md-block" flex-gt-sm>
                                 <label style="color:white;">Tipo servicio</label>
                                 <md-select ng-model="jsonListaOrdenes.idServicio" ng-change="cargarOrdenes()">
+                                <md-tooltip md-direction="bottom">
+                                Tipo servicio
+                                </md-tooltip> 
                                      <md-option ng-repeat="td in tipoServicioData" value="{{td.id}}">
                                       {{td.nombre}}
                                     </md-option>
                                   </md-select>
                             </md-input-container>
+                             <!-- Combo de  Tipos de servicio -->
+                          <md-input-container class="md-block" flex-gt-sm>
+                                <label style="color:white;">Estado de la orden</label>
+                                   <md-select ng-model="jsonListaOrdenes.estadoOrden" ng-change="cargarOrdenes()">
+                                     <md-tooltip md-direction="bottom">
+                                       Estado de la orden
+                                     </md-tooltip> 
+                                     <md-option ng-repeat="td in estadoOrden" value="{{td.id}}">
+                                      {{td.nombre}}
+                                    </md-option>
+                                  </md-select>
+                            </md-input-container>
+                               
+                               
+                             
 
 
                             <!-- Autocompletar de  clientes -->

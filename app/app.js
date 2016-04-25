@@ -22,11 +22,38 @@ angular.module('myApp', [
     'ui.grid.resizeColumns',
     'ui.grid.edit', 
     'ui.grid.rowEdit',
-     'ui.grid.cellNav'
+     'ui.grid.cellNav',
+     'pascalprecht.translate',
+     'base64'
    
 
-]).config(['$routeProvider', '$mdThemingProvider', function($routeProvider ,$mdThemingProvider) {
+]).config(['$routeProvider', '$mdThemingProvider','$translateProvider', function($routeProvider ,$mdThemingProvider ,$translateProvider) {
 
+
+  $translateProvider.useStaticFilesLoader({
+  prefix: './languages/',
+  suffix: '.json'
+});
+
+   /* $translateProvider.translations('en', {
+    GESTION_ORDENES: 'Order gestion'
+  })
+  .translations('es', {
+    GESTION_ORDENES: 'Gestion de ordenes'
+  });*/
+ 
+ // pegar en el controllador   para  cambiar el idioma  dinamicamente
+ /* 
+  app.controller('TranslateController', function($translate, $scope) {
+  $scope.changeLanguage = function (langKey) {
+    $translate.use(langKey);
+  };
+});
+
+ */
+
+
+  $translateProvider.preferredLanguage('en');
 
      var neonRedMap = $mdThemingProvider.extendPalette('red', {
     '500': '444'
