@@ -68,7 +68,6 @@ angular.module('myApp.editarOrden', ['ngRoute'])
   //$scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
   //$scope.login.id = $scope.jsonRespuesta.usuario.id ; 
 
-
 $scope.dataTabs = {};
 $scope.seleccionada  = 1 ; 
 

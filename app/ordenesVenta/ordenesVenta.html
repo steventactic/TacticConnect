@@ -15,20 +15,20 @@
                    <md-fab-actions>
                     <md-button aria-label="Gestion de ordenes" href="#/listaOrdenes" class="md-fab md-primary md-mini">
                             <md-tooltip md-direction="right">
-                                Gestion de ordenes
+                                {{ 'GESTION_ORDENES' | translate }}
                             </md-tooltip>
                           <md-icon md-svg-src="img/arrows.svg" aria-label="Gestion de ordenes"></md-icon>
                     </md-button>
             
                     <md-button aria-label="Crear orden" href="#/cargue" class="md-fab md-primary md-mini"  >
                             <md-tooltip md-direction="right">
-                                Cargue
+                                {{ 'CARGUE' | translate }}
                             </md-tooltip>
                           <md-icon md-svg-src="img/delivery.svg" aria-label="Cargue"></md-icon>
                     </md-button>
                      <md-button aria-label="Crear orden" class="md-fab md-primary md-mini" ng-click="cerrarSesion()" >
                             <md-tooltip md-direction="right">
-                                Cerrar sesion
+                                {{ 'CERRAR_SESION' | translate }}
                             </md-tooltip>
                           <md-icon md-svg-src="img/cerrarSesion.svg" aria-label="Cerrar sesion"></md-icon>
                     </md-button>
@@ -42,13 +42,13 @@
                   <div class="md-toolbar-tools" >
                 
                     <h2>
-                      <span>Crear  Nueva Orden, {{titulo}}</span>
+                      <span>{{ 'CREAR_NUEVA_ORDEN' | translate }}, {{titulo}}</span>
                     </h2>
                     <span flex></span>
                  
                     <md-button class="md-fab md-primary md-hue-2" aria-label="Crear orden" ng-click="volver()">
                        <md-tooltip md-direction="left">
-                        Volver
+                        {{ 'VOLVER' | translate }}
                       </md-tooltip>
                       <md-icon md-svg-src="img/back-arrow.svg"></md-icon>
                     </md-button>
@@ -164,9 +164,9 @@
                      <!--  autocompletar de  DESTINATARIO  -->
                      <label>   
                         <md-tooltip md-direction="bottom">
-                            ¿Quien solicita el servicio?
+                            {{ 'QUIEN_SOLICITA_EL_SERVICIO' | translate }}
                         </md-tooltip> 
-                            ¿Quien solicita el servicio?
+                            {{ 'QUIEN_SOLICITA_EL_SERVICIO' | translate }}
                       </label>
                      <md-autocomplete
                           md-selected-item="seg.selectedItem"
@@ -205,10 +205,10 @@
                         </md-autocomplete>-->
 
                         <md-input-container class="md-block" flex-gt-sm>
-                        <label>Cliente destino*</label>
+                        <label>{{ 'CLIENTE_DESTINO' | translate }}*</label>
                         <md-select ng-model="jsonFacturacion.destinatario" ng-change="cargaCiudadEnvio()">
                             <md-tooltip md-direction="bottom">
-                                Cliente destino*
+                                {{ 'CLIENTE_DESTINO' | translate }}*
                             </md-tooltip> 
                              <md-option ng-repeat="dest in destinatario" value="{{dest.id}}">
                               {{dest.nombre}} - {{dest.numeroIdentificacion}}
@@ -217,10 +217,10 @@
                     </md-input-container>
                         <md-input-container>
                          <md-tooltip md-direction="bottom">
-                                Agregar Nuevo destino
+                               {{ 'AGREGAR_NUEVO_DESTINO' | translate }}
                             </md-tooltip> 
                           <md-button ng-disabled="false" class="md-fab md-mini md-primary" aria-label="agregar destino origen"  ng-click="showAdvancedDestinosBillTo()">
-                             <md-icon md-svg-src="img/add-song.svg"                  style="color greenyellow;"></md-icon>
+                             <md-icon md-svg-src="img/add-song.svg" style="color greenyellow;"></md-icon>
                           </md-button>
                         </md-input-container>
 

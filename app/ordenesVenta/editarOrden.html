@@ -15,25 +15,25 @@
                    <md-fab-actions>
                     <md-button aria-label="Gestion de ordenes" href="#/listaOrdenes" class="md-fab md-primary md-mini">
                             <md-tooltip md-direction="right">
-                                Gestion de ordenes
+                                {{ 'GESTION_ORDENES' | translate }}
                             </md-tooltip>
                           <md-icon md-svg-src="img/arrows.svg" aria-label="Gestion de ordenes"></md-icon>
                     </md-button>
                     <md-button aria-label="Crear orden" href="#/ordenesVenta" class="md-fab md-primary md-mini" ng-click="crearOrden()">
                             <md-tooltip md-direction="right">
-                                Crear orden
+                                {{ 'CREAR_NUEVA_ORDEN' | translate }}
                             </md-tooltip>
                           <md-icon md-svg-src="img/add-circular-outlined-button.svg" aria-label="Crear orden"></md-icon>
                     </md-button>
                     <md-button aria-label="Crear orden" href="#/cargue" class="md-fab md-primary md-mini"  >
                             <md-tooltip md-direction="right">
-                                Cargue
+                                {{ 'CARGUE' | translate }}
                             </md-tooltip>
                           <md-icon md-svg-src="img/delivery.svg" aria-label="Cargue"></md-icon>
                     </md-button>
                      <md-button aria-label="Crear orden" class="md-fab md-primary md-mini" ng-click="cerrarSesion()" >
                             <md-tooltip md-direction="right">
-                                Cerrar sesion
+                                {{ 'CERRAR_SESION' | translate }}
                             </md-tooltip>
                           <md-icon md-svg-src="img/cerrarSesion.svg" aria-label="Cerrar sesion"></md-icon>
                     </md-button>
@@ -48,7 +48,7 @@
                   <div class="md-toolbar-tools" >
                 
                     <h2>
-                      <span>Editar  Orden: {{jsonFacturacion.nombreTipoServicio}} - Id orden - {{ordenSeleccionada.idOrden}}, numero documento - {{jsonFacturacion.numeroDocumentoOrdenCliente}}, Estado: {{jsonFacturacion.estadoOrdenType}}</span>
+                      <span>{{ 'EDITAR_ORDEN' | translate }}: {{jsonFacturacion.nombreTipoServicio}} - Id orden - {{ordenSeleccionada.idOrden}}, {{ 'NUMERO_DOCUMENTO' | translate }} - {{jsonFacturacion.numeroDocumentoOrdenCliente}},  {{ 'ESTADO' | translate }}: {{jsonFacturacion.estadoOrdenType}}</span>
                     </h2>
                     <md-button class="md-fab md-primary md-hue-2 md-mini" aria-label="Crear orden" ng-click="showAdvancedMensajes()">
                        <md-tooltip md-direction="right">
@@ -60,7 +60,7 @@
                  
                     <md-button class="md-fab md-primary md-hue-2" aria-label="Crear orden" ng-click="volver()">
                        <md-tooltip md-direction="left">
-                        Volver
+                        {{ 'VOLVER' | translate }}
                       </md-tooltip>
                       <md-icon md-svg-src="img/back-arrow.svg"></md-icon>
                     </md-button>
@@ -139,14 +139,14 @@
                         </span>
                       </md-item-template>
                     </md-autocomplete>-->
-                    <label>¿Quien solicita el servicio?</label>
+                    <label>{{ 'QUIEN_SOLICITA_EL_SERVICIO' | translate }}</label>
                     <br>
               <!-- Combo de  segmento -->
                    <md-input-container class="md-block" flex-gt-sm>
                             <md-tooltip md-direction="bottom">
-                              Canal de  venta
+                              {{ 'CANAL_DE_VENTA' | translate }}
                             </md-tooltip>
-                        <label>Canal de venta</label>
+                        <label>{{ 'CANAL_DE_VENTA' | translate }}</label>
                            <md-select ng-model="jsonFacturacion.segmento" ng-disabled="true"  ng-change="cargaDestinatarios()">
                              <md-option>
                               Cliente
@@ -184,7 +184,7 @@
                         </span>
                       </md-item-template>
                          <md-tooltip md-direction="bottom">
-                              Cliente destino
+                              {{ 'CLIENTE_DESTINO' | translate }}
                         </md-tooltip>
                     </md-autocomplete>
                     <br>
@@ -208,27 +208,27 @@
                        <md-input-container class="md-block" flex-gt-sm>                       
                          <md-icon md-svg-src="img/city.svg" class="email"></md-icon>
                            <md-tooltip md-direction="bottom">
-                              Ciudad
+                              {{ 'CIUDAD' | translate }}
                         </md-tooltip>
-                          <label>Ciudad</label>
+                          <label>{{ 'CIUDAD' | translate }}</label>
                           <input ng-model="jsonFacturacion.ciudad" >
                       </md-input-container>
                        <!-- campo  telefonos-->
                        <md-input-container class="md-block" flex-gt-sm>
                          <md-icon md-svg-src="img/gps.svg" class="email"></md-icon>
                         <md-tooltip md-direction="bottom">
-                              Dirección
+                              {{ 'DIRECCION' | translate }}
                         </md-tooltip>
-                          <label>Dirección</label>
+                          <label>{{ 'DIRECCION' | translate }}</label>
                           <input  ng-model="jsonFacturacion.direccion">
                       </md-input-container>                
                        <!-- campo  email-->
                        <md-input-container class="md-block" flex-gt-sm>
                          <md-icon md-svg-src="img/indicacionesDireccion.svg" class="email"></md-icon>
                           <md-tooltip md-direction="bottom">
-                              Indicaciones direccion
+                              {{ 'INDICACIONES_DIRECCION' | translate }}
                         </md-tooltip>
-                          <label>Indicaciones direccion</label>
+                          <label>{{ 'INDICACIONES_DIRECCION' | translate }}</label>
                           <input  ng-model="jsonFacturacion.indicaciones">
                       </md-input-container>
                      </div>
@@ -238,18 +238,18 @@
                    <md-input-container class="md-block" flex-gt-sm>
                      <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
                        <md-tooltip md-direction="bottom">
-                              Indicaciones direccion
+                             {{ 'NOMBRE_CONTACTO' | translate }}
                         </md-tooltip>
-                      <label>Nombre contacto</label>
+                      <label>{{ 'NOMBRE_CONTACTO' | translate }}</label>
                       <input ng-model="jsonFacturacion.nombre" >
                   </md-input-container>
                    <!-- campo  telefonos-->
                    <md-input-container class="md-block" flex-gt-sm>
                      <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
                         <md-tooltip md-direction="bottom">
-                           Telefonos contacto
+                           {{ 'TELEFONOS_CONTACTO' | translate }}
                         </md-tooltip>
-                      <label>Telefonos contacto</label>
+                      <label>{{ 'TELEFONOS_CONTACTO' | translate }}</label>
                       <input  ng-model="jsonFacturacion.telefonos">
                   </md-input-container>
                    
@@ -258,9 +258,9 @@
                    <md-input-container class="md-block" flex-gt-sm>
                       <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
                       <md-tooltip md-direction="bottom">
-                           Email contacto
+                           {{ 'EMAIL_CONTACTO' | translate }}
                       </md-tooltip>
-                      <label>Email contacto</label>
+                      <label>{{ 'EMAIL_CONTACTO' | translate }}</label>
                       <input  ng-model="jsonFacturacion.email">
                   </md-input-container>
 
@@ -279,14 +279,14 @@
       <!--   Datos de envio-->
       <md-tab label="Ship to"  ng-if="tipoUbicacion == 'DIRECCION'">
         <md-content class="md-padding">
-        <label>¿Donde necesita que sea entregado su pedido?</label>
+        <label>{{ 'DONDE_NECESITA_PEDIDO' | translate }}</label>
         <div layout="row">
            <!-- Combo de  ciudad -->
               <md-input-container class="md-block" flex-gt-sm>
                       <md-tooltip md-direction="bottom">
-                           Ciudad
+                           {{ 'CIUDAD' | translate }}
                       </md-tooltip>
-                        <label>Ciudad*</label>
+                        <label>{{ 'CIUDAD' | translate }}*</label>
                            <md-select ng-model="jsonEnvio.ciudad" ng-change="cargaDestinosEnvio()">
                             <md-option value="" > </md-option>
                              <md-option ng-repeat="ciud in ciudad" value="{{ciud.id}}">
@@ -297,9 +297,9 @@
 
                      <md-input-container class="md-block" flex-gt-sm>
                       <md-tooltip md-direction="bottom">
-                           Punto destino*
+                           {{ 'PUNTO_DESTINO' | translate }}*
                       </md-tooltip>
-                        <label>Punto destino*</label>
+                        <label>{{ 'PUNTO_DESTINO' | translate }}*</label>
                            <md-select ng-model="jsonEnvio.destino" ng-change="cargaInfoDestinoEnvio()">
                             <md-option value="" > </md-option>
                              <md-option ng-repeat="des in destino"  value="{{des.id}}">
@@ -318,48 +318,48 @@
                 
               <label style="width: 45%;">
                 <md-tooltip md-direction="bottom">
-                           Dirección
+                    {{ 'DIRECCION' | translate }}
                 </md-tooltip>
-                    Dirección: {{jsonEnvio.direccion}}
+                    {{ 'DIRECCION' | translate }}: {{jsonEnvio.direccion}}
                </label>
 
                  <md-input-container class="md-block" flex-gt-sm>
                    <md-tooltip md-direction="bottom">
-                           Indicaciones dirección
+                      {{ 'INDICACIONES_DIRECCION' | translate }}
                    </md-tooltip>
-                    <label>Indicaciones dirección</label>
+                    <label>{{ 'INDICACIONES_DIRECCION' | translate }}</label>
                   <input type="text" style="color:black;"  ng-model="jsonEnvio.indicacionesDireccion">
                 </md-input-container>
           </div>
            <md-divider md-inset ></md-divider>
           <br>
-          <label>¿Cuales son los datos de la persona de contacto?</label>
+          <label>{{ 'CUALES_SON_DATOS_PERSONA_CONTACTO' | translate }}</label>
           <div layout="row">
                  <!-- campo  nombre-->
                  <md-input-container class="md-block" flex-gt-sm>
                    <md-icon md-svg-src="img/contacto.svg" class="email"></md-icon>
                     <md-tooltip md-direction="bottom">
-                           Nombre de contacto
+                           {{ 'NOMBRE_CONTACTO' | translate }}
                    </md-tooltip>
-                    <label>Nombre de contacto</label>
+                    <label>{{ 'NOMBRE_CONTACTO' | translate }}</label>
                     <input type="text" ng-model="jsonEnvio.nombre" >
                 </md-input-container>
                   <!-- campo  telefonos-->
                  <md-input-container class="md-block" flex-gt-sm>
                    <md-icon md-svg-src="img/telefono.svg" class="email"></md-icon>
                     <md-tooltip md-direction="bottom">
-                           Telefonos de contacto
+                           {{ 'TELEFONOS_CONTACTO' | translate }}
                    </md-tooltip>
-                    <label>Telefonos de contacto </label>
+                    <label>{{ 'TELEFONOS_CONTACTO' | translate }} </label>
                     <input type="text" ng-model="jsonEnvio.telefonos" >
                 </md-input-container>
                   <!-- campo  email-->
                  <md-input-container class="md-block" flex-gt-sm>
                      <md-icon md-svg-src="img/email.svg" class="email"></md-icon>
                      <md-tooltip md-direction="bottom">
-                           Email de contacto
+                           {{ 'EMAIL_CONTACTO' | translate }}
                    </md-tooltip>
-                    <label>Email de contacto</label>
+                    <label>{{ 'EMAIL_CONTACTO' | translate }}</label>
                     <input type="email" ng-model="jsonEnvio.email">
                 </md-input-container>
 
@@ -368,17 +368,17 @@
           <div layout="row">
              <div layout="column" style="width: 40%">
           
-                <label>¿Cuando necesita que sea entregado?</label>
+                <label>{{ 'CUANDO_NECESITA_QUE_SEA_ENTREGADO' | translate }}</label>
                   <br>
            
 
               <md-radio-group  ng-model="data.info">
                   <md-tooltip md-direction="bottom">
-                         ¿Cuando necesita que sea entregado?
+                         {{ 'CUANDO_NECESITA_QUE_SEA_ENTREGADO' | translate }}
                  </md-tooltip>
-                  <md-radio-button value="3" ng-click=" mostrarMensajeFechaNoConfirmada()"> Sin confirmar    </md-radio-button> 
-                  <md-radio-button value="1" >Rango    </md-radio-button>
-                  <md-radio-button value="0"> Fijo      </md-radio-button> 
+                  <md-radio-button value="3" ng-click=" mostrarMensajeFechaNoConfirmada()"> {{ 'SIN_CONFIRMAR' | translate }}    </md-radio-button> 
+                  <md-radio-button value="1" > {{ 'RANGO' | translate }}    </md-radio-button>
+                  <md-radio-button value="0">  {{ 'FIJO' | translate }}      </md-radio-button> 
                            
               </md-radio-group>
             
@@ -388,10 +388,10 @@
                  <!--ENTREGAR PREFERIBLEMTEN-->
                   <div layout="column" style="width: 30%">
                 <div class="md-block" ng-if="data.info == 0">
-                   <label>Entregar preferiblemente</label>
+                   <label> {{ 'ENTREGAR_PREFERIBLEMENTE' | translate }}</label>
                       <md-tooltip md-direction="bottom">
-                         ¿Cuando necesita que sea entregado?
-                 </md-tooltip>
+                          {{ 'CUANDO_NECESITA_QUE_SEA_ENTREGADO' | translate }}
+                      </md-tooltip>
 
                   <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"></md-datepicker>
                 </div >
@@ -399,11 +399,11 @@
               <!--Rango de fechas -->
                 <div class="md-block" ng-if="data.info == 1">
                 <md-tooltip md-direction="bottom">
-                         ¿Cuando necesita que sea entregado?
+                         {{ 'CUANDO_NECESITA_QUE_SEA_ENTREGADO' | translate }}
                  </md-tooltip>
-                   <label>Desde</label>
+                   <label>{{ 'DESDE' | translate }}</label>
                   <md-datepicker ng-model="jsonEntrega.fechaMinima" md-placeholder="Enter date"></md-datepicker>
-                   <label>Hasta</label>
+                   <label>{{ 'HASTA' | translate }}</label>
                   <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"></md-datepicker>
                 </div>
                 </div>
@@ -411,13 +411,13 @@
             
              <div layout="column" style="width: 30%">
                
-               <label>¿En qué horario?</label>
+               <label>{{ 'EN_QUE_HORARIO' | translate }}</label>
                <div layout="row">
                     <!-- Combo de  jornada -->
               <md-input-container class="md-block" flex-gt-sm>
-                        <label>Jornada</label> 
+                        <label>{{ 'JORNADA' | translate }}</label> 
                           <md-tooltip md-direction="bottom">
-                           Jornada
+                           {{ 'JORNADA' | translate }}
                           </md-tooltip>
                         <md-select ng-model="jsonEntrega.jornada" ng-change="cargaHoras()">
                              <md-option ng-repeat="des in jornadaEntrega" value="{{des.codigo}}">
@@ -429,9 +429,9 @@
                <!-- campo  hora minima-->
                  <md-input-container class="md-block" flex-gt-sm>
                       <md-tooltip md-direction="bottom">
-                           Hora minima
+                           {{ 'HORA_MINIMA' | translate }}
                       </md-tooltip>
-                    <label>Hora minima</label>
+                    <label>{{ 'HORA_MINIMA' | translate }}</label>
 
                     <input type="text" ng-model="jsonEntrega.horaMinima" >
                 </md-input-container>
@@ -439,9 +439,9 @@
                  <!-- campo  hora maxima-->
                  <md-input-container class="md-block" flex-gt-sm>
                     <md-tooltip md-direction="bottom">
-                           Hora maxima
+                           {{ 'HORA_MAXIMA' | translate }}
                       </md-tooltip>
-                    <label>Hora maxima</label>
+                    <label>{{ 'HORA_MAXIMA' | translate }}</label>
                     <input type="text" ng-model="jsonEntrega.horaMaxima" >
                 </md-input-container>
               
@@ -468,11 +468,11 @@
                       </md-input-container>
                 </div>-->
               
-                    <label>Seleccione los requerimientos de entrega </label>
+                    <label>{{ 'SELECCIONE_REQUERIMIENTOS_DE_ENTREGA' | translate }}</label>
                       <br>
                        <md-input-container class="md-block" flex-gt-sm>    
                           <md-tooltip md-direction="bottom">
-                               Seleccione los requerimientos de entrega 
+                               {{ 'SELECCIONE_REQUERIMIENTOS_DE_ENTREGA' | translate }}
                           </md-tooltip>  
                           <div layout="row" layout-wrap flex>                        
                        <div flex="25" ng-repeat="item in entregas">
@@ -483,19 +483,19 @@
                       </div>
                       </div>
                     </md-input-container>
-                    <label>Notas sobre requerimientos de entrega</label>
+                    <label>{{ 'NOTAS_REQUERIMIENTOS_ENTREGA' | translate }}</label>
                     <md-input-container class="md-block" flex-gt-sm>
                           <md-tooltip md-direction="bottom">
-                               Notas sobre requerimientos de entrega
+                               {{ 'NOTAS_REQUERIMIENTOS_ENTREGA' | translate }}
                           </md-tooltip>                      
                           <input  type="textarea" ng-model="jsonEnvio.notasRequerimientosEntrega" >
                     </md-input-container>
 
-                  <label>Seleccione los requerimientos de maquila</label>
+                  <label>{{ 'SELECCIONE_REQUERIMIENTOS_DE_MAQUILA' | translate }}</label>
                     <br>
                         <md-input-container class="md-block" flex-gt-sm>      
                             <md-tooltip md-direction="bottom">
-                               Seleccione los requerimientos de maquila
+                               {{ 'SELECCIONE_REQUERIMIENTOS_DE_MAQUILA' | translate }}
                           </md-tooltip>  
                           <div layout="row" layout-wrap flex>                        
                        <div flex="25" ng-repeat="item in maquila">
@@ -506,10 +506,10 @@
                       </div>
                       </div>
                     </md-input-container>
-                        <label>Notas sobre requerimientos de maquila</label>
+                        <label>{{ 'NOTAS_REQUERIMIENTOS_MAQUILA' | translate }}</label>
                     <md-input-container class="md-block" flex-gt-sm>
                         <md-tooltip md-direction="bottom">
-                               Notas sobre requerimientos de maquila
+                               {{ 'NOTAS_REQUERIMIENTOS_MAQUILA' | translate }}
                           </md-tooltip>                      
                           <input  type="textarea" ng-model="jsonEnvio.notasRequerimientosMaquila" >
                     </md-input-container>
@@ -517,16 +517,16 @@
               
                      
           </div>
-          <label>Notas</label>
+          <label>{{ 'NOTAS' | translate }}</label>
          
             <md-input-container class="md-block" flex-gt-sm>    
               <md-tooltip md-direction="bottom">
-                               Notas generales
-                          </md-tooltip>                    
-                         <input  type="textarea" ng-model="jsonEnvio.notasGenerales" >
+                     {{ 'NOTAS_GENERALES' | translate }}
+              </md-tooltip>                    
+              <input  type="textarea" ng-model="jsonEnvio.notasGenerales" >
             </md-input-container>
             <center>
-                 <md-button md-no-ink class="md-raised md-primary"  ng-disabled="bloquearBotonGuardar" ng-click="finalizarEdicion()">Guardar</md-button>                 
+                 <md-button md-no-ink class="md-raised md-primary"  ng-disabled="bloquearBotonGuardar" ng-click="finalizarEdicion()">{{ 'GUARDAR' | translate }}</md-button>                 
             </center>
 
 
@@ -721,30 +721,25 @@
        <md-tab label="Lineas"  ng-disabled="dataTabs.tabProductos">
         <md-content class="md-padding" >
                   <div layout="row">
-                      <h4 style="width: 33%;"> Lineas : {{gridOptions.data.length}} </h4> 
+                      <h4 style="width: 33%;"> {{ 'LINEAS' | translate }} : {{gridOptions.data.length}} </h4> 
                       
-                      <h4 style="width: 33%;">Valor total lineas : {{valorTotalLineasTexto}}</h4>
+                      <h4 style="width: 33%;">{{ 'VALOR_TOTAL_LINEAS' | translate }} : {{valorTotalLineasTexto}}</h4>
 
-                      <h4 style="width: 33%;"> Cantidad  total : {{cantidadTotal}} </h4>
+                      <h4 style="width: 33%;"> {{ 'CANTIDAD_TOTAL' | translate }} : {{cantidadTotal}} </h4>
                   </div>
                   <div layout="row">
-                        <h4 style="width: 33%;" ng-repeat=" t in textosUnidades"> {{t.nombre}}: {{t.cantidad}} </h4> 
-
-                  </div>
-
-                
-            
+                        <h4 style="width: 33%;" ng-repeat=" t in textosUnidades"> {{t.nombre}}: {{t.cantidad}} </h4>                        
+                  </div>                          
                  <md-toolbar>
-                  <div class="md-toolbar-tools" >
-                
+                  <div class="md-toolbar-tools" >                
                     <h2>
-                      <span>Seleccione los productos de su pedido</span>
+                      <span> {{ 'SELECCIONE_LOS_PRODUCTOS_PEDIDO' | translate }} </span>
                     </h2>
                     <span flex></span>
                  
                     <md-button class="md-fab md-primary md-hue-2" aria-label="Agregar producto" ng-click="showNuevoProducto()">
                        <md-tooltip md-direction="left">
-                        Crear producto
+                       {{ 'SELECCIONE_LOS_PRODUCTOS_PEDIDO' | translate }}
                       </md-tooltip>
                       <md-icon md-svg-src="img/crear.svg"></md-icon>
                     </md-button>
@@ -756,21 +751,21 @@
                     </md-button>-->
                       <md-button class="md-fab md-primary md-hue-2" aria-label="Agregar producto" ng-click="addData()">
                        <md-tooltip md-direction="left">
-                        Agregar linea de orden EN TABLA
+                          {{ 'AGREGAR_LINEA' | translate }}
                       </md-tooltip>
                       <md-icon md-svg-src="img/add-circular-outlined-button.svg"></md-icon>
                     </md-button>
                                         
                     <md-button  ng-if="mostrarEditar != 0" class="md-fab md-primary md-hue-2"  aria-label="Editar producto" ng-click="editarLinea()">
                     <md-tooltip md-direction="left">
-                       Editar producto
+                       {{ 'EDITAR_PRODUCTO' | translate }}
                       </md-tooltip>
                       <md-icon md-svg-src="img/pencil.svg"></md-icon>
                     </md-button>
 
                     <md-button  ng-if="mostrarEliminar != 0"class="md-fab md-primary  md-hue-2" aria-label="Eliminar producto" ng-click="eliminarLinea()">
                     <md-tooltip md-direction="left">
-                       Eliminar producto
+                       {{ 'ELIMINAR_PRODUCTO' | translate }}
                       </md-tooltip>
                       <md-icon md-svg-src="img/rubbish-bin.svg"></md-icon>
                     </md-button>
@@ -805,7 +800,7 @@
 
 
                      <center>
-                      <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar" ng-click="finalizarEdicion()">Guardar</md-button>                 
+                      <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar" ng-click="finalizarEdicion()">{{ 'GUARDAR' | translate }}</md-button>                 
                       </center>
 
                 <!--
@@ -822,35 +817,35 @@
       <!-- Tab de  productos -->
        <md-tab label="Resumen">
         <fieldset class="standard" >          
-            <legend>Información Bill to</legend>
+            <legend>{{ 'INFORMACION_BILL_TO' | translate }}</legend>
             <center>
               <table border="1">
                 <tr>
                   <td>
-                    <strong>Canal de venta:</strong>  {{jsonFacturacion.nombreSegmento}}  
+                    <strong>{{ 'CANAL_DE_VENTA' | translate }}:</strong>  {{jsonFacturacion.nombreSegmento}}  
                   </td>
                   <td>
-                    <strong>Cliente destino:</strong>  {{jsonFacturacion.nombreDestinatario}}  
+                    <strong>{{ 'CLIENTE_DESTINO' | translate }}:</strong>  {{jsonFacturacion.nombreDestinatario}}  
                   </td>
                   <td>
-                     <strong>Ciudad:</strong>  {{jsonFacturacion.ciudadBillTo}}  
+                     <strong>{{ 'CIUDAD' | translate }}:</strong>  {{jsonFacturacion.ciudadBillTo}}  
                   </td>
                    <td>
-                     <strong>Direccion:</strong>  {{jsonFacturacion.direccion}}  
+                     <strong>{{ 'DIRECCION' | translate }}:</strong>  {{jsonFacturacion.direccion}}  
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Indicaciones dirección:</strong>{{jsonFacturacion.indicacionesDireccion}}
+                    <strong>{{ 'INDICACIONES_DIRECCION' | translate }}:</strong>{{jsonFacturacion.indicacionesDireccion}}
                   </td>
                   <td>
-                    <strong>Nombre contacto:</strong>{{jsonFacturacion.nombre}}
+                    <strong>{{ 'NOMBRE_CONTACTO' | translate }}:</strong>{{jsonFacturacion.nombre}}
                   </td>
                   <td>
-                    <strong>Email contacto:</strong>{{jsonFacturacion.email}}
+                    <strong>{{ 'EMAIL_CONTACTO' | translate }}:</strong>{{jsonFacturacion.email}}
                   </td>
                   <td>
-                    <strong>Telefonos contacto:</strong>{{jsonFacturacion.telefonos}}
+                    <strong>{{ 'TELEFONOS_CONTACTO' | translate }}:</strong>{{jsonFacturacion.telefonos}}
                   </td>
                 </tr>
 
@@ -859,32 +854,32 @@
         </fieldset>
         <br><br>
         <fieldset class="standard" >          
-            <legend>Información Ship to</legend>
+            <legend>{{ 'INFORMACION_SHIP_TO' | translate }}</legend>
             <center>
               <table border="1">
                 <tr>
                   <td>
-                    <strong>Ciudad:</strong>{{jsonEnvio.ciudad}}
+                    <strong>{{ 'CIUDAD' | translate }}:</strong>{{jsonEnvio.ciudad}}
                   </td>
                   <td>
-                    <strong>Punto destino:</strong>{{jsonEnvio.destino}}
+                    <strong>{{ 'PUNTO_DESTINO' | translate }}:</strong>{{jsonEnvio.destino}}
                   </td>
                   <td>
-                    <strong>Dirección:</strong>{{jsonEnvio.direccion}}
+                    <strong>{{ 'DIRECCION' | translate }}:</strong>{{jsonEnvio.direccion}}
                   </td>
                   <td>
-                    <strong>Indicaciones dirección:</strong>{{jsonEnvio.indicacionesDireccion}}
+                    <strong>{{ 'INDICACIONES_DIRECCION' | translate }}:</strong>{{jsonEnvio.indicacionesDireccion}}
                   </td>
                 </tr> 
                 <tr>
                   <td>
-                    <strong>Nombre contacto:</strong>{{jsonEnvio.nombre}}
+                    <strong>{{ 'NOMBRE_CONTACTO' | translate }}:</strong>{{jsonEnvio.nombre}}
                   </td>
                   <td>
-                    <strong>Telefono contacto:</strong>{{jsonEnvio.telefono}}
+                    <strong>{{ 'TELEFONOS_CONTACTO' | translate }}:</strong>{{jsonEnvio.telefono}}
                   </td>
                   <td>
-                    <strong>Email:</strong>{{jsonEnvio.email}}
+                    <strong>{{ 'EMAIL_CONTACTO' | translate }}:</strong>{{jsonEnvio.email}}
                   </td>
                  
                 </tr>                   
@@ -893,15 +888,15 @@
         </fieldset>
         <br><br>
         <fieldset class="standard" >          
-            <legend>Información de entrega</legend>
+            <legend>{{ 'INFORMACION_ENTREGA' | translate }}</legend>
             <center>
               <table border="1">
                  <tr>
                   <td>
-                    <strong>Fecha:</strong>{{jsonEnvio.ciudad}}
+                    <strong>{{ 'FECHA' | translate }}:</strong>{{jsonEnvio.ciudad}}
                   </td>
                   <td>
-                    <strong>Jornada:</strong>{{jsonEnvio.jornada}}
+                    <strong>{{ 'JORNADA' | translate }}:</strong>{{jsonEnvio.jornada}}
                   </td>
                   
                 </tr> 
@@ -911,12 +906,12 @@
         <br>
         <br>
          <fieldset class="standard" >          
-            <legend>Requerimientos entrega</legend>
+            <legend>{{ 'REQUERIMIENTOS_ENTREGA' | translate }}</legend>
             <center>
               <table border="1">
                  <tr>
                   <td>
-                    <strong>Notas : </strong>{{jsonEnvio.notasRequerimientosEntrega}}
+                    <strong>{{ 'NOTAS' | translate }} : </strong>{{jsonEnvio.notasRequerimientosEntrega}}
                   </td>
                  </tr>
                  <tr ng-repeat="en in entregas">
@@ -931,12 +926,12 @@
         <br>
         <br>
         <fieldset class="standard" >          
-            <legend>Requerimientos maquila</legend>
+            <legend>{{ 'REQUERIMIENTOS_MAQUILA' | translate }}</legend>
             <center>
               <table border="1">
               <tr>
                   <td>
-                    <strong>Notas : </strong>{{jsonEnvio.notasRequerimientosMaquila}}
+                    <strong>{{ 'NOTAS' | translate }}  : </strong>{{jsonEnvio.notasRequerimientosMaquila}}
                   </td>
                  </tr>
                 <tr ng-repeat="en in maquila">
@@ -950,7 +945,7 @@
         </fieldset>
         <br><br>
           <fieldset class="standard" >          
-            <legend>Observaciones generales</legend>
+            <legend>{{ 'OBSERVACIONES_GENERALES' | translate }}</legend>
             <table border="1">
                 <tr>
                   <td style="width: 100%;">
@@ -963,14 +958,11 @@
           </fieldset>
 
         
-                 
-
-          
 
               <center>
-                  <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar"  ng-click="finalizarEdicion()">Guardar</md-button>
+                  <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar"  ng-click="finalizarEdicion()">{{ 'GUARDAR' | translate }}</md-button>
 
-                 <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar" ng-click="finalizarAceptacion()">Aceptar</md-button>                    
+                 <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar" ng-click="finalizarAceptacion()">{{ 'ACEPTAR' | translate }}</md-button>                    
               </center>
           
        </md-tab>
