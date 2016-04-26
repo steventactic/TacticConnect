@@ -13,23 +13,16 @@ angular.module('myApp.editarOrden', ['ngRoute'])
   Scopes.store('editarOrdenCtrl', $scope);
   $scope.mensajeServidor = []; 
  
-
   $scope.ubicarEnTab =function (){
-       if(edicionNueva  === 'no'){
-            
+       if(edicionNueva  === 'no'){           
             $scope.dataTabs.tabSeleccionada =0;
-
-          }else{
-            
+          }else{            
             $scope.dataTabs.tabSeleccionada =1;                                
-      }
-
+        }
   }
   
- 
   $scope.file_changed = function(element) {
-
-     var photofile = element.files[0];
+        var photofile = element.files[0];
         var reader = new FileReader();
         reader.onload = function(e) {
             $scope.$apply(function() {
@@ -41,69 +34,62 @@ angular.module('myApp.editarOrden', ['ngRoute'])
         };
         reader.readAsDataURL(photofile);        
         console.log(photofile);
-};
+  };
 
 
   if(window.localStorage.getItem("usuario") === "" ||
-    window.localStorage.getItem("clave") === "" ||
-    window.localStorage.getItem("idUsuario") === ""){
-    console.log("usuario no logueado");
+      window.localStorage.getItem("clave") === "" ||
+      window.localStorage.getItem("idUsuario") === ""){    
+      console.log("usuario no logueado");
       $location.path('/login');
-
-  }else{
-    
-  //$scope.login = Scopes.get('loginCtrl').login ; 
-  $scope.login = {};
-  $scope.login.usuario = window.localStorage.getItem("usuario");
-  $scope.login.clave = window.localStorage.getItem("clave");
-  $scope.login.mostrarMenu = true ;
-  $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
-  $scope.login.id  = $scope.usuario.id;
-  $scope.bloquearBotonGuardar =  false ; 
- // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
+  }else{  
+      //$scope.login = Scopes.get('loginCtrl').login ; 
+      $scope.login = {};
+      $scope.login.usuario = window.localStorage.getItem("usuario");
+      $scope.login.clave = window.localStorage.getItem("clave");
+      $scope.login.mostrarMenu = true ;
+      $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
+      $scope.login.id  = $scope.usuario.id;
+      $scope.bloquearBotonGuardar =  false ; 
+     // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
   }
-  
+
   var textoProductoOrden = "";
    // $scope.login = Scopes.get('loginCtrl').login ; 
   //$scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
   //$scope.login.id = $scope.jsonRespuesta.usuario.id ; 
 
-$scope.dataTabs = {};
-$scope.seleccionada  = 1 ; 
+  $scope.dataTabs = {};
+  $scope.seleccionada  = 1 ; 
 
   if(edicionNueva  === 'no'){
-    console.log("EDICION NUEVA NO");
+      console.log("EDICION NUEVA NO");
       $scope.ordenSeleccionada = Scopes.get('listaOrdenesCtrl').ordenSeleccionada ;
       console.log("orden seleccionada");
       console.log($scope.ordenSeleccionada) ;
-       $scope.dataTabs.tabSeleccionada =0;
-
+      $scope.dataTabs.tabSeleccionada =0;
   }else{
-    console.log("EDICION NUEVA SI");
-    $scope.dataTabs.tabSeleccionada =1;
+      console.log("EDICION NUEVA SI");
+      $scope.dataTabs.tabSeleccionada =1;
       $scope.ordenSeleccionada = {};
       $scope.ordenSeleccionada.idOrden =  Scopes.get('ordenesVentaCtrl').jsonFacturacionRetorno.orden.idOrden; 
       $scope.ordenSeleccionada.idTipoServicio =  Scopes.get('ordenesVentaCtrl').jsonFacturacionRetorno.orden.datosFacturacion.tipoServicio;
       console.log("orden ==> ");
-      console.log(Scopes.get('ordenesVentaCtrl').jsonFacturacionRetorno.orden);
-       
+      console.log(Scopes.get('ordenesVentaCtrl').jsonFacturacionRetorno.orden); 
   }
 
 
-$scope.cambiaEstado = function (){
+  $scope.cambiaEstado = function (){
     $scope.dataTabs.tabSeleccionada = 1 ;
+  }
 
-}
-
-$scope.entregas = [
-                    { id:  1 , nombre :'Manifiesto de importación',checked :false},
-                    { id:  2 , nombre :'Certificado de Calidad',checked :false},
-                    { id:  3 , nombre :'Certificado Invima',checked :false},
-                    { id:  4 , nombre :'Albarán',checked :false}
-
-                  ];
-
-$scope.maquila = [
+  $scope.entregas = [
+                      { id:  1 , nombre :'Manifiesto de importación',checked :false},
+                      { id:  2 , nombre :'Certificado de Calidad',checked :false},
+                      { id:  3 , nombre :'Certificado Invima',checked :false},
+                      { id:  4 , nombre :'Albarán',checked :false}
+                    ];
+  $scope.maquila = [
                     { id:  1 , nombre :'Estampillado',checked :false},
                     { id:  2 , nombre :'Termoformado',checked :false},
                     { id:  4 , nombre :'Armado de ofertas',checked :false},
@@ -111,13 +97,11 @@ $scope.maquila = [
                     { id:  5 , nombre :'Colocación de etiquetas salud',checked :false},
                     { id:  6 , nombre :'Colocación de etiquetas importe ',checked :false},
                     { id:  7 , nombre :'Colocación de etiquetas distribuido',checked :false}
-
                   ];
 
-             $scope.selected = [];
-              $scope.selected1 = [];
-            $scope.toggle = function (item, list) {
-                
+  $scope.selected = [];
+  $scope.selected1 = [];
+  $scope.toggle = function (item, list) {                
                   var idx = list.indexOf(item);
                   if (idx > -1) {
                     list.splice(idx, 1);
@@ -127,28 +111,24 @@ $scope.maquila = [
                   }
                   console.log("seleccionados =>");
                   console.log($scope.selected);
-            };
-                $scope.exists = function (item, list) {
-
+  };
+               
+  $scope.exists = function (item, list) {
                   return list.indexOf(item) > -1;
-                };
+  };
 
-                   $scope.toggle1 = function (item, list) {
-                
-                  var idx = list.indexOf(item);
-                  if (idx > -1) {
-                    list.splice(idx, 1);
-                  }
-                  else {
-                    list.push(item);
-                  }
-                };
-                $scope.exists1 = function (item, list) {
-
-                  return list.indexOf(item) > -1;
-                };
-
-
+  $scope.toggle1 = function (item, list) {              
+    var idx = list.indexOf(item);
+    if (idx > -1) {
+      list.splice(idx, 1);
+    }
+    else {
+      list.push(item);
+    }
+  };
+  $scope.exists1 = function (item, list) {
+    return list.indexOf(item) > -1;
+  };
 
   $scope.mostrarEditar =  0;
   $scope.mostrarEliminar =  0;
@@ -157,135 +137,112 @@ $scope.maquila = [
   $scope.cantidadTotal  =  0 ; 
   $scope.admiteBodegasDestino  = 0 ; 
 
-    $scope.cerrarSesion =  function (){
-         window.localStorage.setItem("usuario" ,"");
-         window.localStorage.setItem("clave" , "");
-         window.localStorage.setItem("idUsuario" , "");
-         window.localStorage.setItem('estadoOrdenCache',"");
-         window.localStorage.setItem('tipoServicioCache',"");
-         window.localStorage.setItem('clienteCache',"");
-         console.log("cerrar sesion  ok  ");
-         $location.path('/login');
+  $scope.cerrarSesion =  function (){
+     window.localStorage.setItem("usuario" ,"");
+     window.localStorage.setItem("clave" , "");
+     window.localStorage.setItem("idUsuario" , "");
+     window.localStorage.setItem('estadoOrdenCache',"");
+     window.localStorage.setItem('tipoServicioCache',"");
+     window.localStorage.setItem('clienteCache',"");
+     console.log("cerrar sesion  ok  ");
+     $location.path('/login');
   }
 
-   $scope.volver = function (ev){
-
-      //$state.go('/ordenesVenta');
+  $scope.volver = function (ev){
+      //$state.go('/ordenesVenta');        
+        var confirm = $mdDialog.confirm()
+              .title('Informacion')
+              .textContent('Si retrocede se perderan todos los cambios.')
+              .ariaLabel('Mensaje')
+              .targetEvent(ev)
+              .ok('ok')
+              .cancel('Cancelar');
+        $mdDialog.show(confirm).then(function() {
           
-          var confirm = $mdDialog.confirm()
-                .title('Informacion')
-                .textContent('Si retrocede se perderan todos los cambios.')
-                .ariaLabel('Mensaje')
-                .targetEvent(ev)
-                .ok('ok')
-                .cancel('Cancelar');
-          $mdDialog.show(confirm).then(function() {
-            
-             $location.path('/listaOrdenes');
-          }, function() {
-            
-            console.log("no hace nada");
-          });
+           $location.path('/listaOrdenes');
+        }, function() {
+          
+          console.log("no hace nada");
+        });
+  }
+
+  $scope.obtenerValorMascara = function (val) {                                              
+    return  '$ '+val.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1.');                                              
+  }; 
+
+
+  $scope.crearOrden = function (){      
+    $location.path('/ordenesVenta');
+  }
+
+  $scope.crearOrden = function (){
+    $location.path('/ordenesVenta');
+  }
+
+  $rootScope.contarProductosPorUnidad = function (lineas){
+    $rootScope.textoUnidadesProducto = "";
+    $scope.cantidadTotal = 0;
+    $scope.valorTotalLineas = 0;
+    $scope.valorTotalLineasTexto = "";
+    $scope.textosUnidades = [];
+    $scope.lineas = lineas ;
+    $scope.unidadesValores = [];
+    $scope.posicion = 0 ; 
+    for (var i = 0; i < $scope.lineas.length ; i++) {
+      if($scope.unidadesValores.length === 0){
+            $scope.unidadesValores  = $scope.unidadesValores.concat([
+                                                                     {
+                                                                       nombre : $scope.lineas[i].nombreUnidad  ,
+                                                                        cantidad : $scope.lineas[i].cantidad
+                                                                      }
+                                                                    ]);
+      }else{
+        for (var j = 0; j < $scope.unidadesValores.length; j++) {
+          console.log( $scope.unidadesValores[j].nombre +" vs "+  $scope.lineas[i].nombreUnidad )  ; 
+          if($scope.unidadesValores[j].nombre === $scope.lineas[i].nombreUnidad){
+            console.log("entra true");
+            $scope.agregarUnidadNueva = 1; 
+            $scope.unidadesValores[j].cantidad = $scope.unidadesValores[j].cantidad  + $scope.lineas[i].cantidad;                                                                                
+            j = $scope.unidadesValores.length+1;                                                               
+          } else{
+            console.log("entra false");
+            $scope.agregarUnidadNueva = 0;                                                                                                        
+          }    
+        }                                                                          
+        if($scope.agregarUnidadNueva === 0 ){      
+          console.log("es diferente");
+          $scope.unidadesValores  = $scope.unidadesValores.concat([
+                                          {
+                                            nombre : $scope.lineas[i].nombreUnidad  ,
+                                            cantidad : $scope.lineas[i].cantidad
+                                          }
+                                    ]);
+          // console.log(angular.toJson( $scope.unidadesValores, true));                                                    
+        }                            
+      } 
+
+        $scope.cantidadTotal += $scope.lineas[i].cantidad ;               
+        if($scope.lineas[i].valorDeclaradoPorUnidad  != ""  || $scope.lineas[i].valorDeclaradoPorUnidad  != null || $scope.lineas[i].valorDeclaradoPorUnidad  != undefined  ){
+          $scope.valorTotalLineas += $scope.lineas[i].valorDeclaradoPorUnidad ; 
+        }
+                                    
+     }
+    $scope.valorTotalLineasTexto = $scope.obtenerValorMascara($scope.valorTotalLineas) ;
+
+       for (var i = 0 ; i < $scope.unidadesValores.length ; i++) {
+          $rootScope.textoUnidadesProducto += $scope.unidadesValores[i].nombre + ":" + $scope.unidadesValores[i].cantidad + ", " ;         
+          $scope.jsonTempo  = {};
+          $scope.jsonTempo.cantidad = $scope.unidadesValores[i].cantidad ;  
+          $scope.jsonTempo.nombre = $scope.unidadesValores[i].nombre ;
+          $scope.textosUnidades.push($scope.jsonTempo);               
+       }
+
+       $rootScope.textoUnidadesProducto = $rootScope.textoUnidadesProducto.substr(0 , $rootScope.textoUnidadesProducto.length - 2 );          
+       console.log("array textos " ) ;
+       console.log(  $scope.textosUnidades)  ;
+       console.log("texto completo   = " +  $rootScope.textoUnidadesProducto );
 
     }
-
-    $scope.obtenerValorMascara = function (val) {                                              
-           return  '$ '+val.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1.');                                              
-        }; 
-
-
-        $scope.crearOrden = function (){
-
-        //$state.go('/ordenesVenta');
-        $location.path('/ordenesVenta');
-
-      }
-
-        $scope.crearOrden = function (){
-
-        //$state.go('/ordenesVenta');
-        $location.path('/ordenesVenta');
-
-      }
-
-
-        $rootScope.contarProductosPorUnidad = function (lineas){
-              $rootScope.textoUnidadesProducto = "";
-              $scope.cantidadTotal = 0;
-              $scope.valorTotalLineas = 0;
-              $scope.valorTotalLineasTexto = "";
-              $scope.textosUnidades = [];
-                    $scope.lineas = lineas ;
-                    $scope.unidadesValores = [];
-                       $scope.posicion = 0 ; 
-                         for (var i = 0; i < $scope.lineas.length ; i++) {
-                                  if($scope.unidadesValores.length === 0){
-                                     $scope.unidadesValores  = $scope.unidadesValores.concat([
-                                                                          {
-                                                                            nombre : $scope.lineas[i].nombreUnidad  ,
-                                                                            cantidad : $scope.lineas[i].cantidad
-                                                                          }
-                                                                      ]);
-                                  }else{
-                                      for (var j = 0; j < $scope.unidadesValores.length; j++) {
-                                      console.log( $scope.unidadesValores[j].nombre +" vs "+  $scope.lineas[i].nombreUnidad )  ; 
-                                          if($scope.unidadesValores[j].nombre === $scope.lineas[i].nombreUnidad){
-                                            console.log("entra true");
-                                              $scope.agregarUnidadNueva = 1; 
-                                              $scope.unidadesValores[j].cantidad = $scope.unidadesValores[j].cantidad  + $scope.lineas[i].cantidad;                                    
-                                              
-                                               j = $scope.unidadesValores.length+1;
-                                               //    
-                                              //console.log($scope.agregarUnidadNueva);                                                                     
-                                          } else{
-                                            console.log("entra false");
-                                              $scope.agregarUnidadNueva = 0;
-                                                                                                         
-                                          }    
-                                      }                                                                          
-                                       if($scope.agregarUnidadNueva === 0 ){
-                                      
-                                            console.log("es diferente");
-                                       
-                                                $scope.unidadesValores  = $scope.unidadesValores.concat([
-                                                                          {
-                                                                            nombre : $scope.lineas[i].nombreUnidad  ,
-                                                                            cantidad : $scope.lineas[i].cantidad
-                                                                          }
-                                                                    ]);
-                                                // console.log(angular.toJson( $scope.unidadesValores, true));
-                                                                                      
-                                        }                            
-                                  } 
-
-                                    $scope.cantidadTotal += $scope.lineas[i].cantidad ;               
-                                    if($scope.lineas[i].valorDeclaradoPorUnidad  != ""  || $scope.lineas[i].valorDeclaradoPorUnidad  != null || $scope.lineas[i].valorDeclaradoPorUnidad  != undefined  ){
-                                      $scope.valorTotalLineas += $scope.lineas[i].valorDeclaradoPorUnidad ; 
-
-                                    }
-                                    
-                         }
-                             $scope.valorTotalLineasTexto = $scope.obtenerValorMascara($scope.valorTotalLineas) ;
-
-                    
-
-                         for (var i = 0 ; i < $scope.unidadesValores.length ; i++) {
-                            $rootScope.textoUnidadesProducto += $scope.unidadesValores[i].nombre + ":" + $scope.unidadesValores[i].cantidad + ", " ;
-                           
-                            $scope.jsonTempo  = {};
-                            $scope.jsonTempo.cantidad = $scope.unidadesValores[i].cantidad ;  
-                            $scope.jsonTempo.nombre = $scope.unidadesValores[i].nombre ;
-                            $scope.textosUnidades.push($scope.jsonTempo);               
-                         }
-
-                         $rootScope.textoUnidadesProducto = $rootScope.textoUnidadesProducto.substr(0 , $rootScope.textoUnidadesProducto.length - 2 );
-                        
-                      
-                       console.log("array textos " ) ;
-                       console.log(  $scope.textosUnidades)  ;
-                         console.log("texto completo   = " +  $rootScope.textoUnidadesProducto );
-
-            }
 
   /*************************Objeto que  alamance la  io y el  puerto al cual conectarme****************************/
     $scope.serverData = {};
@@ -294,26 +251,18 @@ $scope.maquila = [
     $scope.serverData.ip = hostName;
     $scope.serverData.puerto = puerto;
     $scope.serverData.usuario =  window.localStorage.getItem("idUsuario") ;
-    $scope.tipoUbicacion = "" ; 
-     
-      $scope.dis = {};
-     $scope.dis.tabEntrega = true ; 
-    
+    $scope.tipoUbicacion = "" ;      
+    $scope.dis = {};
+    $scope.dis.tabEntrega = true ;     
     /*********************************Carga los tipos de sevicio por usaurio  ****************************************************/
     $scope.cargaTipoServicio =  function (){
-         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.serverData.usuario)
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.serverData.usuario)             
               .error(function(data, status, headers, config){
                 console.log("error ===>");
-                console.log(status);
+                console.log(status)
                 console.log(data);
                 console.log(headers);
-                console.log(config);
-            
+                console.log(config);            
               })
               .then(function(response){
                
@@ -378,12 +327,7 @@ $scope.maquila = [
     $scope.jsonEntrega =[];
     $scope.jsonEntregaEnvio=[];
     $scope.jsonEntregaProducto=[];
-  
-     
-
-
-
-
+ 
 /***********************Tabla edicion de productos*********************************/
     var producto  = "";
     var idLineaOrden = "";
@@ -415,20 +359,12 @@ $scope.maquila = [
     var nombreProductoAlterno = "";
     var codigoUnidadAlterno = "";
 
-      $scope.bloquearBotonGuardar =  false ; 
+    $scope.bloquearBotonGuardar =  false ; 
 
- 
-
-
-      $rootScope.mostrarValorDeclarado = true;
-     console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/'+$scope.ordenSeleccionada.idOrden)     
-     $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/'+$scope.ordenSeleccionada.idOrden)     
-     //$http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/87')
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+    $rootScope.mostrarValorDeclarado = true;
+    console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/'+$scope.ordenSeleccionada.idOrden)     
+    $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/'+$scope.ordenSeleccionada.idOrden)     
+    //$http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/87')             
               .error(function(data, status, headers, config){
                 console.log("error ===>");
                 console.log(status);
@@ -437,29 +373,22 @@ $scope.maquila = [
                 console.log(config);
             
               })
-              .then(function(response){
-              
-              $scope.jsonEdicion= response.data;
-             
-              
-              // console.log("info de edicion == >" + $scope.jsonEdicion.datosFacturacion.nombre) ;
-               console.log("llega a edicion ==>") ; 
-               console.log(response.data) ;      
-
-               $scope.cargarProductosCliente($scope.jsonEdicion.datosFacturacion.cliente,$scope.jsonEdicion.datosFacturacion.tipoServicio);
-
+              .then(function(response){              
+                $scope.jsonEdicion= response.data;  
+                console.log("llega a edicion ==>") ; 
+                console.log(response.data) ;      
+                $scope.cargarProductosCliente($scope.jsonEdicion.datosFacturacion.cliente,$scope.jsonEdicion.datosFacturacion.tipoServicio);
                //verificar valor declarado 
-               console.log("lineas");
-               console.log($scope.jsonEdicion.lineas);   
+                console.log("lineas");
+                console.log($scope.jsonEdicion.lineas);   
 
-                for (var i = 0; i < $scope.jsonEdicion.lineas.length; i++) {
-                  
+                for (var i = 0; i < $scope.jsonEdicion.lineas.length; i++) {                
                    if($scope.jsonEdicion.lineas[i].valorDeclaradoPorUnidad  !=  null){
                       $rootScope.mostrarValorDeclarado = false;
 
                    }
-
                 }
+
                 if($rootScope.mostrarValorDeclarado){
                   console.log("NO hay valor declarado en ninguna linea");
                 }else{
@@ -469,10 +398,9 @@ $scope.maquila = [
 
                /*********Valida alternos en datos facturacion***********************/
                $scope.jsonFacturacion =  $scope.jsonEdicion.datosFacturacion ;
-                $scope.dest.selectedItem ={}                    
-                    $scope.dest.selectedItem.nombre  =  $scope.jsonFacturacion.nombreDestinatario;
-                    $scope.dest.selectedItem.id = $scope.jsonFacturacion.destinatario;
-
+               $scope.dest.selectedItem ={}                    
+               $scope.dest.selectedItem.nombre  =  $scope.jsonFacturacion.nombreDestinatario;
+               $scope.dest.selectedItem.id = $scope.jsonFacturacion.destinatario;
 
                $scope.mostrarAlternoBillToSegmento = false;
                if($scope.jsonFacturacion.codigoAlternoSegmento != null ||
@@ -525,265 +453,236 @@ $scope.maquila = [
 
                 }
 
-                  /*********FIN Valida alternos en destinoOrigen***********************/
+          /*********FIN Valida alternos en destinoOrigen***********************/
 
-                  /**************Valida alternos Bodega destino origen ******************************/
-                  $scope.bodegaDestinoOrigen  =  $scope.jsonEdicion.bodegaDestinoOrigen;
-                   $scope.mostrarAlternoShipToDestinoBodega= false;
-                   if($scope.bodegaDestinoOrigen.bodegaCodigoAlterno != null || 
-                      $scope.bodegaDestinoOrigen.bodegaCodigoAlterno != ''   ||
-                      $scope.bodegaDestinoOrigen.bodegaNombreAlterno != null ||
-                      $scope.bodegaDestinoOrigen.bodegaNombreAlterno != ''){
-                      $scope.mostrarAlternoShipToDestinoBodega= false;
+          /**************Valida alternos Bodega destino origen ******************************/
+          $scope.bodegaDestinoOrigen  =  $scope.jsonEdicion.bodegaDestinoOrigen;
+           $scope.mostrarAlternoShipToDestinoBodega= false;
+           if($scope.bodegaDestinoOrigen.bodegaCodigoAlterno != null || 
+              $scope.bodegaDestinoOrigen.bodegaCodigoAlterno != ''   ||
+              $scope.bodegaDestinoOrigen.bodegaNombreAlterno != null ||
+              $scope.bodegaDestinoOrigen.bodegaNombreAlterno != ''){
+              $scope.mostrarAlternoShipToDestinoBodega= false;
 
-                   }else{
-                      $scope.mostrarAlternoShipToDestinoBodega= true;
-                   }
+           }else{
+              $scope.mostrarAlternoShipToDestinoBodega= true;
+           }
 
-                   $scope.mostrarAlternoShipToBodegaCiudad= false;
-                   if($scope.bodegaDestinoOrigen.ciudadCodigoAlterno  != null ||
-                      $scope.bodegaDestinoOrigen.ciudadCodigoAlterno  != ''  ||
-                      $scope.bodegaDestinoOrigen.ciudadNombreAlterno  != null   || 
-                      $scope.bodegaDestinoOrigen.ciudadNombreAlterno  != ''  ) {
-                      $scope.mostrarAlternoShipToBodegaCiudad= false;
-                   }else{
-                    $scope.mostrarAlternoShipToBodegaCiudad= true;
-                   }
+           $scope.mostrarAlternoShipToBodegaCiudad= false;
+           if($scope.bodegaDestinoOrigen.ciudadCodigoAlterno  != null ||
+              $scope.bodegaDestinoOrigen.ciudadCodigoAlterno  != ''  ||
+              $scope.bodegaDestinoOrigen.ciudadNombreAlterno  != null   || 
+              $scope.bodegaDestinoOrigen.ciudadNombreAlterno  != ''  ) {
+              $scope.mostrarAlternoShipToBodegaCiudad= false;
+           }else{
+            $scope.mostrarAlternoShipToBodegaCiudad= true;
+           }
 
+              /**************Valida alternos Bodega destino origen ******************************/
 
-
-
-                  /**************Valida alternos Bodega destino origen ******************************/
-
-
-
-
-
-                 $scope.jsonEntrega  = $scope.jsonEdicion.datosEntregaRecogida;
-                 $scope.lineas = $scope.jsonEdicion.lineas ; 
-                 $scope.jsonOtros = $scope.jsonEdicion.datosOtros;
-                if($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima != null ){
-                  if($scope.jsonEdicion.datosEntregaRecogida.fechaMinima === $scope.jsonEdicion.datosEntregaRecogida.fechaMaxima ){
-                    
-                    $scope.data.info =  0;
-                    $scope.jsonEntrega.fechaMaxima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima);
-                    $scope.jsonEntrega.fechaMinima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMinima);
-                    console.log("fecha  unica");
-                  
-                 }else if($scope.jsonEdicion.datosEntregaRecogida.fechaMinima === null) {// if ($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima != $scope.jsonEdicion.datosEntregaRecogida.fechaMinima){
-                     
-                    $scope.data.info =  0;
-                    $scope.jsonEntrega.fechaMaxima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima);
-                    $scope.jsonEntrega.fechaMinima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima);
-                    console.log("fecha  unica 2");
-
-                 }else{
-                   $scope.data.info =  0;
-                    $scope.jsonEntrega.fechaMaxima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima);
-                    $scope.jsonEntrega.fechaMinima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMinima);
-                    console.log("fecha rango fecha");
-
-                 }
-                } else {
-                    $scope.data.info =  3;
-                    $scope.jsonEntrega.fechaMaxima =  null;
-                    $scope.jsonEntrega.fechaMinima = null;
-                    console.log("fecha  no confirmada");                 
-                }
-               //}
-               //valore spor defecto para   la edicion
-               //$scope.app.searchText.nombre = $scope.jsonFacturacion.nombreTipoServicio;
-               //$scope.cli.searchText.nombre = $scope.jsonFacturacion.nombreCliente;               
-               $scope.cargaClientes();
-               $scope.cargaDestinatarios();
-               $scope.cargaSegmentos();               
-               $scope.cargaCiudadEnvio(0,0);
-               $scope.cargaDestinosEnvio();
-               $scope.cargaInfoDestinoEnvio();
-               $scope.cargarConfiguracion();
-               $scope.cargaCiudadEnvioShiptToBodega();
-               $scope.cargaFormasDePago();
-               $rootScope.contarProductosPorUnidad($scope.lineas);
-              $scope.gridOptions ={};
-
-               $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+$scope.jsonEdicion.datosFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonEdicion.datosFacturacion.tipoServicio)
-                  .success(function(data, status, headers, config){
-                    //alert("**** SUCCESS ****");
-                   // alert(status);
-
-                  })
-                  .error(function(data, status, headers, config){
-                       console.log("error ===>");
-                        console.log(status);
-                        console.log(data);
-                        console.log(headers);
-                        console.log(config);
+           $scope.jsonEntrega  = $scope.jsonEdicion.datosEntregaRecogida;
+           $scope.lineas = $scope.jsonEdicion.lineas ; 
+           $scope.jsonOtros = $scope.jsonEdicion.datosOtros;
+           if($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima != null ){
+              if($scope.jsonEdicion.datosEntregaRecogida.fechaMinima === $scope.jsonEdicion.datosEntregaRecogida.fechaMaxima ){
                 
-                  })
-                  .then(function(response){
-                   
-                    $scope.productosCliente= response.data;
-                    console.log("json cargado productos ===> " );
-                  
-                      for (var i =0; i < $scope.productosCliente.length; i++) {
-                         $scope.dataCombo= $scope.dataCombo.concat(
-                                                                    {
-                                                                      id:$scope.productosCliente[i].id , 
-                                                                      value : $scope.productosCliente[i].nombre
-                                                                    }
-                                                                );
-                       }
+                $scope.data.info =  0;
+                $scope.jsonEntrega.fechaMaxima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima);
+                $scope.jsonEntrega.fechaMinima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMinima);
+                console.log("fecha  unica");
+              
+            }else if($scope.jsonEdicion.datosEntregaRecogida.fechaMinima === null) {// if ($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima != $scope.jsonEdicion.datosEntregaRecogida.fechaMinima){
+                 
+                $scope.data.info =  0;
+                $scope.jsonEntrega.fechaMaxima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima);
+                $scope.jsonEntrega.fechaMinima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima);
+                console.log("fecha  unica 2");
 
-                     
+            }else{
+               $scope.data.info =  0;
+                $scope.jsonEntrega.fechaMaxima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMaxima);
+                $scope.jsonEntrega.fechaMinima =  new Date($scope.jsonEdicion.datosEntregaRecogida.fechaMinima);
+                console.log("fecha rango fecha");
+            }
+           }else{
+                $scope.data.info =  3;
+                $scope.jsonEntrega.fechaMaxima =  null;
+                $scope.jsonEntrega.fechaMinima = null;
+                console.log("fecha  no confirmada");                 
+           }
+        
+           $scope.cargaClientes();
+           $scope.cargaDestinatarios();
+           $scope.cargaSegmentos();               
+           $scope.cargaCiudadEnvio(0,0);
+           $scope.cargaDestinosEnvio();
+           $scope.cargaInfoDestinoEnvio();
+           $scope.cargarConfiguracion();
+           $scope.cargaCiudadEnvioShiptToBodega();
+           $scope.cargaFormasDePago();
+           $rootScope.contarProductosPorUnidad($scope.lineas);
+           $scope.gridOptions ={};
 
-                    
-                 }); 
+           $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+$scope.jsonEdicion.datosFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonEdicion.datosFacturacion.tipoServicio)                  
+              .error(function(data, status, headers, config){
+                   console.log("error ===>");
+                    console.log(status);
+                    console.log(data);
+                    console.log(headers);
+                    console.log(config);
+            
+              })
+              .then(function(response){
+               
+                $scope.productosCliente= response.data;
+                console.log("json cargado productos ===> " );
+              
+                  for (var i =0; i < $scope.productosCliente.length; i++) {
+                     $scope.dataCombo= $scope.dataCombo.concat(
+                                                                {
+                                                                  id:$scope.productosCliente[i].id , 
+                                                                  value : $scope.productosCliente[i].nombre
+                                                                }
+                                                            );
+                   }
+            }); 
 
-                        console.log("Data combo");
-                        console.log($scope.dataCombo);
-                             /****************CArga tablas ***********************/
-                         
-
-
-                      $scope.columnDefs= [
-                                            {field:'numeroItem', displayName: 'Línea',visible: true , width : '5%',enableColumnResizing: false , enableCellEdit: false},
-                                            {field:'codigoProducto', displayName: 'Producto' ,visible: true , width : '35%',enableColumnResizing: false,enableCellEdit: true,editableCellTemplate: 'ui-grid/dropdownEditor'  ,cellFilter: 'productoFilter: this ' },   
-                                            {field:'cantidad', displayName: 'Cantidad' ,visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true, cellClass:'derecha' },                                                         
-                                            {field:'unidad', displayName: 'Unidad',visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true , editableCellTemplate: 'ui-grid/dropdownEditor',
-                                                 editDropdownOptionsArray: [
-                                                { id: '1', value: 'UNIDAD' },                                                
-                                                { id: '2', value: 'CAJA' }
-                                              ] , cellFilter: 'medidaFilter:this' },
-                                            {field:'codigoUnidad', displayName: 'Nombre unidad',visible: false,enableColumnResizing: false,enableCellEdit: true},                                                            
-                                            {field:'lote', displayName: 'Lote/Serial' ,visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true} ,                                                         
-                                            {field:'valorDeclaradoPorUnidad', displayName: 'Valor venta',visible: true,enableColumnResizing: false,enableCellEdit: true ,cellFilter: 'currencyFilter:this'  ,cellClass:'derecha'  },                                         
-                                            {field:'valorVenta', displayName: 'Precio de venta unitario',visible: false,enableColumnResizing: false,enableCellEdit: true ,cellClass:'derecha'},
-                                            {field:'nombreProducto', displayName: 'Nombre producto',visible: false , width : '12%',enableColumnResizing: false,enableCellEdit: true},                                                            
-                                            {field:'codigoUnidadAlterno', displayName: 'Unidad alterno',visible: false, width : '16%',enableColumnResizing: false,enableCellEdit: true},                                                      
-                                            {field:'codigoBodega', displayName: 'Bodega' ,visible:false , width : '12%',enableColumnResizing: false,enableCellEdit: true}, 
-                                            {field:'nombreBodega', displayName: 'Nombre bodega' ,visible: false , width : '12%',enableColumnResizing: false,enableCellEdit: true},                                
-                                            {field:'notas', displayName: 'Notas',visible: false , width : '40%',enableColumnResizing: false,enableCellEdit: true},                              
-                                            {field:'usuario', displayName: 'usuario',visible: false , width : '12%',enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'fechaActualizacion', displayName: 'Fecha actualización',visible: false , width : '18%',enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'codigoProductoAlterno', displayName: 'Producto alterno' ,visible: false, width : '16%',enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'bodega', displayName: 'Bodega' , visible: false,enableColumnResizing: false,enableCellEdit: true},                                                                                     
-                                            {field:'disponibilidad', displayName: 'Disponibilidad',visible: false,enableColumnResizing: false,enableCellEdit: true},                            
-                                            {field:'idLineaOrden', displayName: 'Id linea orden' ,visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'idOrden', displayName: 'Id  orden' ,visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'idUsuario', displayName: 'Id  usuario' ,visible: false,enableColumnResizing: false,enableCellEdit: true},                                                                                                                                     
-                                            {field:'producto', displayName: 'producto',visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'unidad', displayName: 'unidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'altoPorUnidad', displayName: 'alto unidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'anchoPorUnidad', displayName: 'anchoPorUnidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'anchoPorUnidad', displayName: 'anchoPorUnidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'largoPorUnidad', displayName: 'largoPorUnidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'pesoBrutoPorUnidad', displayName: 'pesoBrutoPorUnidad',visible: false,enableColumnResizing: false,enableCellEdit: true},                                            
-                                            {field:'ciudadNombreAlterno', displayName: 'ciudadNombreAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'codigoBodegaAlterno', displayName: 'codigoBodegaAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'nombreBodegaAlterno', displayName: 'nombreBodegaAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'codigoProductoAlterno', displayName: 'codigoProductoAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true},
-                                            {field:'nombreProductoAlterno', displayName: 'nombreProductoAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true}
-             
-                                          ]
-
-
-                                 
-                                         
-
-                      /*function rowTemplate() {
+            console.log("Data combo");
+            console.log($scope.dataCombo);
+              /****************CArga tablas ***********************/
+              
+            $scope.columnDefs= [
+                                  {field:'numeroItem', displayName: 'Línea',visible: true , width : '5%',enableColumnResizing: false , enableCellEdit: false},
+                                  {field:'codigoProducto', displayName: 'Producto' ,visible: true , width : '35%',enableColumnResizing: false,enableCellEdit: true,editableCellTemplate: 'ui-grid/dropdownEditor'  ,cellFilter: 'productoFilter: this ' },   
+                                  {field:'cantidad', displayName: 'Cantidad' ,visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true, cellClass:'derecha' },                                                         
+                                  {field:'unidad', displayName: 'Unidad',visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true , editableCellTemplate: 'ui-grid/dropdownEditor',
+                                       editDropdownOptionsArray: [
+                                      { id: '1', value: 'UNIDAD' },                                                
+                                      { id: '2', value: 'CAJA' }
+                                    ] , cellFilter: 'medidaFilter:this' },
+                                  {field:'codigoUnidad', displayName: 'Nombre unidad',visible: false,enableColumnResizing: false,enableCellEdit: true},                                                            
+                                  {field:'lote', displayName: 'Lote/Serial' ,visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true} ,                                                         
+                                  {field:'valorDeclaradoPorUnidad', displayName: 'Valor venta',visible: true,enableColumnResizing: false,enableCellEdit: true ,cellFilter: 'currencyFilter:this'  ,cellClass:'derecha'  },                                         
+                                  {field:'valorVenta', displayName: 'Precio de venta unitario',visible: false,enableColumnResizing: false,enableCellEdit: true ,cellClass:'derecha'},
+                                  {field:'nombreProducto', displayName: 'Nombre producto',visible: false , width : '12%',enableColumnResizing: false,enableCellEdit: true},                                                            
+                                  {field:'codigoUnidadAlterno', displayName: 'Unidad alterno',visible: false, width : '16%',enableColumnResizing: false,enableCellEdit: true},                                                      
+                                  {field:'codigoBodega', displayName: 'Bodega' ,visible:false , width : '12%',enableColumnResizing: false,enableCellEdit: true}, 
+                                  {field:'nombreBodega', displayName: 'Nombre bodega' ,visible: false , width : '12%',enableColumnResizing: false,enableCellEdit: true},                                
+                                  {field:'notas', displayName: 'Notas',visible: false , width : '40%',enableColumnResizing: false,enableCellEdit: true},                              
+                                  {field:'usuario', displayName: 'usuario',visible: false , width : '12%',enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'fechaActualizacion', displayName: 'Fecha actualización',visible: false , width : '18%',enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'codigoProductoAlterno', displayName: 'Producto alterno' ,visible: false, width : '16%',enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'bodega', displayName: 'Bodega' , visible: false,enableColumnResizing: false,enableCellEdit: true},                                                                                     
+                                  {field:'disponibilidad', displayName: 'Disponibilidad',visible: false,enableColumnResizing: false,enableCellEdit: true},                            
+                                  {field:'idLineaOrden', displayName: 'Id linea orden' ,visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'idOrden', displayName: 'Id  orden' ,visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'idUsuario', displayName: 'Id  usuario' ,visible: false,enableColumnResizing: false,enableCellEdit: true},                                                                                                                                     
+                                  {field:'producto', displayName: 'producto',visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'unidad', displayName: 'unidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'altoPorUnidad', displayName: 'alto unidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'anchoPorUnidad', displayName: 'anchoPorUnidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'anchoPorUnidad', displayName: 'anchoPorUnidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'largoPorUnidad', displayName: 'largoPorUnidad',visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'pesoBrutoPorUnidad', displayName: 'pesoBrutoPorUnidad',visible: false,enableColumnResizing: false,enableCellEdit: true},                                            
+                                  {field:'ciudadNombreAlterno', displayName: 'ciudadNombreAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'codigoBodegaAlterno', displayName: 'codigoBodegaAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'nombreBodegaAlterno', displayName: 'nombreBodegaAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'codigoProductoAlterno', displayName: 'codigoProductoAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true},
+                                  {field:'nombreProductoAlterno', displayName: 'nombreProductoAlterno',visible: false,enableColumnResizing: false,enableCellEdit: true}
+   
+                                ];
+                  /*function rowTemplate() {
                                 return '<div ng-dblclick="grid.appScope.rowDblClick(row)" >' +
                                              '  <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell></div>' +
                                              '</div>';
                       };*/
-                            $scope.rowDblClick = function(){
-                              $scope.editarLinea();
-                            }            
-                            $scope.gridOptions = {
-                                              // enableRowHeaderSelection: false,
-                                        //selectedItems: $scope.selections,
-                                        //enableRowSelection: true,
-                                         enableColumnResize: true,
-                                         columnDefs : $scope.columnDefs
-                                        //enableRowSelection: true , 
-                                       // rowTemplate: rowTemplate()     
-                            }
-                            $scope.saveRow = function (rowEntity){
-                                 // create a fake promise - normally you'd use the promise returned by $http or $resource
-                               // var promise = $q.defer();
-                             $scope.bloquearBotonGuardar =  true ; 
-                               console.log(rowEntity);
-                              var promise = $q.defer();
-                               $scope.productoAddTabla = {};
-                               $scope.productoAddTabla.linea = rowEntity.idLineaOrden,
-                               $scope.productoAddTabla.producto = rowEntity.codigoProducto
-                               $scope.productoAddTabla.cantidad = rowEntity.cantidad ; 
-                               $scope.productoAddTabla.unidad = rowEntity.unidad ; 
-                               $scope.productoAddTabla.lote = rowEntity.lote;
-                               $scope.productoAddTabla.valorVenta = rowEntity.valorVenta;
-                               rowEntity.idOrden =  parseInt($scope.ordenSeleccionada.idOrden);
-                               var dataProdSplit =  rowEntity.codigoProducto.split("@");
-                               rowEntity.producto=  parseInt(dataProdSplit[1]);
-                               //rowEntity.numeroItem =  rowEntity.idLineaOrden;
-                               rowEntity.nombreProducto =  rowEntity.codigoProducto;
-                               rowEntity.codigoUnidad =  rowEntity.unidad;
-                               rowEntity.nombreUnidad =  rowEntity.unidad;
-                               rowEntity.bodega =  10;
-                               rowEntity.codigoBodega =  "TL-BOG-SIB-01";
-                               rowEntity.nombreBodega =  "BOG-CEDI SIBERIA 1";
-                               rowEntity.idUsuario =parseInt($scope.login.id) ;
-                               rowEntity.usuario =  'juanf';
-                          
+                  $scope.rowDblClick = function(){
+                    $scope.editarLinea();
+                  }            
+                  $scope.gridOptions = {
+                                    // enableRowHeaderSelection: false,
+                              //selectedItems: $scope.selections,
+                              //enableRowSelection: true,
+                               enableColumnResize: true,
+                               columnDefs : $scope.columnDefs
+                              //enableRowSelection: true , 
+                             // rowTemplate: rowTemplate()     
+                  }
+                  $scope.saveRow = function (rowEntity){
+                      // create a fake promise - normally you'd use the promise returned by $http or $resource
+                     // var promise = $q.defer();
+                   $scope.bloquearBotonGuardar =  true ; 
+                     console.log(rowEntity);
+                     var promise = $q.defer();
+                     $scope.productoAddTabla = {};
+                     $scope.productoAddTabla.linea = rowEntity.idLineaOrden,
+                     $scope.productoAddTabla.producto = rowEntity.codigoProducto
+                     $scope.productoAddTabla.cantidad = rowEntity.cantidad ; 
+                     $scope.productoAddTabla.unidad = rowEntity.unidad ; 
+                     $scope.productoAddTabla.lote = rowEntity.lote;
+                     $scope.productoAddTabla.valorVenta = rowEntity.valorVenta;
+                     rowEntity.idOrden =  parseInt($scope.ordenSeleccionada.idOrden);
+                     var dataProdSplit =  rowEntity.codigoProducto.split("@");
+                     rowEntity.producto=  parseInt(dataProdSplit[1]);
+                     //rowEntity.numeroItem =  rowEntity.idLineaOrden;
+                     rowEntity.nombreProducto =  rowEntity.codigoProducto;
+                     rowEntity.codigoUnidad =  rowEntity.unidad;
+                     rowEntity.nombreUnidad =  rowEntity.unidad;
+                     rowEntity.bodega =  10;
+                     rowEntity.codigoBodega =  "TL-BOG-SIB-01";
+                     rowEntity.nombreBodega =  "BOG-CEDI SIBERIA 1";
+                     rowEntity.idUsuario =parseInt($scope.login.id) ;
+                     rowEntity.usuario =  'juanf';                
 
+                    console.log(angular.toJson( $scope.productoAddTabla, true));
+                    promise.resolve(rowEntity);
+                    $scope.gridApi.rowEdit.setSavePromise( rowEntity, promise.promise );
+                    // $rootScope.contarProductosPorUnidad();
+                    $scope.bloquearBotonGuardar =  false ; 
+                    // fake a delay of 3 seconds whilst the save occurs, return error if gender is "male"
+                    
 
-                              console.log(angular.toJson( $scope.productoAddTabla, true));
-                              promise.resolve(rowEntity);
-                              $scope.gridApi.rowEdit.setSavePromise( rowEntity, promise.promise );
-                             // $rootScope.contarProductosPorUnidad();
-                               $scope.bloquearBotonGuardar =  false ; 
-                                // fake a delay of 3 seconds whilst the save occurs, return error if gender is "male"
-                              
+                  }
 
-                            }
+                 $scope.gridOptions.multiSelect = false;
+                 $scope.gridOptions.onRegisterApi = function( gridApi ) {
+                            $scope.gridApi = gridApi;                                  
+                            gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+                          /*$scope.gridApi.selection.on.rowSelectionChanged($scope, function(row){
+                              console.log("entra");
+                              console.log( row.entity.idOrden);
+                              $scope.ordenSeleccionada =  row.entity ; 
+                              console.log(row);
+                              console.log(row.entity.idLineaOrden);
+                              console.log("producto seleccionado" + row.entity.nombreProducto  + "---" +row.entity.codigoProducto );
+                              idLineaOrden =  row.entity.idLineaOrden ; 
+                              producto = row.entity.codigoProducto;
+                              bodega = row.entity.nombreBodega;
+                              cantidad = row.entity.cantidad;
+                              unidad = row.entity.nombreUnidad;
+                              alto =  row.entity.altoPorUnidad ;
+                              ancho =  row.entity.anchoPorUnidad;
+                              largo = row.entity.largoPorUnidad;
+                              pesoBruto = row.entity.pesoBrutoPorUnidad;
+                              valorDeclarado = row.entity.valorDeclaradoPorUnidad; 
+                              idProductoEdit = row.entity.producto;
+                              nombreProducto = row.entity.nombreProducto;
+                              idUnidadMedidaEdicion = row.entity.unidad;
+                              nombreUnidadMedidaEdicion = row.entity.nombreUnidad;
 
-                         $scope.gridOptions.multiSelect = false;
-                         $scope.gridOptions.onRegisterApi = function( gridApi ) {
-                                    $scope.gridApi = gridApi;                                  
-                                    gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
-                                  /*$scope.gridApi.selection.on.rowSelectionChanged($scope, function(row){
-                                      console.log("entra");
-                                      console.log( row.entity.idOrden);
-                                      $scope.ordenSeleccionada =  row.entity ; 
-                                      console.log(row);
-                                      console.log(row.entity.idLineaOrden);
-                                      console.log("producto seleccionado" + row.entity.nombreProducto  + "---" +row.entity.codigoProducto );
-                                      idLineaOrden =  row.entity.idLineaOrden ; 
-                                      producto = row.entity.codigoProducto;
-                                      bodega = row.entity.nombreBodega;
-                                      cantidad = row.entity.cantidad;
-                                      unidad = row.entity.nombreUnidad;
-                                      alto =  row.entity.altoPorUnidad ;
-                                      ancho =  row.entity.anchoPorUnidad;
-                                      largo = row.entity.largoPorUnidad;
-                                      pesoBruto = row.entity.pesoBrutoPorUnidad;
-                                      valorDeclarado = row.entity.valorDeclaradoPorUnidad; 
-                                      idProductoEdit = row.entity.producto;
-                                      nombreProducto = row.entity.nombreProducto;
-                                      idUnidadMedidaEdicion = row.entity.unidad;
-                                      nombreUnidadMedidaEdicion = row.entity.nombreUnidad;
-
-                                      ciudadNombreAlterno = row.entity.ciudadNombreAlterno;
-                                      codigoBodegaAlterno = row.entity.codigoBodegaAlterno;
-                                      nombreBodegaAlterno = row.entity.nombreBodegaAlterno;
-                                      codigoProductoAlterno = row.entity.codigoProductoAlterno;
-                                      nombreProductoAlterno = row.entity.nombreProductoAlterno;
-                                      codigoUnidadAlterno = row.entity.codigoUnidadAlterno;
-                                     // $scope.prodCli.nombreLargo =row.entity.nombreProducto;
-                                      lote = row.entity.lote;
-                                      notas  = row.entity.notas ;
-                                      $scope.mostrarEditar =  1;
-                                      $scope.mostrarEliminar =  1;
-                                    });*/
-                              };
+                              ciudadNombreAlterno = row.entity.ciudadNombreAlterno;
+                              codigoBodegaAlterno = row.entity.codigoBodegaAlterno;
+                              nombreBodegaAlterno = row.entity.nombreBodegaAlterno;
+                              codigoProductoAlterno = row.entity.codigoProductoAlterno;
+                              nombreProductoAlterno = row.entity.nombreProductoAlterno;
+                              codigoUnidadAlterno = row.entity.codigoUnidadAlterno;
+                             // $scope.prodCli.nombreLargo =row.entity.nombreProducto;
+                              lote = row.entity.lote;
+                              notas  = row.entity.notas ;
+                              $scope.mostrarEditar =  1;
+                              $scope.mostrarEliminar =  1;
+                            });*/
+                      };
 
                              /**********in carga tablas ************************/
 
@@ -798,24 +697,19 @@ $scope.maquila = [
    
    
     $scope.addData = function() {
-    $scope.bloquearBotonGuardar =  true ; 
-    $scope.valorn = $scope.gridOptions.data.length + 1;
-
-       $scope.gridOptions.data.push({
-
-
-                    "numeroItem":  $scope.valorn ,
-                    "codigoProducto": "" ,
-                    "cantidad": "0",
-                    "unidad": "",
-                    "lote": "",
-                    "valorVenta": 0,
-                    "valorDeclaradoPorUnidad": 0
-
-                  });
-
-       $scope.valorn = $scope.valorn + 1 ;
-  };
+      $scope.bloquearBotonGuardar =  true ; 
+      $scope.valorn = $scope.gridOptions.data.length + 1;
+      $scope.gridOptions.data.push({
+                      "numeroItem":  $scope.valorn ,
+                      "codigoProducto": "" ,
+                      "cantidad": "0",
+                      "unidad": "",
+                      "lote": "",
+                      "valorVenta": 0,
+                      "valorDeclaradoPorUnidad": 0
+                    });
+         $scope.valorn = $scope.valorn + 1 ;
+    };
   
 
     /************************Carga  info de  clientes  *******************************************/
@@ -824,11 +718,7 @@ $scope.maquila = [
         console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/clientes-x-usuario?id_usuario='+$scope.login.id+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/clientes-x-usuario?id_usuario='+$scope.login.id+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
       //$http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/clientes-x-usuario?id_usuario='+$scope.login.id)
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+              
               .error(function(data, status, headers, config){
                 
                 console.log("error ===>");
@@ -848,17 +738,13 @@ $scope.maquila = [
     }
 
       /***********************Carga json segmentos*******************************************/
+
       $scope.cargaSegmentos = function(){
         $scope.segmento= [];
         $scope.destinatario = [];
        
        
-         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/segmentos-x-cliente-x-tipo_servicio?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/segmentos-x-cliente-x-tipo_servicio?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )             
               .error(function(data, status, headers, config){
                 console.log("error ===>");
                 console.log(status);
@@ -881,27 +767,18 @@ $scope.maquila = [
         $scope.cargaDestinatarios = function (){
           console.log("entra cargar destinatarios");
           console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinatarios_remitentes-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+$scope.jsonFacturacion.segmento);
-           $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinatarios_remitentes-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+$scope.jsonFacturacion.segmento)
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+           $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinatarios_remitentes-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+$scope.jsonFacturacion.segmento)              
               .error(function(data, status, headers, config){
                    console.log("error ===>");
                     console.log(status);
                     console.log(data);
                     console.log(headers);
-                    console.log(config);
-            
+                    console.log(config);            
               })
-              .then(function(response){
-               
+              .then(function(response){               
                 $scope.destinatario= response.data;
                 console.log("json cargado deestinartario ===> " );
-                console.log($scope.destinatario) ; 
-             
-
+                console.log($scope.destinatario) ;              
            });    
 
         }
@@ -937,42 +814,27 @@ $scope.maquila = [
                                                 
                                                 console.log("no hace nada");
                                               });*/
-
-                                        
-                                          }
-                                         
-
-                            }
-                                      
+                                          }                                         
+                            }                                      
                       };
-
-          }
+        }        
         
-        $scope.cargaCiudadEnvio = function(val, id){
-          
+        $scope.cargaCiudadEnvio = function(val, id){                
           if(parseInt(id) != 0 )
-          {
-          
+          {          
             $scope.jsonFacturacion.destinatario = val ; 
           }
           
           console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/ciudades-x-destinatario_remitente?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
-          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/ciudades-x-destinatario_remitente?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/ciudades-x-destinatario_remitente?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )             
               .error(function(data, status, headers, config){
-                   console.log("error ===>");
+                console.log("error ===>");
                 console.log(status);
                 console.log(data);
                 console.log(headers);
-                console.log(config);
-            
+                console.log(config);            
               })
-              .then(function(response){
-               
+              .then(function(response){               
                 $rootScope.ciudad= response.data;
                //console.log("json cargado ciudad ===> "+$scope.destinatario[0].id   + "----" +  $scope.jsonFacturacion.destinatario );
                console.log($scope.ciudad) ; 
@@ -991,12 +853,8 @@ $scope.maquila = [
                                 $scope.jsonFacturacion.nombre  = $scope.destinatario[i].contacto.nombres ;
                                 $scope.jsonFacturacion.telefonos  = $scope.destinatario[i].contacto.telefonos;
                                 $scope.jsonFacturacion.email  = $scope.destinatario[i].contacto.email;        
-
-                              
-                     }
-                  
+                     }                  
                  }
-
               }else{
 
                    for (var i = 0; i < $scope.destinatario.length; i++) {
@@ -1034,16 +892,9 @@ $scope.maquila = [
                                                 
                                                 console.log("no hace nada");
                                               });*/
-
-                                        
-                                          }
-                                        
-                                             
-
-                            }
-                                      
+                                          }                                      
+                            }                                    
                       };
-
               }
                 /*for (var i = 0; i < $scope.destinatario.length; i++) {
                  
@@ -1064,7 +915,6 @@ $scope.maquila = [
                  };*/              
 
           });    
-
         }   
 
 
@@ -1077,25 +927,18 @@ $scope.maquila = [
                                              .ok('ok')
                                              .cancel('Cancelar');
                                               $mdDialog.show(confirm).then(function() {
-                                                console.log("no hace");
-                                                       
+                                                console.log("no hace");                                                      
                                               }, function() {
                                                 
                                                 console.log("no hace nada");
                                               });
         }  
-         /*******************************Combo destino  *********************************************/
-   
+         /*******************************Combo destino  *********************************************/   
         $scope.destino = [];
         $scope.cargaDestinosEnvio = function (){
             console.log("entra cargar destinos envio ");
             console.log("")
-            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinos_origenes-x-destinatario_remitente-x-ciudad?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_ciudad='+$scope.jsonEnvio.ciudad+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinos_origenes-x-destinatario_remitente-x-ciudad?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_ciudad='+$scope.jsonEnvio.ciudad+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)              
               .error(function(data, status, headers, config){
                    console.log("error ===>");
                 console.log(status);
@@ -1109,9 +952,7 @@ $scope.maquila = [
                $scope.destino= response.data;
                console.log("json cargado destino ===> " );
                console.log(angular.toJson($scope.destino, true)) ; 
-
           });    
-
         }
 
         /***********hace set del valor de bodega *******************/
@@ -1122,15 +963,10 @@ $scope.maquila = [
         /******************************Cargar informacion destino envio***************/
 
         $scope.cargaInfoDestinoEnvio = function (id){
-
           console.log("evento carga info destino"); 
           console.log($scope.destino);
-
-          for (var i = 0; i < $scope.destino.length; i++) {
-            
-            if(parseInt($scope.jsonEnvio.destino) === $scope.destino[i].id ){
-
-             
+          for (var i = 0; i < $scope.destino.length; i++) {          
+            if(parseInt($scope.jsonEnvio.destino) === $scope.destino[i].id ){             
                        $rootScope.nombreShipDest =   $scope.destino[i].contacto.nombres;
                        $rootScope.direccionShipDest =   $scope.destino[i].direccion.direccion;
                        $rootScope.indicacionesShipDest =    $scope.destino[i].direccion.indicacionesDireccion;
@@ -1147,7 +983,6 @@ $scope.maquila = [
                                  $scope.jsonEnvio.email = $scope.destino[i].contacto.email ;
 
                       }else{
-
                       /*  var confirm = $mdDialog.confirm()
                               .title('Informacion')
                               .textContent('Desea reemplazar los datos de contacto.')
@@ -1166,31 +1001,19 @@ $scope.maquila = [
                           
                           console.log("no hace nada");
                         });*/
-
-                  
                     }
-
+               }              
             }
-              
-          }
-          $scope.dis.tabEntrega = false ; 
-               
-
-
-	 }
+          $scope.dis.tabEntrega = false ;        
+	       }
 
 
    /*******************************Combo productos  por  cliente  *********************************************/
-       $scope.productosCliente = [];
-   $scope.dataCombo = [];
-        $scope.cargarProductosCliente = function (cliente,tipoServicio){
-              
+        $scope.productosCliente = [];
+        $scope.dataCombo = [];
+        $scope.cargarProductosCliente = function (cliente,tipoServicio){            
             $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+cliente+'&id_tipo_servicio='+tipoServicio)
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+              
               .error(function(data, status, headers, config){
                    console.log("error ===>");
                 console.log(status);
@@ -1210,9 +1033,7 @@ $scope.maquila = [
                  $scope.dataCombo= $scope.dataCombo.concat(
                                                             {
                                                               id:      $scope.productosCliente[i].id  , 
-                                                              value :   $scope.productosCliente[i].nombreLargo + " | " +$scope.productosCliente[i].codigo +" @" +  $scope.productosCliente[i].id  
-
-                                                              
+                                                              value :   $scope.productosCliente[i].nombreLargo + " | " +$scope.productosCliente[i].codigo +" @" +  $scope.productosCliente[i].id                                                                
                                                             }
                                                         );
                }
@@ -1220,25 +1041,15 @@ $scope.maquila = [
                $scope.gridOptions.columnDefs[1].editDropdownOptionsArray =   $scope.dataCombo;
           });    
         }
-
       /*******************************Combo jornada  *********************************************/
-
-    /*  $scope.jornadaEntrega= [
+      /*$scope.jornadaEntrega= [
                    {"id":"1", "texto":"Am"},
                    {"id":"2", "texto":"Pm"},
                    {"id":"3", "texto":"Am/Pm"}                
         ];*/
-       $scope.configuracionData = [];
-
-
-        $scope.cargarConfiguracion = function (cliente,tipoServicio){
-              
-            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio+'&id_cliente='+$scope.jsonFacturacion.cliente)
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+        $scope.configuracionData = [];
+        $scope.cargarConfiguracion = function (cliente,tipoServicio){              
+            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio+'&id_cliente='+$scope.jsonFacturacion.cliente)             
               .error(function(data, status, headers, config){
                    console.log("error ===>");
                 console.log(status);
@@ -1247,21 +1058,16 @@ $scope.maquila = [
                 console.log(config);
             
               })
-              .then(function(response){
-               
-               $scope.configuracionData= response.data;
-              console.log("json cargado configuracion ===> " );
-              console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio+'&id_cliente='+$scope.jsonFacturacion.cliente);
-
-               console.log($scope.configuracionData) ; 
-               console.log("-----------------------------------")
-              $scope.jornadaEntrega = $scope.configuracionData[0].jornadas;
-              $scope.requerimientosDocumentales =  $scope.configuracionData[1].requerimientosDocumentales ; 
-               console.log($scope.configuracionData[0].jornadas);
-               console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-               console.log($scope.configuracionData[1].requerimientosDocumentales);
-               $scope.ubicarEnTab();
-
+              .then(function(response){               
+                $scope.configuracionData= response.data;
+                console.log("json cargado configuracion ===> " );
+                console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio+'&id_cliente='+$scope.jsonFacturacion.cliente);
+                console.log($scope.configuracionData) ;                 
+                $scope.jornadaEntrega = $scope.configuracionData[0].jornadas;
+                $scope.requerimientosDocumentales =  $scope.configuracionData[1].requerimientosDocumentales ; 
+                console.log($scope.configuracionData[0].jornadas);                
+                console.log($scope.configuracionData[1].requerimientosDocumentales);
+                $scope.ubicarEnTab();
           });    
 
         }
@@ -1269,28 +1075,20 @@ $scope.maquila = [
          $scope.cargaCiudadEnvioShiptToBodega = function(){
        
           $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/ciudades-con-bodega-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+             
               .error(function(data, status, headers, config){
                 //alert("**** Verificar conexion a internet ****");
-                    console.log("error ===>");
+                console.log("error ===>");
                 console.log(status);
                 console.log(data);
                 console.log(headers);
                 console.log(config);
             
               })
-              .then(function(response){
-               
+              .then(function(response){               
                 $scope.ciudadShipTOBodega= response.data;
-               console.log("json cargado ciudad ship to bodega ===> ");
-               console.log($scope.ciudadShipTOBodega) ; 
-
-             
-         
+                console.log("json cargado ciudad ship to bodega ===> ");
+                console.log($scope.ciudadShipTOBodega) ; 
 
           });    
 
@@ -1301,18 +1099,14 @@ $scope.maquila = [
              $scope.jsonEnvio.valorBodegaShipTo   = $scope.jsonEnvio.ciudad ; 
               console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/bodegas-x-ciudad-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_ciudad='+$scope.jsonEnvio.valorBodegaShipTo+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
              $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/bodegas-x-ciudad-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_ciudad='+$scope.jsonEnvio.valorBodegaShipTo+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
-                    .success(function(data, status, headers, config){
-                      //alert("**** SUCCESS ****");
-                     // alert(status);
-
-                    })
+                   
                     .error(function(data, status, headers, config){
                      // alert("**** Verificar conexion a internet ****");
-                         console.log("error ===>");
-                console.log(status);
-                console.log(data);
-                console.log(headers);
-                console.log(config);
+                          console.log("error ===>");
+                          console.log(status);
+                          console.log(data);
+                          console.log(headers);
+                          console.log(config);
                   
                     })
                     .then(function(response){
@@ -1332,11 +1126,8 @@ $scope.maquila = [
             $scope.cargaFormasDePago = function (){
              console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/tipos_forma_pago-x-cliente-x-tipo_servicio?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio);
              $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/tipos_forma_pago-x-cliente-x-tipo_servicio?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
-                    .success(function(data, status, headers, config){
-                      //alert("**** SUCCESS ****");
-                     // alert(status);
+                    
 
-                    })
                     .error(function(data, status, headers, config){
                          console.log("error ===>");
                         console.log(status);
@@ -1377,13 +1168,13 @@ $scope.maquila = [
                  
         ];
          
-    var test = 10  ;
-    var producto  = "";
-    var bodega = "";
-    var cantidad = "" ; 
-    var unidad = "";
-    var lote ="";
-    var notas ="";
+      var test = 10  ;
+      var producto  = "";
+      var bodega = "";
+      var cantidad = "" ; 
+      var unidad = "";
+      var lote ="";
+      var notas ="";
       $scope.productosTemporales = [];
       $scope.imprimir = function (){
       $scope.productosTemporales=  $scope.productosTemporales.concat([
@@ -1406,11 +1197,7 @@ $scope.maquila = [
         console.log("Entra a eliminar" + idLineaOrden);
         console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/'+$scope.ordenSeleccionada.idOrden+'/deleteLineaOrden/'+idLineaOrden+'/'+$scope.login.usuario);
         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/'+$scope.ordenSeleccionada.idOrden+'/deleteLineaOrden/'+idLineaOrden+'/'+$scope.login.usuario)
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+             
               .error(function(data, status, headers, config){
             //    alert("**** Verificar conexion a internet ****");
                 console.log("error ===>");
@@ -1435,13 +1222,11 @@ $scope.maquila = [
                   $rootScope.contarProductosPorUnidad($scope.respuestaEliminacion.orden.lineas);
                 }
 
-
           });    
-
 
       }
 
-            /************editar evento ********************/
+      /************editar evento ********************/
       $scope.esEdicion =  0 ; 
       $scope.editarLinea = function(){
             $scope.esEdicion =  1 ; 
@@ -1450,10 +1235,8 @@ $scope.maquila = [
                 //$scope.jsonProductoAdd.bodega ="" ;
                 
               //  $scope.onProductoAdd.unidad = "";
-             
-
       }
-/**************Agregar producto**********************/
+      /**************Agregar producto**********************/
    
       $scope.agregarLinea = function(){
             $scope.esEdicion =  0 ; 
@@ -1465,19 +1248,19 @@ $scope.maquila = [
       }
 
       /*************************Ventana  modal de agregar  producto ********************************************/
-        $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
-       $scope.showAdvanced = function(ev) {
+      $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+      $scope.showAdvanced = function(ev) {
         
           var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
           $mdDialog.show({
             controller: DialogController,
-          //  templateUrl: './ordenesVenta/agregarProducto.tmpl.html',
+          //templateUrl: './ordenesVenta/agregarProducto.tmpl.html',
             templateUrl: './ordenesVenta/agregarProductoSt.tmpl.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose:false,
             fullscreen: useFullScreen,
-             locals: { serverData: $scope.serverData ,
+            locals: { serverData: $scope.serverData ,
                        jsonFacturacion :$scope.jsonFacturacion , 
                        productosTemporales :$scope.productosTemporales , 
                        imprimir  : $scope.imprimir ,   
@@ -1506,16 +1289,14 @@ $scope.maquila = [
         };
 
 
-         $scope.cerrarAdvanced = function(){
-          console.log("entra");
-          $mdDialog.hide()
+     $scope.cerrarAdvanced = function(){
+      console.log("entra");
+      $mdDialog.hide()
 
-         }
+     }
 
      
-        function DialogController($scope, $mdDialog ,serverData,jsonFacturacion,productosTemporales,imprimir,tabla ,jsonEntregaRetorno , login,ordenSeleccionada ,gridOptions ,esEdicion,cantidadTotal , tipoUbicacionLineaOrden, ciudad  ) {
-
-              
+      function DialogController($scope, $mdDialog ,serverData,jsonFacturacion,productosTemporales,imprimir,tabla ,jsonEntregaRetorno , login,ordenSeleccionada ,gridOptions ,esEdicion,cantidadTotal , tipoUbicacionLineaOrden, ciudad  ) {              
               $scope.login = login ; 
               $scope.serverData =serverData;
               $scope.jsonFacturacion = jsonFacturacion;
@@ -1533,10 +1314,7 @@ $scope.maquila = [
               $scope.cantidadTotal = cantidadTotal;
               $scope.tipoUbicacionLineaOrden =  tipoUbicacionLineaOrden ;
               $scope.ciudad = ciudad  ; 
-               $scope.prodCli  ={};
-             
-     
-
+              $scope.prodCli  ={};             
               $scope.lineasProductoAlternos = false ; 
               $scope.lineasBodegaAlternos = false ; 
               $scope.lineasCiudadAlternos = false ; 
@@ -1562,8 +1340,6 @@ $scope.maquila = [
                     $scope.jsonProductoAdd.valorDeclarado ="";
                     $scope.jsonProductoAdd.totalDeclarado = "";
               
-
-
               }else{
                     $scope.lineasProductoAlternos = false ; 
                     $scope.lineasBodegaAlternos = false ; 
@@ -1596,8 +1372,6 @@ $scope.maquila = [
                       $scope.lineasUnidadAlternos = true ; 
                     }
 
-
-
                     $scope.idLineaOrden  =  idLineaOrden  ; 
                     $scope.jsonProductoAdd.producto = producto;
                     $scope.jsonProductoAdd.bodega =bodega ;
@@ -1613,13 +1387,9 @@ $scope.maquila = [
                     $scope.prodCli.selectedItem ={}                    
                     $scope.prodCli.selectedItem.nombre  = producto +","+ nombreProducto;
                     $scope.prodCli.selectedItem.id = idProductoEdit;
-                   console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ciudades-x-producto?id_producto='+$scope.prodCli.selectedItem.id)
+                    console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ciudades-x-producto?id_producto='+$scope.prodCli.selectedItem.id)
                     $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ciudades-x-producto?id_producto='+$scope.prodCli.selectedItem.id)
-                        .success(function(data, status, headers, config){
-                          //alert("**** SUCCESS ****");
-                         // alert(status);
-
-                        })
+                       
                         .error(function(data, status, headers, config){
                             console.log("error ===>");
                             console.log(status);
@@ -1635,12 +1405,8 @@ $scope.maquila = [
                          console.log($scope.ciudadesProducto) ; 
 
                     });   
-                     $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/unidades-x-producto?id_producto='+$scope.prodCli.selectedItem.id)
-                            .success(function(data, status, headers, config){
-                              //alert("**** SUCCESS ****");
-                             // alert(status);
-
-                            })
+                    $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/unidades-x-producto?id_producto='+$scope.prodCli.selectedItem.id)
+                            
                             .error(function(data, status, headers, config){
                                  console.log("error ===>");
                                   console.log(status);
@@ -1663,50 +1429,39 @@ $scope.maquila = [
 
               }
               $scope.muestraAgrega =  false;
-                $scope.showNuevoProducto = function(){
-                      if($scope.muestraAgrega){
-                        $scope.muestraAgrega =  false;
+              $scope.showNuevoProducto = function(){
+                    if($scope.muestraAgrega){
+                      $scope.muestraAgrega =  false;
 
-                      }else{
-                        $scope.muestraAgrega =  true;
-                      }
-                     
+                    }else{
+                      $scope.muestraAgrega =  true;
+                    }                   
+              }
 
-
-                }
-
-                $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+ $scope.jsonFacturacion.cliente+'&id_tipo_servicio='+ $scope.jsonFacturacion.tipoServicio)
-                  .success(function(data, status, headers, config){
-                    //alert("**** SUCCESS ****");
-                   // alert(status);
-
-                  })
-                  .error(function(data, status, headers, config){
-                       console.log("error ===>");
-                        console.log(status);
-                        console.log(data);
-                        console.log(headers);
-                        console.log(config);
+              $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+ $scope.jsonFacturacion.cliente+'&id_tipo_servicio='+ $scope.jsonFacturacion.tipoServicio)
                 
-                  })
-                  .then(function(response){
+                .error(function(data, status, headers, config){
+                     console.log("error ===>");
+                      console.log(status);
+                      console.log(data);
+                      console.log(headers);
+                      console.log(config);
+              
+                })
+                .then(function(response){
+                 
+                 $scope.productosCliente= response.data;
+                 console.log("json cargado productos ===> " );
+                 console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+ $scope.jsonFacturacion.cliente+'&id_tipo_servicio='+ $scope.jsonFacturacion.tipoServicio);
+                 console.log($scope.productosCliente) ; 
+
+              });  
+
+              /**************************Carga unidades por producto*************************************************/
+              $scope.cargaUnidades = function (){
+               console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/unidades-x-producto?id_producto='+$scope.jsonProductoAdd.producto); 
+               $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/unidades-x-producto?id_producto='+$scope.jsonProductoAdd.producto)
                    
-                   $scope.productosCliente= response.data;
-                  console.log("json cargado productos ===> " );
-                  console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+ $scope.jsonFacturacion.cliente+'&id_tipo_servicio='+ $scope.jsonFacturacion.tipoServicio);
-
-                   console.log($scope.productosCliente) ; 
-
-              });    
-                /**************************Carga unidades por producto*************************************************/
-            $scope.cargaUnidades = function (){
-             console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/unidades-x-producto?id_producto='+$scope.jsonProductoAdd.producto); 
-             $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/unidades-x-producto?id_producto='+$scope.jsonProductoAdd.producto)
-                    .success(function(data, status, headers, config){
-                      //alert("**** SUCCESS ****");
-                     // alert(status);
-
-                    })
                     .error(function(data, status, headers, config){
                          console.log("error ===>");
                           console.log(status);
@@ -1717,26 +1472,20 @@ $scope.maquila = [
                     })
                     .then(function(response){
                      
-                     $scope.unidadesProducto= response.data;
-                    console.log("json cargado unidades producto ===> " );
-                    console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'satelite/ordenes/unidades-x-producto?id_producto='+$scope.jsonProductoAdd.producto);
-
-                     console.log($scope.unidadesProducto) ; 
-
+                      $scope.unidadesProducto= response.data;
+                      console.log("json cargado unidades producto ===> " );
+                      console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'satelite/ordenes/unidades-x-producto?id_producto='+$scope.jsonProductoAdd.producto);
+                      console.log($scope.unidadesProducto) ;
                 });    
-            }
+              }
 
 
             /**************************Carga bodegas a partir de un producto*************************************************/
             $scope.cargaBodegas = function (){
               console.log("carga bodegas");
-            console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/bodegas-x-producto-x-ciudad?id_producto='+$scope.jsonProductoAdd.producto+'&id_ciudad='+$scope.jsonProductoAdd.ciudad)
-             $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/bodegas-x-producto-x-ciudad?id_producto='+$scope.jsonProductoAdd.producto+'&id_ciudad='+$scope.jsonProductoAdd.ciudad)
-                    .success(function(data, status, headers, config){
-                      //alert("**** SUCCESS ****");
-                     // alert(status);
-
-                    })
+              console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/bodegas-x-producto-x-ciudad?id_producto='+$scope.jsonProductoAdd.producto+'&id_ciudad='+$scope.jsonProductoAdd.ciudad)
+              $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/bodegas-x-producto-x-ciudad?id_producto='+$scope.jsonProductoAdd.producto+'&id_ciudad='+$scope.jsonProductoAdd.ciudad)
+                    
                     .error(function(data, status, headers, config){
                          console.log("error ===>");
                         console.log(status);
@@ -1790,12 +1539,7 @@ $scope.maquila = [
                  }
               }
              console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ciudades-x-producto?id_producto='+$scope.jsonProductoAdd.producto)
-             $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ciudades-x-producto?id_producto='+$scope.jsonProductoAdd.producto)
-                    .success(function(data, status, headers, config){
-                      //alert("**** SUCCESS ****");
-                     // alert(status);
-
-                    })
+             $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ciudades-x-producto?id_producto='+$scope.jsonProductoAdd.producto)                    
                     .error(function(data, status, headers, config){
                         console.log("error ===>");
                         console.log(status);
@@ -1839,8 +1583,7 @@ $scope.maquila = [
 
 
                             $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/serviciosTactic/consultaDisponibles')
-                                  .success(function(data, status, headers, config){                                  
-                                  })
+                                  
                                   .error(function(data, status, headers, config){
                                     console.log("error ===>");
                                     console.log(status);
@@ -1860,16 +1603,11 @@ $scope.maquila = [
                   }      
             }
 
-             $scope.destino = [];
+        $scope.destino = [];
         $scope.cargaDestinosEnvio = function (){
             console.log("entra cargar destinos envio ");
             console.log("")
-            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinos_origenes-x-destinatario_remitente-x-ciudad?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_ciudad='+$scope.jsonProductoAdd.ciudad+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinos_origenes-x-destinatario_remitente-x-ciudad?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_ciudad='+$scope.jsonProductoAdd.ciudad+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)             
               .error(function(data, status, headers, config){
                 console.log("error ===>");
                 console.log(status);
@@ -1884,36 +1622,30 @@ $scope.maquila = [
                console.log("json cargado destino ===> " );
                console.log($scope.destino) ; 
 
-          });    
-
+           });    
         }           
-            $scope.cerrarModal = function (){
-
-                $mdDialog.hide();
-            }
-            $scope.campoValidacionNuevaLinea = "";
-            $scope.faltanDatosNuevaLinea = false ;
-            $scope.validarDataNuevaLinea = function (){
-              
-              if($scope.jsonProductoAdd.cantidad === null  || $scope.jsonProductoAdd.cantidad === ""  ){
-                  $scope.campoValidacionNuevaLinea = "Cantidad";
-                  $scope.faltanDatosNuevaLinea = true;
-                  return;
-              }else if ($scope.jsonProductoAdd.unidad === null ||  $scope.jsonProductoAdd.unidad === ""){
-                  $scope.campoValidacionNuevaLinea = "Unidad";
-                  $scope.faltanDatosNuevaLinea = true;
-                  return;
-
-              }else{
-                $scope.agregarProductoTemporal();
-
-              }
-
-
-
-            }
+        $scope.cerrarModal = function (){
+            $mdDialog.hide();
+        }
+        $scope.campoValidacionNuevaLinea = "";
+        $scope.faltanDatosNuevaLinea = false ;
+        $scope.validarDataNuevaLinea = function (){
           
-            $scope.agregarProductoTemporal = function (){
+          if($scope.jsonProductoAdd.cantidad === null  || $scope.jsonProductoAdd.cantidad === ""  ){
+              $scope.campoValidacionNuevaLinea = "Cantidad";
+              $scope.faltanDatosNuevaLinea = true;
+              return;
+          }else if ($scope.jsonProductoAdd.unidad === null ||  $scope.jsonProductoAdd.unidad === ""){
+              $scope.campoValidacionNuevaLinea = "Unidad";
+              $scope.faltanDatosNuevaLinea = true;
+              return;
+
+          }else{
+            $scope.agregarProductoTemporal();
+          }
+        }
+          
+      $scope.agregarProductoTemporal = function (){
 
               //var dataPreview = document.getElementById('productoLista');
               //$scope.lista.nombre = dataPreview.getAttribute("data-nombre");
@@ -1935,11 +1667,10 @@ $scope.maquila = [
         //$scope.datatable = datatable(datatableConfig);
         //Set the data to the datatable
         //$scope.datatable.setData(datatableData);
-         console.log("data entrega en modal ");
-         console.log($scope.jsonEntregaRetorno);
+           console.log("data entrega en modal ");
+           console.log($scope.jsonEntregaRetorno);
 
-          $scope.jsonEntregaProducto=  [{
-
+           $scope.jsonEntregaProducto=  [{
                                              idLineaOrden:$scope.idLineaOrden,
                                              idOrden :parseInt($scope.ordenSeleccionada.idOrden),
                                              numeroItem : 10,
@@ -1963,20 +1694,13 @@ $scope.maquila = [
                                              idUsuario:parseInt($scope.login.id),
                                              usuario:$scope.login.usuario ,
                                              valorDeclaradoPorUnidad : $scope.jsonProductoAdd.valorDeclarado
-
                                         }];
         console.log("jsonEntregaProducto  data  =>");
         console.log(angular.toJson($scope.jsonEntregaProducto, true));
-
         console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
+
         $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
               
-              
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
               .error(function(data, status, headers, config){
                 console.log("error ===>");
                 console.log(status);
@@ -2050,30 +1774,29 @@ $scope.maquila = [
        }
   }
 
-        $scope.mostrarMensajeEdicionExitosa  = function(ev) {
-                
-                  $mdDialog.show(
-                    $mdDialog.alert()
-                      .parent(angular.element(document.querySelector('#popupContainer')))
-                      .clickOutsideToClose(true)
-                      .title('informacion')
-                      .textContent('Se ha guardado la orden correctamente')
-                      .ariaLabel('Mensaje')
-                      .ok('OK')                     
-                      .targetEvent(ev)
-                      
-                 ) .finally(function() {
-                      $scope.bloquearBotonGuardar =  false ; 
-                      console.log($scope.edicionRetorno.orden.lineas);
-                    //  $scope.gridOptions.data = [];
-                    //  $scope.gridOptions.data = $scope.edicionRetorno.orden.lineas;
-                    //  $scope.gridOptions.columnDefs = $scope.columnDefs; 
-                      //$scope.gridApi.core.refresh();
+      $scope.mostrarMensajeEdicionExitosa  = function(ev) {                
+              $mdDialog.show(
+                  $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('informacion')
+                    .textContent('Se ha guardado la orden correctamente')
+                    .ariaLabel('Mensaje')
+                    .ok('OK')                     
+                    .targetEvent(ev)
+                    
+               ).finally(function() {
+                    $scope.bloquearBotonGuardar =  false ; 
+                    console.log($scope.edicionRetorno.orden.lineas);
+                  //  $scope.gridOptions.data = [];
+                  //  $scope.gridOptions.data = $scope.edicionRetorno.orden.lineas;
+                  //  $scope.gridOptions.columnDefs = $scope.columnDefs; 
+                    //$scope.gridApi.core.refresh();
 
-                       $scope.gridOptions.data.length = 0;
-                        $scope.gridOptions.data.concat($scope.edicionRetorno.orden.lineas);
-                  });
-              };
+                     $scope.gridOptions.data.length = 0;
+                     $scope.gridOptions.data.concat($scope.edicionRetorno.orden.lineas);
+              });
+      };
 
       $scope.jsonEdicion = [];
       
@@ -2112,11 +1835,7 @@ $scope.maquila = [
           console.log(angular.toJson($scope.jsonEdicion, true));
           console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/save',$scope.jsonEdicion);
            $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/save',$scope.jsonEdicion)
-                    .success(function(data, status, headers, config){
-                      //alert("**** SUCCESS ****");
-                     // alert(status);
-
-                    })
+                  
                     .error(function(data, status, headers, config){
                          console.log("error ===>");
                           console.log(status);
@@ -2142,8 +1861,8 @@ $scope.maquila = [
 
       }
 
-  $scope.jsonAceptacion = [];
-      $scope.finalizarAceptacion = function(){
+    $scope.jsonAceptacion = [];
+    $scope.finalizarAceptacion = function(){
         if($scope.jsonFacturacion.numeroDocumentoOrdenCliente === undefined || 
           $scope.jsonFacturacion.numeroDocumentoOrdenCliente === null    ||
           $scope.jsonFacturacion.numeroDocumentoOrdenCliente === ""){
@@ -2168,11 +1887,7 @@ $scope.maquila = [
           console.log(angular.toJson($scope.jsonAceptacion, true));
           console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/save',$scope.jsonAceptacion);
            $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/save',$scope.jsonAceptacion)
-                    .success(function(data, status, headers, config){
-                      //alert("**** SUCCESS ****");
-                     // alert(status);
-
-                    })
+                    
                     .error(function(data, status, headers, config){
                          console.log("error ===>");
                           console.log(status);
@@ -2198,8 +1913,8 @@ $scope.maquila = [
           
       }
 
-       $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');        
-       $scope.showAdvancedMensajes = function(ev) {
+      $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');        
+      $scope.showAdvancedMensajes = function(ev) {
         
 
           var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
@@ -2250,7 +1965,7 @@ $scope.maquila = [
         }
 
 
-          $scope.showNuevoProducto = function(ev) {
+      $scope.showNuevoProducto = function(ev) {
         
 
           var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
@@ -2433,8 +2148,7 @@ $scope.maquila = [
                                             };
               console.log(angular.toJson($scope.dataNuevoProducto, true));
                $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/productos/save' , $scope.dataNuevoProducto)
-                    .success(function(data, status, headers, config){
-                    })
+                    
                     .error(function(data, status, headers, config){
                          console.log("error ===>");
                           console.log(status);
@@ -2464,11 +2178,7 @@ $scope.maquila = [
 
               /*******************carga de productos para hacer copia ***********************************/
                 $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+ $scope.jsonFacturacion.cliente+'&id_tipo_servicio='+ $scope.jsonFacturacion.tipoServicio)
-                  .success(function(data, status, headers, config){
-                    //alert("**** SUCCESS ****");
-                   // alert(status);
-
-                  })
+                  
                   .error(function(data, status, headers, config){
                        console.log("error ===>");
                         console.log(status);
@@ -2488,8 +2198,7 @@ $scope.maquila = [
               });   
               /**************************************************************/
               $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/productos/unidades-x-nivel?nivel=1')
-                    .success(function(data, status, headers, config){
-                    })
+                    
                     .error(function(data, status, headers, config){
                          console.log("error ===>");
                           console.log(status);
@@ -2506,8 +2215,7 @@ $scope.maquila = [
 
                 });   
              $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/productos/unidades-x-nivel?nivel=2')
-                    .success(function(data, status, headers, config){
-                    })
+                   
                     .error(function(data, status, headers, config){
                          console.log("error ===>");
                           console.log(status);
@@ -2525,8 +2233,7 @@ $scope.maquila = [
                 });   
 
              $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/productos/unidades-x-nivel?nivel=3')
-                    .success(function(data, status, headers, config){
-                    })
+                   
                     .error(function(data, status, headers, config){
                          console.log("error ===>");
                           console.log(status);
@@ -2583,8 +2290,7 @@ $scope.maquila = [
 
                console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinos_origenes/ciudades');
               $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinos_origenes/ciudades')
-                  .success(function(data, status, headers, config){
-                  })
+                  
                   .error(function(data, status, headers, config){
                        console.log("error ===>");
                         console.log(status);
@@ -2600,11 +2306,8 @@ $scope.maquila = [
                    
               });   
        }
-
-
-
-        /************************ventan modal para   destino origen ********************/
-        $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');        
+    /************************ventan modal para   destino origen ********************/
+       $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');        
        $scope.showDestinoOrigen = function(ev) {
         
 
@@ -2664,8 +2367,7 @@ $scope.maquila = [
 
              console.log("entra controlador destino origen  ");
               $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinos_origenes/segmentos-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente)
-                  .success(function(data, status, headers, config){
-                  })
+                 
                   .error(function(data, status, headers, config){
                        console.log("error ===>");
                         console.log(status);
@@ -2685,8 +2387,7 @@ $scope.maquila = [
              $scope.cargarDestinatario = function (){
               console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinos_origenes/destinatarios_remitentes-x-cliente-x-segmento?id_cliente='+$scope.jsonFacturacion.cliente+'&id_segmento='+$scope.jsonDestinoOrigen.segmentoId);
               $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinos_origenes/destinatarios_remitentes-x-cliente-x-segmento?id_cliente='+$scope.jsonFacturacion.cliente+'&id_segmento='+$scope.jsonDestinoOrigen.segmentoId)
-                  .success(function(data, status, headers, config){
-                  })
+                 
                   .error(function(data, status, headers, config){
                        console.log("error ===>");
                         console.log(status);
@@ -2707,8 +2408,7 @@ $scope.maquila = [
         
               console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinos_origenes/ciudades');
               $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinos_origenes/ciudades')
-                  .success(function(data, status, headers, config){
-                  })
+                  
                   .error(function(data, status, headers, config){
                        console.log("error ===>");
                         console.log(status);
@@ -2788,8 +2488,7 @@ $scope.maquila = [
                   console.log(angular.toJson($scope.nuevoDestinatario, true));
                    console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinos_origenes/save',$scope.nuevoDestinatario);                         
                   $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinos_origenes/save',$scope.nuevoDestinatario)
-                        .success(function(data, status, headers, config){
-                        })
+                     
                         .error(function(data, status, headers, config){
                              console.log("error ===>");
                               console.log(status);
@@ -2809,11 +2508,7 @@ $scope.maquila = [
                            }else{
                              
                                $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/ciudades-x-destinatario_remitente?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
-                                            .success(function(data, status, headers, config){
-                                              //alert("**** SUCCESS ****");
-                                             // alert(status);
-
-                                            })
+                                         
                                             .error(function(data, status, headers, config){
                                                  console.log("error ===>");
                                               console.log(status);

@@ -13,9 +13,7 @@
   Scopes.store('listaOrdenesCtrl', $scope);
  
   $scope.mensajeServidor =  $rootScope.mensajesServidor; 
- 
-  
-  
+   
   $scope.serverData = {};
   //$scope.serverData.ip = "inglaterra";
   //$scope.serverData.puerto = "8080";
@@ -96,18 +94,13 @@
          console.log("cerrar sesion  ok  ");
          $location.path('/login');
   }
-      $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/estados-ordenes')
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-              })
+      $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/estados-ordenes')            
               .error(function(data, status, headers, config){
                 console.log("error ===>");
                 console.log(status);
                 console.log(data);
                 console.log(headers);
-                console.log(config);
-            
+                console.log(config);            
               })
               .then(function(response){
                
@@ -244,12 +237,7 @@
 
         console.log("carga cliente lista ordenes ")
           console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio);
-         $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio)
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+         $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio)          
               .error(function(data, status, headers, config){
                 //alert("**** Verificar conexion a internet ****");
                 console.log("error ===>");
@@ -346,13 +334,6 @@
          }
           console.log($scope.cadena);
           $http.get($scope.cadena)
-
-          //$http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio=1&estadoOrden=NO_CONFIRMADA&id_usuario=2')
-                .success(function(data, status, headers, config){
-                  //alert("**** SUCCESS ****");
-                 // alert(status);
-
-                })
                 .error(function(data, status, headers, config){
                       console.log("error ===>");
                       console.log(status);
@@ -399,12 +380,7 @@
       
     /*********************************Carga los tipos de sevicio por usaurio  ****************************************************/
     console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.usuario.id)
-         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.usuario.id)
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-
-              })
+         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.usuario.id)             
               .error(function(data, status, headers, config){
                     console.log("error ===>");
                 console.log(status);
