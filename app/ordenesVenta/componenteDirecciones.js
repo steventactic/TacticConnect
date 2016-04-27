@@ -142,6 +142,7 @@ $scope.borrar = function (){
                   ];
 
   $scope.combo4= [
+                    {nombre: "" , id: ""},
                     {nombre: "SUR" , id: "SUR"},
                     {nombre: "NORTE" , id: "NORTE"},
                     {nombre: "ESTE" , id:"ESTE" },
