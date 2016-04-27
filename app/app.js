@@ -16,6 +16,7 @@ angular.module('myApp', [
   'myApp.cargueExcel',
   'myApp.corteDicermex',
   'myApp.moviles',
+  'myApp.componenteDireccion',
   'ui.grid',   
   'tactic.services',
   'ui.grid.selection',

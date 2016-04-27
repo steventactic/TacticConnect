@@ -916,9 +916,8 @@
                  </tr>
                  <tr ng-repeat="en in entregas">
                   <td style="width: 50%;">
-                  <strong>{{en.nombre}}</strong>
-                  </td>
-                                
+                    <strong>{{en.nombre}}</strong>
+                  </td>                                
                 </tr> 
               </table>
             </center>
@@ -942,7 +941,7 @@
                 </tr> 
               </table>
             </center>
-        </fieldset>
+        </fieldset>|
         <br><br>
           <fieldset class="standard" >          
             <legend>{{ 'OBSERVACIONES_GENERALES' | translate }}</legend>
@@ -950,14 +949,10 @@
                 <tr>
                   <td style="width: 100%;">
                   <strong>{{jsonEnvio.notasGenerales}}</strong>
-                  </td>
-                                
+                  </td>                                
                 </tr> 
             </table>
-
           </fieldset>
-
-        
 
               <center>
                   <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar"  ng-click="finalizarEdicion()">{{ 'GUARDAR' | translate }}</md-button>

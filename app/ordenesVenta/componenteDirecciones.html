@@ -1,0 +1,245 @@
+<div ng-cloak>
+<md-content>
+        <div layout="row">
+                <md-fab-speed-dial  ng-if="login.mostrarMenu"
+                   style="left:0%  ;width: 5%" 
+                   md-open="true"
+                    md-direction="down" class="md-fling"
+                   >
+                  <md-fab-trigger>
+                          <md-button aria-label="menu" class="md-fab md-primary">
+                            <md-icon md-svg-src="img/interface.svg"></md-icon>
+                          </md-button>
+                   </md-fab-trigger>
+
+                   <md-fab-actions>
+                    <md-button aria-label="Gestion de ordenes" href="#/listaOrdenes" class="md-fab md-primary md-mini">
+                            <md-tooltip md-direction="right">
+                                Gestion de ordenes
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/arrows.svg" aria-label="Gestion de ordenes"></md-icon>
+                    </md-button>
+                  
+                       <md-button aria-label="Crear orden" href="#/cargue" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                                Cargue
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/delivery.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                     <md-button aria-label="Crear orden" href="#/corteDicermex" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                                Corte Dicermex
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/cut.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                      <md-button aria-label="Crear orden" href="#/moviles" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                               Moviles
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/transport.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                     <md-button aria-label="Crear orden" class="md-fab md-primary md-mini" ng-click="cerrarSesion()" >
+                            <md-tooltip md-direction="right">
+                                Cerrar sesion
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/cerrarSesion.svg" aria-label="Cerrar sesion"></md-icon>
+                    </md-button>
+                
+                  
+                  </md-fab-actions>
+              </md-fab-speed-dial>
+
+            <div style="width: 94%">
+                      <md-toolbar>
+                        <div class="md-toolbar-tools" >                        
+                          <h2>
+                            <span>Direccion</span>
+                          </h2>
+                       </div>
+                     </md-toolbar>
+                      <md-content layout-padding layout-wrap>
+                          <table border="1">
+                            <tr >
+                              <td class="dir"><strong>Municipio</strong></td>
+                              <td class="dir" colspan="3">
+                                  <md-input-container class="md-block"  flex-gt-sm>                                      
+                                         <md-select  ng-model="jsonDireccion.municipio" ng-disabled="true"  >
+                                           <md-option  value="1">
+                                            Bogota
+                                          </md-option>
+                                        </md-select>
+                                  </md-input-container>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="dir" ><strong>Direccion completa</strong></td>
+                              <td  colspan="3" class="dir">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                      
+                                    <input  style="color: #333;" type="textarea"  ng-disabled="true" ng-model="direccionCompleta" >
+                                </md-input-container>
+                                 <center>
+                                   <md-button md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar"  ng-click="borrar()">Borrar</md-button>
+                                 </center>
+                              </td>
+                              <!--<td class="dir"><strong>Sentido P.V.E:</strong></td>
+                              <td class="dir"> 
+                                  <md-input-container class="md-block"  flex-gt-sm>
+                                    <md-select  ng-model="jsonDireccion.sentido">
+                                           <md-option  ng-repeat="in  in sentidos" value="{{in.id}}">
+                                            {{in.nombre}}
+                                          </md-option>
+                                    </md-select>
+                                  </md-input-container></td>
+                              </tr>-->
+                            <!--<tr>
+                              
+                              <td  colspan="4" > </td>
+                            </tr> -->
+                             <tr>
+                              
+                              <td  colspan="4" ><center><strong> Asistente Para el ingreso de la Dirección Parte Principal</strong></center> </td>
+                            </tr>
+                              <tr>
+                              
+                              <td  colspan="4" >
+                                      <center>
+                                      (Diligencie los campos requeridos que identifiquen la dirección actual; los campos que no requiera los puede dejar en blanco. Vaya verificando en el recuadro superior "Direccion Completa" su dirección)
+                                      </center>
+                               </td>
+                            </tr>
+                            <tr>
+                              <td class="dir" colspan="4">
+                                <div style="height: 50%" layout="row">
+                                    <!--Combo1-->                                  
+                                  <md-input-container class="md-block"  flex-gt-sm>
+                                    <md-select  ng-change="cambiaCombo1()" ng-model="jsonDireccion.combo1Val">
+                                           <md-option  ng-repeat="in  in combo1" value="{{in.id}}">
+                                            {{in.nombre}}
+                                          </md-option>
+                                    </md-select>
+                                  </md-input-container>    
+
+
+                                   <!--campo 2 -->
+                                  <md-input-container  class="md-block" flex-gt-sm> 
+                                    <input md-maxlength="3" ng-change="cambiaCombo1()" maxlength="3"  ng-model="jsonDireccion.campo2" >
+                                  </md-input-container>
+                                    <!--Combo2-->
+                                  <md-input-container class="md-block"  flex-gt-sm>
+                                    <md-select  ng-change="cambiaCombo1()" ng-model="jsonDireccion.combo2">
+                                           <md-option  ng-repeat="in  in combo2" value="{{in.id}}">
+                                            {{in.nombre}}
+                                          </md-option>
+                                    </md-select>
+                                  </md-input-container>    
+                                    <!--Combo3-->
+                                  <md-input-container class="md-block"  flex-gt-sm>
+                                    <md-select  ng-change="cambiaCombo1()" ng-model="jsonDireccion.combo3">
+                                           <md-option  ng-repeat="in  in combo3" value="{{in.id}}">
+                                            {{in.nombre}}
+                                          </md-option>
+                                    </md-select>
+                                  </md-input-container>    
+                                    <!--Combo4-->
+                                  <md-input-container class="md-block"  flex-gt-sm>
+                                    <md-select  ng-change="cambiaCombo1()" ng-model="jsonDireccion.combo4">
+                                           <md-option  ng-repeat="in  in combo2" value="{{in.id}}">
+                                            {{in.nombre}}
+                                          </md-option>
+                                    </md-select>
+                                  </md-input-container>    
+                                    <!--Combo5-->
+                                  <md-input-container class="md-block"  flex-gt-sm>
+                                    <md-select ng-change="cambiaCombo1()" ng-model="jsonDireccion.combo5">
+                                           <md-option  ng-repeat="in  in combo4" value="{{in.id}}">
+                                            {{in.nombre}}
+                                          </md-option>
+                                    </md-select>
+                                  </md-input-container>  
+                                  <md-input-container class="md-block"  flex-gt-sm>
+                                    
+                                      <label style="color: black; padding-left: 50px;">
+                                      #  </label>
+                                   
+                                   </md-input-container>
+                                  
+                                    <!--campo 7 -->
+                                    <md-input-container  class="md-block" flex-gt-sm> 
+                                      <input  ng-change="cambiaCombo1()" ng-model="jsonDireccion.campo7" >
+                                    </md-input-container>  
+                                    <!--Combo7-->
+                                  <md-input-container class="md-block"  flex-gt-sm>
+                                    <md-select ng-change="cambiaCombo1()" ng-model="jsonDireccion.combo7">
+                                           <md-option  ng-repeat="in  in combo2" value="{{in.id}}">
+                                            {{in.nombre}}
+                                          </md-option>
+                                    </md-select>
+                                  </md-input-container>    
+                                    
+                                    <md-input-container class="md-block"  flex-gt-sm>
+                                    
+                                    <label style="color: black; padding-left: 50px;">_  </label>
+                                   
+                                   </md-input-container>  
+                                   <!--campo 9 -->
+                                    <md-input-container  class="md-block" flex-gt-sm> 
+                                      <input  ng-change="cambiaCombo1()" ng-model="jsonDireccion.campo8" >
+                                    </md-input-container> 
+                                    <!--Combo10-->
+                                  <md-input-container class="md-block"  flex-gt-sm>
+                                    <md-select  ng-change="cambiaCombo1()"  ng-model="jsonDireccion.combo10">
+                                           <md-option  ng-repeat="in  in combo4" value="{{in.id}}">
+                                            {{in.nombre}}
+                                          </md-option>
+                                    </md-select>
+                                  </md-input-container>    
+                                </div>                                
+                              </td>
+                            </tr>
+                           <!-- <tr>
+                              <td colspan="4"></td>
+                            </tr>-->
+                            <tr>
+                              <td colspan="4">
+                                (Seleccione el tipo en la lista desplegable inferior, escriba en el recuadro el detalle y pulse el botón "Adicionar otro complemento". Repita este proceso hasta tener toda la parte complementaria de la dirección y vaya verificando en el recuadro superior "Dirección Completa" su dirección)
+                              </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" >
+                                  <div  style="height: 50%" layout ="row">
+                                    <md-input-container class="md-block"  flex-gt-sm>
+                                    <md-select  ng-model="jsonDireccion.complemento">
+                                           <md-option  ng-repeat="in  in complementos" value="{{in.id}}">
+                                            {{in.nombre}}
+                                          </md-option>
+                                    </md-select>
+                                  </md-input-container>
+                                    <md-input-container  class="md-block" flex-gt-sm> 
+                                    <input  ng-model="jsonDireccion.textoComplemento">
+                                    </md-input-container> 
+                                    <md-button style="height: 50%;" md-no-ink class="md-raised md-primary" ng-disabled="bloquearBotonGuardar" ng-click="agregarComplemento()" >Adicionar otro complemento</md-button>
+                                  </div>                             
+                                </td>
+                              </td>
+                           
+                            
+
+                          </table>
+                      </md-content>
+
+
+                
+
+                  <md-button md-no-ink class="md-raised  md-primary btn-block"   ng-click="envioData()">Enviar </md-button>
+             
+                
+
+
+           </div>
+
+      
+        </div>
+</md-content>
+      
+</div>

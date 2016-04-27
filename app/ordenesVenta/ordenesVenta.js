@@ -289,7 +289,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
               
               .error(function(data, status, headers, config){
                // alert("**** Verificar conexion a internet ****");
-                   console.log("error ===>");
+                console.log("error ===>");
                 console.log(status);
                 console.log(data);
                 console.log(headers);
@@ -346,7 +346,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
               
               .error(function(data, status, headers, config){
                // alert("**** Verificar conexion a internet ****");
-                   console.log("error ===>");
+                console.log("error ===>");
                 console.log(status);
                 console.log(data);
                 console.log(headers);
@@ -379,7 +379,6 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
       //$scope.dataTabs.tabProductos = true;      
     }
     
-
     /*************************Objeto que  alamance la  io y el  puerto al cual conectarme****************************/
     $scope.serverData = {};
     $scope.serverData.ip = hostName;
@@ -394,8 +393,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
         
         $scope.cargaTiposServicio= function(val){
 
-              $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.login.id)
-                   
+              $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.login.id)                   
                     .error(function(data, status, headers, config){
                       console.log("error ===>");
                       console.log(status);
@@ -432,14 +430,9 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                     $scope.admiteBodegasDestino  = 1 ; 
                                       console.log("Bodega como origen true");
                                   }
-
-                            }
-                          
-
+                            }                          
                         }
-
                      }
-
                });  
       }   
 
@@ -455,7 +448,6 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
       $scope.cargaClientes = function(val){
         
         $scope.jsonFacturacion.tipoServicio  = val;
-
      
          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/clientes-x-usuario?id_usuario='+$scope.login.id+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
              

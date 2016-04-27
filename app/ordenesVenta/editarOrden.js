@@ -2510,7 +2510,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                                $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/ciudades-x-destinatario_remitente?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
                                          
                                             .error(function(data, status, headers, config){
-                                                 console.log("error ===>");
+                                              console.log("error ===>");
                                               console.log(status);
                                               console.log(data);
                                               console.log(headers);
