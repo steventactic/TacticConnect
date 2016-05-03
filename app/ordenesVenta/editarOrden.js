@@ -352,7 +352,8 @@ angular.module('myApp.editarOrden', ['ngRoute'])
     var idUnidadMedidaEdicion = "";
     var nombreUnidadMedidaEdicion = "";
     var codigoProducto = "";
-    var cantidadResta  = ""  ;
+    var cantidadResta  = "";
+    var  valorTotalLineas = "";
     
     var ciudadNombreAlterno = "";
     var codigoBodegaAlterno = "";
@@ -676,14 +677,20 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                      // var promise = $q.defer();
                    $scope.bloquearBotonGuardar =  true ; 
                      console.log(rowEntity);
+                 
+
                      var promise = $q.defer();
+
                      $scope.productoAddTabla = {};
+                     $scope.productoAddTabla.idLineaOrden  = rowEntity.idLineaOrden;
+                     $scope.productoAddTabla.numeroItem = rowEntity.numeroItem;
                      $scope.productoAddTabla.linea = rowEntity.idLineaOrden,
-                     $scope.productoAddTabla.producto = rowEntity.codigoProducto
+              
                      $scope.productoAddTabla.cantidad = rowEntity.cantidad ; 
                      $scope.valorTotalLineas += parseInt(rowEntity.valorDeclaradoPorUnidad); 
-                     $scope.valorTotalLineasTexto = $scope.obtenerValorMascara($scope.valorTotalLineas) ;
-                     
+                     valorTotalLineas = $scope.valorTotalLineas ; 
+                     $scope.valorTotalLineasTexto = $scope.obtenerValorMascara(valorTotalLineas) ;
+                     //$scope.cantidadTotal += rowEntity.cantidad ; 
                      $scope.productoAddTabla.unidad = rowEntity.unidad ; 
                      $scope.productoAddTabla.lote = rowEntity.lote;
                      $scope.productoAddTabla.valorVenta = rowEntity.valorDeclaradoPorUnidad;
@@ -698,10 +705,96 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                      rowEntity.codigoBodega =  "TL-BOG-SIB-01";
                      rowEntity.nombreBodega =  "BOG-CEDI SIBERIA 1";
                      rowEntity.idUsuario =parseInt($scope.login.id) ;
-                     rowEntity.usuario =  'juanf';                
+                     rowEntity.usuario =  'juanf';     
 
-                    console.log(angular.toJson( $scope.productoAddTabla, true));
+                    $scope.productoAddTabla.producto = rowEntity.producto;
+                     $scope.productoAddTabla.codigoProducto = rowEntity.codigoProducto;  
+
+
+                      $scope.jsonEntregaProducto=  [{
+                                             idLineaOrden:$scope.idLineaOrden,
+                                             idOrden :parseInt($scope.ordenSeleccionada.idOrden),
+                                             numeroItem :  $scope.productoAddTabla.numeroItem,
+                                             producto :  $scope.productoAddTabla.producto  , 
+                                             codigoProducto :parseInt($scope.productoAddTabla.codigoProducto) ,
+                                             nombreProducto : dataProdSplit[0] ,                                              
+                                             cantidad :parseInt($scope.productoAddTabla.cantidad),
+                                             unidad : 4 ,//parseInt($scope.jsonProductoAdd.unidad),
+                                            
+                                             bodega :null,
+                                           
+                                           
+                                             lote :$scope.productoAddTabla.lote ,
+                                             notas :"",
+                                             idUsuario:parseInt($scope.login.id),
+                                             usuario:$scope.login.usuario ,
+                                             valorDeclaradoPorUnidad : rowEntity.valorDeclaradoPorUnidad
+                                        }];         
+
+                    console.log(angular.toJson( $scope.jsonEntregaProducto, true));
                     promise.resolve(rowEntity);
+
+                   
+        console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
+
+        $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
+              
+              .error(function(data, status, headers, config){
+                console.log("error ===>");
+                console.log(status);
+                console.log(data);
+                console.log(headers);
+                console.log(config);
+            
+              })
+              .then(function(response){
+              
+              $scope.jsonProductoRetorno= response.data;
+              console.log("Data");
+              console.log($scope.jsonProductoRetorno) ; 
+                if ($scope.jsonProductoRetorno.mensajes.severidadMaxima != 'INFO') {
+                  alert("error" + $scope.jsonProductoRetorno.mensajes.mensajes[0].texto )
+
+                 }else{
+                       //$scope.imprimir();
+                       console.log("json cargado retorno  productos ===> ");
+                       console.log($scope.jsonProductoRetorno.orden.lineas);
+
+                        for (var i = 0; i < $scope.jsonProductoRetorno.orden.lineas.length; i++) {
+                  
+                               if($scope.jsonProductoRetorno.orden.lineas[i].valorDeclaradoPorUnidad  !=  null){
+                                  $rootScope.mostrarValorDeclarado = false;
+
+                               }
+
+                            }
+                            if($rootScope.mostrarValorDeclarado){
+                              console.log("NO hay valor declarado en ninguna linea");
+                            }else{
+                              console.log("Ya existe un valor declarado en la linea")
+
+                            }
+
+
+
+                       $rootScope.contarProductosPorUnidad($scope.jsonProductoRetorno.orden.lineas);
+                       
+                          $scope.cantidadTotal   = 0 ; 
+                       for (var i = 0; i < $scope.jsonProductoRetorno.orden.lineas.length ; i++) {
+                          $scope.cantidadTotal += $scope.jsonProductoRetorno.orden.lineas[i].cantidad ; 
+                       }
+                       console.log("cantidad total  = " + $scope.cantidadTotal);
+
+                       $scope.gridOptions.data = [];
+                       $scope.gridOptions.data = $scope.jsonProductoRetorno.orden.lineas;
+                    
+              }
+           
+
+             });  
+
+
+
                     $scope.gridApi.rowEdit.setSavePromise( rowEntity, promise.promise );
                     // $rootScope.contarProductosPorUnidad();
                     $scope.bloquearBotonGuardar =  false ; 
@@ -1316,8 +1409,11 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                   $scope.gridOptions.data = [] ;
                   $scope.gridOptions.data = $scope.respuestaEliminacion.orden.lineas ;
                   $rootScope.contarProductosPorUnidad($scope.respuestaEliminacion.orden.lineas);
-                  $scope.valorTotalLineas -= parseInt(cantidadResta); 
-                  $scope.valorTotalLineasTexto = $scope.obtenerValorMascara($scope.valorTotalLineas) ;
+                  
+                 // alert("aqui " + valorTotalLineas + " - "  +  cantidadResta ) ; 
+                  $scope.valorTotalLineas = parseInt(valorTotalLineas)  -  parseInt(cantidadResta); 
+                  valorTotalLineas = parseInt(valorTotalLineas)  -  parseInt(cantidadResta); 
+                  $scope.valorTotalLineasTexto = $scope.obtenerValorMascara(valorTotalLineas) ;
                 }
 
           });    
