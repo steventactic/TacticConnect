@@ -351,6 +351,8 @@ angular.module('myApp.editarOrden', ['ngRoute'])
     var nombreProducto = "";
     var idUnidadMedidaEdicion = "";
     var nombreUnidadMedidaEdicion = "";
+    var codigoProducto = "";
+    var cantidadResta  = ""  ;
     
     var ciudadNombreAlterno = "";
     var codigoBodegaAlterno = "";
@@ -522,6 +524,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
            $scope.cargaFormasDePago();
            $rootScope.contarProductosPorUnidad($scope.lineas);
            $scope.gridOptions ={};
+           $scope.gridOptionsDisponibilidad ={};
 
            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+$scope.jsonEdicion.datosFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonEdicion.datosFacturacion.tipoServicio)                  
               .error(function(data, status, headers, config){
@@ -547,13 +550,64 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                    }
             }); 
 
+
             console.log("Data combo");
             console.log($scope.dataCombo);
               /****************CArga tablas ***********************/
+               $scope.columnDefsDisponibilidad = [
+                    {field:'ciudad', displayName: 'Ciudad',visible: true , width : '50%',enableColumnResizing: false , enableCellEdit: false},
+                    {field:'cantidad', displayName: 'Disponible',visible: true , width : '50%',enableColumnResizing: false , enableCellEdit: false}
+
+               ];
+
+
+      $scope.getDisponibles =function (id,cliente){
+
+        $scope.clienteData = Scopes.get('listaOrdenesCtrl').clientes ; 
+        console.log($scope.clienteData);          
+        console.log("cliente");
+        console.log(cliente);        
+        console.log("id");
+        console.log(id);        
+        $scope.valor = ""  ; 
+        for (var i = 0; i < $scope.clienteData.length ;  i++) {
+           if(cliente === $scope.clienteData[i].codigo){
+              $scope.valor = $scope.clienteData[i].nombreComercial
+           }   
+        }
+        console.log("valor  para el envio")
+        console.log($scope.valor);
+
+        console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/serviciosTactic/consultaDisponibles?idProducto='+id+"&nombreCliente="+$scope.valor);
+        $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/serviciosTactic/consultaDisponibles?idProducto='+id+"&nombreCliente="+$scope.valor)
+      //$http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/clientes-x-usuario?id_usuario='+$scope.login.id)
               
+              .error(function(data, status, headers, config){
+                
+                console.log("error ===>");
+                console.log(status);
+                console.log(data);
+                console.log(headers);
+                console.log(config);
+            
+              })
+              .then(function(response){
+               
+               $scope.disponiblesProducto = response.data;
+               console.log("json cargado disponibles producto ===> " );
+               console.log($scope.disponiblesProducto) ;
+               $scope.gridOptionsDisponibilidad.data =  []; 
+              $scope.gridOptionsDisponibilidad.data =  $scope.disponiblesProducto ; 
+
+          }); 
+
+
+      }   
+      $scope.editarProducto = {}; 
+      $scope.editarProducto.prod = "";
             $scope.columnDefs= [
-                                  {field:'numeroItem', displayName: 'Línea',visible: true , width : '5%',enableColumnResizing: false , enableCellEdit: false},
-                                  {field:'codigoProducto', displayName: 'Producto' ,visible: true , width : '35%',enableColumnResizing: false,enableCellEdit: true,editableCellTemplate: 'ui-grid/dropdownEditor'  ,cellFilter: 'productoFilter: this ' },   
+                                  {field:'numeroItem', displayName: 'Línea',visible: true , width : '8%',enableColumnResizing: false , enableCellEdit: false},
+                                  {field:'codigoProducto', displayName: 'Producto' ,visible: true , width : '44%',enableColumnResizing: false,enableCellEdit: true,editableCellTemplate: 'ui-grid/dropdownEditor'  ,cellFilter: 'productoFilter: this ' },                                   
                                   {field:'cantidad', displayName: 'Cantidad' ,visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true, cellClass:'derecha' },                                                         
                                   {field:'unidad', displayName: 'Unidad',visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true , editableCellTemplate: 'ui-grid/dropdownEditor',
                                        editDropdownOptionsArray: [
@@ -562,7 +616,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                                     ] , cellFilter: 'medidaFilter:this' },
                                   {field:'codigoUnidad', displayName: 'Nombre unidad',visible: false,enableColumnResizing: false,enableCellEdit: true},                                                            
                                   {field:'lote', displayName: 'Lote/Serial' ,visible: true , width : '10%',enableColumnResizing: false,enableCellEdit: true} ,                                                         
-                                  {field:'valorDeclaradoPorUnidad', displayName: 'Valor venta',visible: true,enableColumnResizing: false,enableCellEdit: true ,cellFilter: 'currencyFilter:this'  ,cellClass:'derecha'  },                                         
+                                  {field:'valorDeclaradoPorUnidad', displayName: 'Valor venta', width : '15%' , visible: true,enableColumnResizing: false,enableCellEdit: true ,cellFilter: 'currencyFilter:this'  ,cellClass:'derecha'  },                                         
                                   {field:'valorVenta', displayName: 'Precio de venta unitario',visible: false,enableColumnResizing: false,enableCellEdit: true ,cellClass:'derecha'},
                                   {field:'nombreProducto', displayName: 'Nombre producto',visible: false , width : '12%',enableColumnResizing: false,enableCellEdit: true},                                                            
                                   {field:'codigoUnidadAlterno', displayName: 'Unidad alterno',visible: false, width : '16%',enableColumnResizing: false,enableCellEdit: true},                                                      
@@ -598,11 +652,20 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                       };*/
                   $scope.rowDblClick = function(){
                     $scope.editarLinea();
-                  }            
-                  $scope.gridOptions = {
+                  }  
+                   $scope.gridOptionsDisponibilidad = {
                                     // enableRowHeaderSelection: false,
                               //selectedItems: $scope.selections,
                               //enableRowSelection: true,
+                               enableColumnResize: true,
+                               columnDefs : $scope.columnDefsDisponibilidad
+                              //enableRowSelection: true , 
+                             // rowTemplate: rowTemplate()     
+                  }          
+                  $scope.gridOptions = {
+                                    // enableRowHeaderSelection: false,
+                              //selectedItems: $scope.selections,
+                              enableRowSelection: true,
                                enableColumnResize: true,
                                columnDefs : $scope.columnDefs
                               //enableRowSelection: true , 
@@ -618,9 +681,12 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                      $scope.productoAddTabla.linea = rowEntity.idLineaOrden,
                      $scope.productoAddTabla.producto = rowEntity.codigoProducto
                      $scope.productoAddTabla.cantidad = rowEntity.cantidad ; 
+                     $scope.valorTotalLineas += parseInt(rowEntity.valorDeclaradoPorUnidad); 
+                     $scope.valorTotalLineasTexto = $scope.obtenerValorMascara($scope.valorTotalLineas) ;
+                     
                      $scope.productoAddTabla.unidad = rowEntity.unidad ; 
                      $scope.productoAddTabla.lote = rowEntity.lote;
-                     $scope.productoAddTabla.valorVenta = rowEntity.valorVenta;
+                     $scope.productoAddTabla.valorVenta = rowEntity.valorDeclaradoPorUnidad;
                      rowEntity.idOrden =  parseInt($scope.ordenSeleccionada.idOrden);
                      var dataProdSplit =  rowEntity.codigoProducto.split("@");
                      rowEntity.producto=  parseInt(dataProdSplit[1]);
@@ -643,11 +709,40 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                     
 
                   }
+                     $scope.gridOptionsDisponibilidad.onRegisterApi = function( gridApi ) {
 
+
+                     }
                  $scope.gridOptions.multiSelect = false;
                  $scope.gridOptions.onRegisterApi = function( gridApi ) {
-                            $scope.gridApi = gridApi;                                  
+                            $scope.gridApi = gridApi; 
+                             $scope.gridApi.selection.on.rowSelectionChanged($scope, function(row){                             
+                               idLineaOrden =  row.entity.idLineaOrden ; 
+                               $scope.mostrarEliminar =  1;
+                               cantidadResta = row.entity.valorDeclaradoPorUnidad ; 
+                               codigoProducto =row.entity.codigoProducto                                                      
+                               $scope.getDisponibles(codigoProducto ,$scope.ordenSeleccionada.cliente);
+                            });
+                               gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+                                  if( colDef.name === 'codigoProducto' ){
+                                    console.log(rowEntity);
+                                    var dataProdSplit1 =  rowEntity.codigoProducto.split("|");
+                                    var dataCodProd=  dataProdSplit1[1].split("@");
+                                    //alert("entro codigo de producto "+ dataCodProd[0]);
+                                    $scope.getDisponibles(dataCodProd[0].trim() ,$scope.ordenSeleccionada.cliente);
+                                    //rowEntity.cantidad = 666; 
+                                    /*if( newValue === 1 ){
+                                      rowEntity.sizeOptions = $scope.maleSizeDropdownOptions;
+                                    } else {
+                                      rowEntity.sizeOptions = $scope.femaleSizeDropdownOptions;
+                                    }*/
+                                  }
+                                });
+
+
                             gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+
+                           
                           /*$scope.gridApi.selection.on.rowSelectionChanged($scope, function(row){
                               console.log("entra");
                               console.log( row.entity.idOrden);
@@ -1037,6 +1132,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                                                             }
                                                         );
                }
+              
                $scope.gridOptions.columnDefs[1].editDropdownIdLabel  = 'value';
                $scope.gridOptions.columnDefs[1].editDropdownOptionsArray =   $scope.dataCombo;
           });    
@@ -1220,6 +1316,8 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                   $scope.gridOptions.data = [] ;
                   $scope.gridOptions.data = $scope.respuestaEliminacion.orden.lineas ;
                   $rootScope.contarProductosPorUnidad($scope.respuestaEliminacion.orden.lineas);
+                  $scope.valorTotalLineas -= parseInt(cantidadResta); 
+                  $scope.valorTotalLineasTexto = $scope.obtenerValorMascara($scope.valorTotalLineas) ;
                 }
 
           });    

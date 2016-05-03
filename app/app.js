@@ -27,10 +27,9 @@ angular.module('myApp', [
   'pascalprecht.translate',
   'base64'
    
+]).config(['$routeProvider', '$mdThemingProvider','$translateProvider','$httpProvider', function($routeProvider ,$mdThemingProvider ,$translateProvider ,$httpProvider) {
 
-]).config(['$routeProvider', '$mdThemingProvider','$translateProvider', function($routeProvider ,$mdThemingProvider ,$translateProvider) {
-
-
+    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   $translateProvider.useStaticFilesLoader({
     prefix: './languages/',
     suffix: '.json'

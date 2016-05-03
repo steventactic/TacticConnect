@@ -65,10 +65,9 @@ angular.module('myApp.componenteDireccion', ['ngRoute'])
   }
  
  $scope.jsonDireccion.textoComplemento = ""; 
-$scope.agregarComplemento = function (){
-
-  $scope.direccionCompleta  +=  " "+$scope.jsonDireccion.complemento  +" "+   
-                                  $scope.jsonDireccion.textoComplemento  + " ";
+  $scope.agregarComplemento = function (){
+  $scope.direccionCompleta  +=  " " + $scope.jsonDireccion.complemento  + " " +   
+                                      $scope.jsonDireccion.textoComplemento  + " ";
   $scope.jsonDireccion.textoComplemento = ""; 
   $scope.jsonDireccion.complemento = ""; 
 }

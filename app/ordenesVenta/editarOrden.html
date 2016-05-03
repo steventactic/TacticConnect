@@ -789,14 +789,21 @@
                           <td>{{pro.notas}}</td>
                         </tr> ui-grid-selection
                   </table>-->
-              <div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav  style="width:100%;height:400px;" class="grid">
-                <div class="watermark" ng-show="!gridOptions.data.length">No se encontraron resultados</div>    
+                  <div layout="row">
+                    <div ui-grid="gridOptions"  ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection style="width:83%;height:400px;" class="grid">
+                     <div class="watermark" ng-show="!gridOptions.data.length">No se encontraron   resultados</div>    
                 </div>
+                <div ui-grid="gridOptionsDisponibilidad" ui-grid-edit ui-grid-row-edit ui-grid-cellNav  style="width:17%;height:400px;" class="grid">
+                <div class="watermark" ng-show="!gridOptionsDisponibilidad.data.length"><h3>No se ha seleccionado producto</h3></div>    
+                </div>      
 
-                <input ng-model="photo"
+                  </div>
+              
+
+                <!--<input ng-model="photo"
        onchange="angular.element(this).scope().file_changed(this)"
        type="file" accept="image/*" />
-       <img src="{{prev_img}}">
+       <img src="{{prev_img}}">-->
 
 
                      <center>
