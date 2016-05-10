@@ -29,7 +29,7 @@ angular.module('myApp', [
    
 ]).config(['$routeProvider', '$mdThemingProvider','$translateProvider','$httpProvider', function($routeProvider ,$mdThemingProvider ,$translateProvider ,$httpProvider) {
 
-    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+ //   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   $translateProvider.useStaticFilesLoader({
     prefix: './languages/',
     suffix: '.json'

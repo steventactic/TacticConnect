@@ -45,7 +45,7 @@ angular.module('myApp.corteDicermex', ['ngRoute'])
           console.log("json envio") ; 
           console.log (angular.toJson($scope.json, true));
           $http.defaults.useXDomain = true;
-          $http.post('http://'+hostName+':'+puerto+'/satelite/cpr/cortes/corte-ordenes-x-fecha' , $scope.json  )
+          $http.post('http://'+hostName+':'+puerto+'/'+contexto+'/cpr/cortes/corte-ordenes-x-fecha' , $scope.json  )
               .success(function(data, status, headers, config){
                 //alert("**** SUCCESS ****");
                // alert(status);

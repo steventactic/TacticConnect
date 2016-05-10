@@ -366,7 +366,7 @@
           </div>
 
           <div layout="row">
-             <div layout="column" style="width: 40%">
+             <div layout="column" style="width: 30%">
           
                 <label>{{ 'CUANDO_NECESITA_QUE_SEA_ENTREGADO' | translate }}</label>
                   <br>
@@ -376,9 +376,11 @@
                   <md-tooltip md-direction="bottom">
                          {{ 'CUANDO_NECESITA_QUE_SEA_ENTREGADO' | translate }}
                  </md-tooltip>
-                  <md-radio-button value="3" ng-click=" mostrarMensajeFechaNoConfirmada()"> {{ 'SIN_CONFIRMAR' | translate }}    </md-radio-button> 
-                  <md-radio-button value="1" > {{ 'RANGO' | translate }}    </md-radio-button>
-                  <md-radio-button value="0">  {{ 'FIJO' | translate }}      </md-radio-button> 
+              <md-radio-button value="3" ng-click=" mostrarMensajeFechaNoConfirmada()"> {{ 'SIN_CONFIRMAR' | translate }}  </md-radio-button> 
+                  <md-radio-button value="1" > {{ 'RANGO' | translate }}    
+                  </md-radio-button>
+                  <md-radio-button value="0">  {{ 'FIJO' | translate }}      
+                  </md-radio-button> 
                            
               </md-radio-group>
             
@@ -388,23 +390,26 @@
                  <!--ENTREGAR PREFERIBLEMTEN-->
                   <div layout="column" style="width: 30%">
                 <div class="md-block" ng-if="data.info == 0">
+                <br><br>
                    <label> {{ 'ENTREGAR_PREFERIBLEMENTE' | translate }}</label>
                       <md-tooltip md-direction="bottom">
                           {{ 'CUANDO_NECESITA_QUE_SEA_ENTREGADO' | translate }}
                       </md-tooltip>
-
-                  <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"></md-datepicker>
-                </div >
+                  <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"  md-min-date="minDate" md-max-date="maxDate"  >
+                  </md-datepicker>
+                </div>
               
               <!--Rango de fechas -->
                 <div class="md-block" ng-if="data.info == 1">
                 <md-tooltip md-direction="bottom">
                          {{ 'CUANDO_NECESITA_QUE_SEA_ENTREGADO' | translate }}
                  </md-tooltip>
+                 <br><br>
                    <label>{{ 'DESDE' | translate }}</label>
-                  <md-datepicker ng-model="jsonEntrega.fechaMinima" md-placeholder="Enter date"></md-datepicker>
+                   
+                  <md-datepicker ng-model="jsonEntrega.fechaMinima" md-placeholder="Enter date"   md-min-date="minDate" md-max-date="maxDate" ></md-datepicker>
                    <label>{{ 'HASTA' | translate }}</label>
-                  <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"></md-datepicker>
+                  <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"   md-min-date="minDate" md-max-date="maxDate"></md-datepicker>
                 </div>
                 </div>
                </div>
@@ -826,7 +831,7 @@
         <fieldset class="standard" >          
             <legend>{{ 'INFORMACION_BILL_TO' | translate }}</legend>
             <center>
-              <table border="1">
+              <table class="tablaResumen" border="1">
                 <tr>
                   <td>
                     <strong>{{ 'CANAL_DE_VENTA' | translate }}:</strong>  {{jsonFacturacion.nombreSegmento}}  
@@ -863,10 +868,10 @@
         <fieldset class="standard" >          
             <legend>{{ 'INFORMACION_SHIP_TO' | translate }}</legend>
             <center>
-              <table border="1">
+              <table class="tablaResumen" border="1">
                 <tr>
                   <td>
-                    <strong>{{ 'CIUDAD' | translate }}:</strong>{{jsonEnvio.ciudad}}
+                    <strong>{{ 'CIUDAD' | translate }}:</strong>{{jsonEnvio.ciudadNombreAlterno}}
                   </td>
                   <td>
                     <strong>{{ 'PUNTO_DESTINO' | translate }}:</strong>{{jsonEnvio.destino}}
@@ -897,13 +902,13 @@
         <fieldset class="standard" >          
             <legend>{{ 'INFORMACION_ENTREGA' | translate }}</legend>
             <center>
-              <table border="1">
+              <table class="tablaResumen" border="1">
                  <tr>
                   <td>
-                    <strong>{{ 'FECHA' | translate }}:</strong>{{jsonEnvio.ciudad}}
+                    <strong>{{ 'FECHA' | translate }}:</strong>{{jsonEntrega.fechaTexto}}
                   </td>
                   <td>
-                    <strong>{{ 'JORNADA' | translate }}:</strong>{{jsonEnvio.jornada}}
+                    <strong>{{ 'JORNADA' | translate }}:</strong>{{jsonEntrega.horaMinima}}-{{jsonEntrega.horaMaxima}}
                   </td>
                   
                 </tr> 
@@ -912,10 +917,10 @@
         </fieldset>
         <br>
         <br>
-         <fieldset class="standard" >          
+         <fieldset class="standard" ng-show="false" >          
             <legend>{{ 'REQUERIMIENTOS_ENTREGA' | translate }}</legend>
             <center>
-              <table border="1">
+              <table class="tablaResumen" border="1">
                  <tr>
                   <td>
                     <strong>{{ 'NOTAS' | translate }} : </strong>{{jsonEnvio.notasRequerimientosEntrega}}
@@ -931,10 +936,10 @@
         </fieldset>
         <br>
         <br>
-        <fieldset class="standard" >          
+        <fieldset class="standard" ng-show="false" >          
             <legend>{{ 'REQUERIMIENTOS_MAQUILA' | translate }}</legend>
             <center>
-              <table border="1">
+              <table class="tablaResumen" border="1">
               <tr>
                   <td>
                     <strong>{{ 'NOTAS' | translate }}  : </strong>{{jsonEnvio.notasRequerimientosMaquila}}
@@ -948,11 +953,11 @@
                 </tr> 
               </table>
             </center>
-        </fieldset>|
-        <br><br>
+        </fieldset>
+  
           <fieldset class="standard" >          
             <legend>{{ 'OBSERVACIONES_GENERALES' | translate }}</legend>
-            <table border="1">
+            <table class="tablaResumen" border="1">
                 <tr>
                   <td style="width: 100%;">
                   <strong>{{jsonEnvio.notasGenerales}}</strong>

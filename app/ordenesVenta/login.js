@@ -15,6 +15,16 @@ angular.module('myApp.login', ['ngRoute'])
       $scope.login = {};   
       $scope.login.mostrarMenu = false ;
    
+    //var t  = $location.path($location.path() + '/getusers');
+    //alert($location.absUrl().substr(0, $location.absUrl().lastIndexOf("#")) + "/getusers");
+    //alert($location.absUrl());
+    //alert($location.host());
+    //alert($location.path());
+    //alert($location.port());
+    //alert($location.protocol());
+    var t  = $location.protocol()+"://"+$location.host()+":"+$location.port();
+    //alert(t);
+     
 
 
       
@@ -60,9 +70,11 @@ angular.module('myApp.login', ['ngRoute'])
  
     $scope.login =function(){
 
-              console.log('http://'+hostName+':'+puerto+'/satelite/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
+    console.log('http://'+hostName+':'+puerto+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
     $http.defaults.useXDomain = true;
-        $http.get('http://'+hostName+':'+puerto+'/satelite/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
+    $http.get('http://'+hostName+':'+puerto+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
+    //alert(t+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
+   // $http.get(t+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
               .success(function(data, status, headers, config){
                 //alert("**** SUCCESS ****");
                // alert(status);

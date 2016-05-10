@@ -39,7 +39,7 @@ angular.module('myApp.moviles', ['ngRoute'])
           
           
           $http.defaults.useXDomain = true;
-          $http.post('http://'+hostName+':'+puerto+'/satelite/cpr/moviles/save?id_movil='+$scope.data.id+'&numero_placa='+$scope.data.placa)
+          $http.post('http://'+hostName+':'+puerto+'/'+contexto+'/cpr/moviles/save?id_movil='+$scope.data.id+'&numero_placa='+$scope.data.placa)
               .success(function(data, status, headers, config){
                 //alert("**** SUCCESS ****");
                // alert(status);
@@ -72,7 +72,7 @@ angular.module('myApp.moviles', ['ngRoute'])
           
           
           $http.defaults.useXDomain = true;
-          $http.get('http://'+hostName+':'+puerto+'/satelite/cpr/moviles')
+          $http.get('http://'+hostName+':'+puerto+'/'+contexto+'/cpr/moviles')
               .success(function(data, status, headers, config){
                 //alert("**** SUCCESS ****");
                // alert(status);

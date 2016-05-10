@@ -58,9 +58,9 @@ angular.module('myApp.cargue', ['ngRoute'])
                           
       console.log("json de envio  cargue "); 
       console.log(angular.toJson($scope.jsonCargue, true));
-      console.log('http://'+hostName+':'+puerto+'/satelite/cpr/cortes/corte')
+      console.log('http://'+hostName+':'+puerto+'/'+contexto+'/cpr/cortes/corte')
       $http.defaults.useXDomain = true;
-        $http.post('http://'+hostName+':'+puerto+'/satelite/cpr/cortes/corte' , $scope.jsonCargue)
+        $http.post('http://'+hostName+':'+puerto+'/'+contexto+'/cpr/cortes/corte' , $scope.jsonCargue)
               .success(function(data, status, headers, config){
                 //alert("**** SUCCESS ****");
                // alert(status);

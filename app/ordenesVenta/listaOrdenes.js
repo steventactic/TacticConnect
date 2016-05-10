@@ -12,8 +12,7 @@
   .controller('listaOrdenesCtrl', [ '$scope', 'datatable', '$location','$http','Scopes','$mdDialog','$mdMedia','$rootScope','$mdToast',function($scope   ,datatable ,$location ,$http ,Scopes,$mdDialog,$mdMedia ,$rootScope  , $mdToast ) {
   Scopes.store('listaOrdenesCtrl', $scope);
  
-  $scope.mensajeServidor =  $rootScope.mensajesServidor; 
-   
+  $scope.mensajeServidor =  $rootScope.mensajesServidor;    
   $scope.serverData = {};
   //$scope.serverData.ip = "inglaterra";
   //$scope.serverData.puerto = "8080";
@@ -26,8 +25,6 @@
   $scope.datos.verOpciones = true;
   $scope.jsonListaOrdenes= {};
   $scope.jsonListaOrdenes.idCliente = 0;
-
-  
 
 
   if(window.localStorage.getItem("usuario") === "" ||
@@ -76,14 +73,10 @@
           template: '<md-toast class="md-toast-steven" ><br>Codigo cliente : 123 , usuario : juanf , Rol : administrador </md-toast>',
           hideDelay   : 6000,
           position    :  'bottom left'
-          //controller  : 'ToastCtrl',          
-  
-     
+          //controller  : 'ToastCtrl',                 
     });
   };
   
-  
-
   $scope.cerrarSesion =  function (){
          window.localStorage.setItem("usuario" ,"");
          window.localStorage.setItem("clave" , "");
@@ -94,33 +87,28 @@
          console.log("cerrar sesion  ok  ");
          $location.path('/login');
   }
-      $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/estados-ordenes')            
-              .error(function(data, status, headers, config){
-                console.log("error ===>");
-                console.log(status);
-                console.log(data);
-                console.log(headers);
-                console.log(config);            
-              })
-              .then(function(response){
-               
-               $scope.estadoOrden = response.data;
 
-              console.log("json cargado estados de la orden ===>" +  $scope.estadoOrden.length);
-
-              console.log( $scope.estadoOrden);
-             
-
-         });   
+  $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/estados-ordenes')            
+        .error(function(data, status, headers, config){
+          console.log("error ===>");
+          console.log(status);
+          console.log(data);
+          console.log(headers);
+          console.log(config);            
+        })
+        .then(function(response){
+         
+          $scope.estadoOrden = response.data;
+          console.log("json cargado estados de la orden ===>" +  $scope.estadoOrden.length);
+          console.log( $scope.estadoOrden);             
+  });   
 
 
 
   console.log("id de usuario = " + $scope.usuario.id);
   		$scope.crearOrden = function (){
-
   			//$state.go('/ordenesVenta');
   			$location.path('/ordenesVenta');
-
   		}
   	 /****************************** metodos  para  el funcionamiento de  las datatables*******************************Scopes*/
 
@@ -154,12 +142,14 @@
             $scope.cargarEdicion();
           }
 
-        $scope.gridOptions = {enableRowSelection: true, 
-                              enableRowHeaderSelection: false,
-                              enableColumnResize: true,
-                              selectedItems: $scope.selections,
-                                enableRowSelection: true,
-                                 rowTemplate: rowTemplate()
+        $scope.gridOptions = {
+                                  enableFiltering: true,
+                                  enableRowSelection: true, 
+                                  enableRowHeaderSelection: false,
+                                  enableColumnResize: true,
+                                  selectedItems: $scope.selections,
+                                  enableRowSelection: true,
+                                  rowTemplate: rowTemplate()
                               };
         $scope.gridOptions.onRegisterApi = function( gridApi ) {
             $scope.gridApi = gridApi;
@@ -236,8 +226,8 @@
         
 
         console.log("carga cliente lista ordenes ")
-          console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio);
-         $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio)          
+          console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio);
+         $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio)          
               .error(function(data, status, headers, config){
                 //alert("**** Verificar conexion a internet ****");
                 console.log("error ===>");
@@ -325,12 +315,12 @@
             $scope.datos.activarCrearOrden = 0 ; 
           }
          if ($scope.jsonListaOrdenes.idCliente != undefined ){
-          $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id+'&id_cliente='+$scope.jsonListaOrdenes.idCliente ; 
+          $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id+'&id_cliente='+$scope.jsonListaOrdenes.idCliente ; 
 
          }else{
 
              
-          $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id ;   
+          $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id ;   
          }
           console.log($scope.cadena);
           $http.get($scope.cadena)
@@ -351,51 +341,48 @@
                  for (var i = 0; i < $scope.respuesta.length; i++) {
                        $scope.datatableData =  $scope.datatableData.concat([{
                                        idOrden :$scope.respuesta[i].idOrden,
+                                       estadoOrden : $scope.respuesta[i].nuevoEstadoOrden , 
                                        tipoServicio: $scope.respuesta[i].datosFacturacion.nombreTipoServicio,
                                        cliente: $scope.respuesta[i].datosFacturacion.codigoCliente,
                                        numeroDocumentoOrdenCliente: $scope.respuesta[i].datosFacturacion.numeroDocumentoOrdenCliente,
                                        destinatario: $scope.respuesta[i].datosFacturacion.nombreDestinatario,
                                        nit : $scope.respuesta[i].datosFacturacion.numeroIdentificacionDestinatario,
-                                       ciudad : $scope.respuesta[i].destinoOrigen.nombreAlternoCiudad,
+                                       //ciudad : $scope.respuesta[i].destinoOrigen.nombreAlternoCiudad,
                                        direccion : $scope.respuesta[i].destinoOrigen.direccion,
                                        usuario : $scope.respuesta[i].usuarioActualizacion,
                                        fecha_actualizacion : $scope.respuesta[i].fechaActualizacion
-
                                    }]);
 
 
 
                  };
-                  console.log("json datatable ===> " );
+                 console.log("json datatable ===> " );
                  console.log( $scope.datatableData) ; 
-                $scope.refrescar = 1 ; 
-                  $scope.gridOptions.data = [];//$scope.datatableData ;
-                   $scope.gridOptions.data = $scope.datatableData ;
-                  $scope.gridApi.core.refresh();
-                                              
-
+                 $scope.refrescar = 1 ; 
+                 $scope.gridOptions.data = [];//$scope.datatableData ;
+                 $scope.gridOptions.data = $scope.datatableData ;
+                 $scope.gridApi.core.refresh();
+                 $scope.totalRegistrosLista  =  $scope.gridOptions.data.length ; 
+                  //alert($scope.gridOptions.data.length) ;                                              
           });    
 
       }
       
     /*********************************Carga los tipos de sevicio por usaurio  ****************************************************/
-    console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.usuario.id)
-         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.usuario.id)             
+    console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.usuario.id)
+         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.usuario.id)             
               .error(function(data, status, headers, config){
-                    console.log("error ===>");
+                console.log("error ===>");
                 console.log(status);
                 console.log(data);
                 console.log(headers);
-                console.log(config);
-            
+                console.log(config);            
               })
-              .then(function(response){
-               
-               $scope.tipoServicioData = response.data;
-              console.log("json cargado tipos de servicio por cliente ===>");
-              console.log( $scope.tipoServicioData);
-               $scope.cargaClientes();
-
+              .then(function(response){               
+                $scope.tipoServicioData = response.data;
+                console.log("json cargado tipos de servicio por cliente ===>");
+                console.log( $scope.tipoServicioData);
+                $scope.cargaClientes();
          });   
 
       $scope.cargarOrdenes();

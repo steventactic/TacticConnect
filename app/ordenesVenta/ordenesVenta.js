@@ -184,12 +184,13 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
       if( $scope.jsonFacturacion.email === null  || $scope.jsonFacturacion.email === 'null'  ){
             $scope.jsonFacturacion.email = "";
       }
+      $scope.jsonFacturacion.cliente  = window.localStorage.getItem('clienteCache');
       $scope.jsonFacturacionEnvio =  [
                                   {
                                     idOrden :null, 
                                     tipoServicio : parseInt($scope.tipoServicioEnvio),  
-                                    //cliente : parseInt($scope.jsonFacturacion.cliente),
-                                    cliente :14,                               
+                                    cliente : parseInt($scope.jsonFacturacion.cliente),
+                                    //cliente :14,                               
                                     numeroDocumentoOrdenCliente :$scope.jsonFacturacion.numeroDocumento,
                                     //segmento :parseInt($scope.jsonFacturacion.segmento),
                                     segmento :7,
@@ -206,8 +207,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
       console.log("json de facturacion");
       console.log(angular.toJson($scope.jsonFacturacionEnvio, true));
      
-        console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/saveDatosFacturacion' , $scope.jsonFacturacionEnvio)
-       $http.post('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/saveDatosFacturacion' , $scope.jsonFacturacionEnvio)
+        console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/saveDatosFacturacion' , $scope.jsonFacturacionEnvio)
+       $http.post('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/saveDatosFacturacion' , $scope.jsonFacturacionEnvio)
        //$http.post('http://192.170.112.193:8080/satelite/ordenes/saveDatosFacturacion' , $scope.jsonFacturacionEnvio)
               
               .error(function(data, status, headers, config){
@@ -285,7 +286,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
        console.log("json de envio");
        console.log(angular.toJson($scope.jsonEnvioEnvio, true));
      //  console.log($scope.jsonEnvio)
-       $http.post('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/saveDestinoOrigen' , $scope.jsonEnvioEnvio)
+       $http.post('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/saveDestinoOrigen' , $scope.jsonEnvioEnvio)
               
               .error(function(data, status, headers, config){
                // alert("**** Verificar conexion a internet ****");
@@ -342,7 +343,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
         console.log("Json entrega") ;
         console.log(angular.toJson($scope.jsonEntregaEnvio, true));
         
-        $http.post('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/saveDatosEntregaRecogida' , $scope.jsonEntregaEnvio)
+        $http.post('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/saveDatosEntregaRecogida' , $scope.jsonEntregaEnvio)
               
               .error(function(data, status, headers, config){
                // alert("**** Verificar conexion a internet ****");
@@ -393,7 +394,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
         
         $scope.cargaTiposServicio= function(val){
 
-              $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.login.id)                   
+              $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.login.id)                   
                     .error(function(data, status, headers, config){
                       console.log("error ===>");
                       console.log(status);
@@ -449,7 +450,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
         
         $scope.jsonFacturacion.tipoServicio  = val;
      
-         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/clientes-x-usuario?id_usuario='+$scope.login.id+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
+         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/clientes-x-usuario?id_usuario='+$scope.login.id+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
              
               .error(function(data, status, headers, config){
                 //alert("**** Verificar conexion a internet ****");
@@ -490,7 +491,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
        // $scope.dest.searchText.nombre = "";
         
          $scope.habi.habilitarAgregarDestinatario = false;
-         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/segmentos-x-cliente-x-tipo_servicio?id_cliente='+$scope.jsonListaOrdenes.idCliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
+         $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/segmentos-x-cliente-x-tipo_servicio?id_cliente='+$scope.jsonListaOrdenes.idCliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
              
               .error(function(data, status, headers, config){
                // alert("**** Verificar conexion a internet ****");
@@ -525,8 +526,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
             
             $scope.destinatario=[];
             
-          console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinatarios_remitentes-x-cliente?id_cliente=14&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+ $scope.jsonFacturacion.segmento) 
-          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinatarios_remitentes-x-cliente?id_cliente=14&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+ $scope.jsonFacturacion.segmento)
+          console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/destinatarios_remitentes-x-cliente?id_cliente=14&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+ $scope.jsonFacturacion.segmento) 
+          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/destinatarios_remitentes-x-cliente?id_cliente=14&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+ $scope.jsonFacturacion.segmento)
           // $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinatarios_remitentes-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+$scope.jsonFacturacion.segmento)
              
               .error(function(data, status, headers, config){
@@ -557,7 +558,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
         ];*/
         $scope.cargaCiudadEnvio = function(val){
          // $scope.jsonFacturacion.destinatario = val ; 
-          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/ciudades-x-destinatario_remitente?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
+          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/ciudades-x-destinatario_remitente?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
             
               .error(function(data, status, headers, config){
                 //alert("**** Verificar conexion a internet ****");
@@ -602,7 +603,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
         ];*/
         $scope.cargaCiudadEnvioShiptToBodega = function(){
        
-          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/ciudades-con-bodega-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
+          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/ciudades-con-bodega-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
              
               .error(function(data, status, headers, config){
                 //alert("**** Verificar conexion a internet ****");
@@ -625,8 +626,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
          $scope.cargaBodegasShiptToBodegas = function (val){
               $scope.jsonEnvio.valorBodegaShipTo  = val ;
-              console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/bodegas-x-ciudad-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_ciudad='+$scope.jsonEnvio.valorBodegaShipTo+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
-             $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/bodegas-x-ciudad-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_ciudad='+$scope.jsonEnvio.valorBodegaShipTo+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
+              console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/bodegas-x-ciudad-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_ciudad='+$scope.jsonEnvio.valorBodegaShipTo+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
+             $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/bodegas-x-ciudad-x-cliente?id_cliente='+$scope.jsonFacturacion.cliente+'&id_ciudad='+$scope.jsonEnvio.valorBodegaShipTo+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
                    
                     .error(function(data, status, headers, config){
                      // alert("**** Verificar conexion a internet ****");
@@ -659,7 +660,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
         
         $scope.cargaDestinosEnvio = function (val){
           $scope.jsonEnvio.ciudad = val;
-            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/destinos_origenes-x-destinatario_remitente-x-ciudad?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_ciudad='+$scope.jsonEnvio.ciudad+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
+            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/destinos_origenes-x-destinatario_remitente-x-ciudad?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_ciudad='+$scope.jsonEnvio.ciudad+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)
               
               .error(function(data, status, headers, config){
                // alert("**** Verificar conexion a internet ****");
@@ -709,7 +710,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
         $scope.cargarProductosCliente = function (cliente,tipoServicio){
               
-            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+cliente+'&id_tipo_servicio='+tipoServicio)
+            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/productos-x-cliente?id_cliente='+cliente+'&id_tipo_servicio='+tipoServicio)
              
               .error(function(data, status, headers, config){
                 //alert("**** Verificar conexion a internet ****");
@@ -723,7 +724,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                
                $scope.productosCliente= response.data;
               console.log("json cargado productos ===> " );
-              console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+cliente+'&id_tipo_servicio='+tipoServicio);
+              console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/productos-x-cliente?id_cliente='+cliente+'&id_tipo_servicio='+tipoServicio);
 
                console.log($scope.productosCliente) ; 
 
@@ -742,8 +743,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
 
         $scope.cargarConfiguracion = function (cliente,tipoServicio){
-            console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+tipoServicio+'&id_cliente='+cliente)  
-            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+tipoServicio+'&id_cliente='+cliente)
+            console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+tipoServicio+'&id_cliente='+cliente)  
+            $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/configuracion_orden-x-tipo_servicio?id_tipo_servicio='+tipoServicio+'&id_cliente='+cliente)
              
               .error(function(data, status, headers, config){
               //  alert("**** Verificar conexion a internet ****");
@@ -942,8 +943,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
       {
 
         console.log("Entra a eliminar" + idLineaOrden);
-        console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/'+$scope.jsonFacturacionRetorno.orden.idOrden+'/deleteLineaOrden/'+idLineaOrden+'/'+$scope.login.usuario);
-        $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/'+$scope.jsonFacturacionRetorno.orden.idOrden+'/deleteLineaOrden/'+idLineaOrden+'/'+$scope.login.usuario)
+        console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/'+$scope.jsonFacturacionRetorno.orden.idOrden+'/deleteLineaOrden/'+idLineaOrden+'/'+$scope.login.usuario);
+        $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/'+$scope.jsonFacturacionRetorno.orden.idOrden+'/deleteLineaOrden/'+idLineaOrden+'/'+$scope.login.usuario)
               
               .error(function(data, status, headers, config){
             //    alert("**** Verificar conexion a internet ****");
@@ -1093,7 +1094,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
 
 
-                $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+ $scope.jsonFacturacion.cliente+'&id_tipo_servicio='+ $scope.jsonFacturacion.tipoServicio)
+                $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/productos-x-cliente?id_cliente='+ $scope.jsonFacturacion.cliente+'&id_tipo_servicio='+ $scope.jsonFacturacion.tipoServicio)
                   
                   .error(function(data, status, headers, config){
                    // alert("**** Verificar conexion a internet ****");
@@ -1107,7 +1108,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                    
                    $scope.productosCliente= response.data;
                   console.log("json cargado productos ===> " );
-                  console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/productos-x-cliente?id_cliente='+ $scope.jsonFacturacion.cliente+'&id_tipo_servicio='+ $scope.jsonFacturacion.tipoServicio);
+                  console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/productos-x-cliente?id_cliente='+ $scope.jsonFacturacion.cliente+'&id_tipo_servicio='+ $scope.jsonFacturacion.tipoServicio);
 
                    console.log($scope.productosCliente) ; 
 
@@ -1117,7 +1118,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
             /**************************Carga bodegas a partir de un producto*************************************************/
             $scope.cargaBodegas = function (val){
               $scope.jsonProductoAdd.producto = val;
-             $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/bodegas-x-producto?id_producto='+$scope.jsonProductoAdd.producto)
+             $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/bodegas-x-producto?id_producto='+$scope.jsonProductoAdd.producto)
                     
                     .error(function(data, status, headers, config){
                      // alert("**** Verificar conexion a internet ****");
@@ -1135,7 +1136,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
                     //console.log("json cargado bodegas ===> " + item.attributes["data-nombre"].value );
                     //console.log(item.currentTarget.getAttribute("data-nombre"));
-                    console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'satelite/ordenes/bodegas-x-producto?id_producto='+$scope.jsonProductoAdd.producto);
+                    console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/bodegas-x-producto?id_producto='+$scope.jsonProductoAdd.producto);
 
                      console.log($scope.bodegasProducto) ; 
 
@@ -1149,7 +1150,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
              /**************************Carga unidades por producto*************************************************/
             }
             $scope.cargaUnidades = function (){
-             $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/unidades-x-producto?id_producto='+$scope.jsonProductoAdd.producto)
+             $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/unidades-x-producto?id_producto='+$scope.jsonProductoAdd.producto)
                     
                     .error(function(data, status, headers, config){
                      // alert("**** Verificar conexion a internet ****");
@@ -1164,7 +1165,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                      
                      $scope.unidadesProducto= response.data;
                     console.log("json cargado unidades producto ===> " );
-                    console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'satelite/ordenes/unidades-x-producto?id_producto='+$scope.jsonProductoAdd.producto);
+                    console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/unidades-x-producto?id_producto='+$scope.jsonProductoAdd.producto);
                      console.log($scope.unidadesProducto) ; 
 
 
@@ -1201,8 +1202,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
               console.log("jsonEntregaProducto  data  =>");
               console.log(angular.toJson($scope.jsonEntregaProducto, true));
 
-              console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
-              $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
+              console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
+              $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
                     
                     
                    
@@ -1471,8 +1472,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                       console.log("jsonEntregaProducto  data  =>");
                       console.log(angular.toJson($scope.jsonEntregaProducto, true));
 
-                      console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
-                      $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
+                      console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
+                      $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/saveLineaOrden' , $scope.jsonEntregaProducto)
                     
                     
                          
@@ -1588,7 +1589,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
               // $rootScope.segmento = ["paso"];
               }
 
-                $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinatarios_remitentes/tipos_identificacion')
+                $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/destinatarios_remitentes/tipos_identificacion')
                         
                         .error(function(data, status, headers, config){
                              console.log("error ===>");
@@ -1606,7 +1607,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                          
                    });  
 
-                  $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinatarios_remitentes/segmentos')
+                  $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/destinatarios_remitentes/segmentos')
                         
                         .error(function(data, status, headers, config){
                              console.log("error ===>");
@@ -1654,7 +1655,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                          return;
                          
                   
-                  }else if($scope.jsonFacturacion.nombreCliente === undefined){
+                  }
+                  else if(window.localStorage.getItem('clienteCache')  === undefined){
                   
                          $scope.campoValidacionDestinoBill = "Cliente";
                           $scope.faltanDatos = true;
@@ -1694,13 +1696,15 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
               $scope.jsonDestinosBillTo = {};            
               $scope.crearDestinatario = function (){
-                 $scope.jsonDestinosBillTo.clienteId = $scope.jsonFacturacion.cliente;
+               // alert( $scope.jsonFacturacion.cliente)
+                 $scope.jsonDestinosBillTo.clienteId = parseInt(window.localStorage.getItem('clienteCache'));
+                 $scope.jsonDestinosBillTo.idCliente = parseInt(window.localStorage.getItem('clienteCache'));
                   //$scope.jsonDestinosBillTo.segmentos =$scope.jsonFacturacion.segmento;
                   $scope.jsonDestinosBillTo.segmentos =$scope.selected;
                   $scope.jsonDestinosBillTo.usuarioActualizacion= $scope.login.usuario 
                 console.log(angular.toJson($scope.jsonDestinosBillTo, true));  
 
-                 $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/destinatarios_remitentes/save',$scope.jsonDestinosBillTo)
+                 $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/destinatarios_remitentes/save',$scope.jsonDestinosBillTo)
                        
                         .error(function(data, status, headers, config){
                              console.log("error ===>");
@@ -1719,7 +1723,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                             alert("error" + $scope.respuesta.mensajes.mensajes[0].texto )
 
                            }else{
-                              $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/satelite/ordenes/segmentos-x-cliente-x-tipo_servicio?id_cliente='+$scope.jsonFacturacion.cliente+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
+                              $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/segmentos-x-cliente-x-tipo_servicio?id_cliente='+window.localStorage.getItem('clienteCache')+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
                                   
                                   .error(function(data, status, headers, config){
                                    // alert("**** Verificar conexion a internet ****");
