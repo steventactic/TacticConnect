@@ -22,7 +22,7 @@ angular.module('myApp.login', ['ngRoute'])
     //alert($location.path());
     //alert($location.port());
     //alert($location.protocol());
-    var t  = $location.protocol()+"://"+$location.host()+":"+$location.port();
+    var contextoApp  = $location.protocol()+"://"+$location.host()+":"+$location.port();
     //alert(t);
      
 
@@ -73,8 +73,8 @@ angular.module('myApp.login', ['ngRoute'])
     console.log('http://'+hostName+':'+puerto+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
     $http.defaults.useXDomain = true;
     $http.get('http://'+hostName+':'+puerto+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
-    //alert(t+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
-   // $http.get(t+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
+    //alert(contextoApp+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
+    //$http.get(contextoApp+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
               .success(function(data, status, headers, config){
                 //alert("**** SUCCESS ****");
                // alert(status);
@@ -82,6 +82,9 @@ angular.module('myApp.login', ['ngRoute'])
               .error(function(data, status, headers, config){
                 console.log("error ===>");
                 console.log(status);
+                if(status == -1){
+                  alert("El servico no esta disponible termporalmente.");
+                }
                 console.log(data);
                 console.log(headers);
                 console.log(config);

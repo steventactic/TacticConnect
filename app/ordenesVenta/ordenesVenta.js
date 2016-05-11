@@ -519,12 +519,12 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                    {"id":"3", "texto":"bbbhDestinatario1"}                                            
         ];*/
   
-        $scope.cargaDestinatarios = function (val ,nombre){
+        $rootScope.cargaDestinatarios = function (val ,nombre){
            $scope.jsonFacturacion.segmento = val ; 
 
            //$scope.jsonFacturacion.nombreSegmento = nombre ; 
             
-            $scope.destinatario=[];
+            $rootScope.destinatario=[];
             
           console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/destinatarios_remitentes-x-cliente?id_cliente=14&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+ $scope.jsonFacturacion.segmento) 
           $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/destinatarios_remitentes-x-cliente?id_cliente=14&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio +'&id_segmento='+ $scope.jsonFacturacion.segmento)
@@ -540,9 +540,9 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
               })
               .then(function(response){
                
-                $scope.destinatario= response.data;
+                $rootScope.destinatario= response.data;
                console.log("json cargado deestinartario ===> " );
-              console.log($scope.destinatario) ; 
+              console.log($rootScope.destinatario) ; 
             
 
            });    
@@ -562,7 +562,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
             
               .error(function(data, status, headers, config){
                 //alert("**** Verificar conexion a internet ****");
-                    console.log("error ===>");
+                console.log("error ===>");
                 console.log(status);
                 console.log(data);
                 console.log(headers);
@@ -1652,9 +1652,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                          $scope.campoValidacionDestinoBill = "Segmentos";
                          $scope.faltanDatos = true;
                       //   $scope.mostrarMensajeDatosFaltantes();
-                         return;
-                         
-                  
+                         return;                                           
                   }
                   else if(window.localStorage.getItem('clienteCache')  === undefined){
                   
@@ -1721,8 +1719,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                         
                           if ($scope.respuesta.mensajes.severidadMaxima != 'INFO') {
                             alert("error" + $scope.respuesta.mensajes.mensajes[0].texto )
-
                            }else{
+                            $rootScope.cargaDestinatarios($scope.jsonFacturacion.segmento , "df");
                               $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/segmentos-x-cliente-x-tipo_servicio?id_cliente='+window.localStorage.getItem('clienteCache')+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
                                   
                                   .error(function(data, status, headers, config){

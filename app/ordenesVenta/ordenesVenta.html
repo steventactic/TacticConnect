@@ -171,7 +171,8 @@
                      <md-autocomplete
                           md-selected-item="seg.selectedItem"
                           md-search-text="seg.searchText.nombre"
-                          md-items="seg in segmento | filter:seg.searchText.nombre"                   md-item-text="seg.nombre"                         
+                          md-items="seg in segmento | filter:seg.searchText.nombre"
+                          md-item-text="seg.nombre"                         
                           placeholder="Canal de venta ..."                       
                           md-selected-item-change="cargaDestinatarios(seg.id , seg.nombre)"  
                           md-min-length="0"                   
@@ -204,17 +205,18 @@
                               </md-item-template>
                         </md-autocomplete>-->
 
-                        <md-input-container class="md-block" flex-gt-sm>
-                        <label>{{ 'CLIENTE_DESTINO' | translate }}*</label>
-                        <md-select ng-model="jsonFacturacion.destinatario" ng-change="cargaCiudadEnvio()">
-                            <md-tooltip md-direction="bottom">
-                                {{ 'CLIENTE_DESTINO' | translate }}*
-                            </md-tooltip> 
-                             <md-option ng-repeat="dest in destinatario" value="{{dest.id}}">
-                              {{dest.nombre}} - {{dest.numeroIdentificacion}}
-                            </md-option>
-                          </md-select>
-                    </md-input-container>
+                         <md-input-container class="md-block" flex-gt-sm>
+                            <label>{{ 'CLIENTE_DESTINO' | translate }}*</label>
+                            <md-select ng-model="jsonFacturacion.destinatario" ng-change="cargaCiudadEnvio()">
+                                <md-tooltip md-direction="bottom">
+                                    {{ 'CLIENTE_DESTINO' | translate }}*
+                                </md-tooltip> 
+                                 <md-option ng-repeat="dest in destinatario" value="{{dest.id}}">
+                                  {{dest.nombre}} - {{dest.numeroIdentificacion}}
+                                </md-option>
+                              </md-select>
+                        </md-input-container>
+                        
                         <md-input-container>
                          <md-tooltip md-direction="bottom">
                                {{ 'AGREGAR_NUEVO_DESTINO' | translate }}

@@ -391,7 +391,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                 $scope.jsonEdicion= response.data;  
                 console.log("llega a edicion ==>") ; 
                 console.log(response.data) ;      
-                $scope.cargarProductosCliente($scope.jsonEdicion.datosFacturacion.cliente,$scope.jsonEdicion.datosFacturacion.tipoServicio);
+                $rootScope.cargarProductosCliente($scope.jsonEdicion.datosFacturacion.cliente,$scope.jsonEdicion.datosFacturacion.tipoServicio);
                //verificar valor declarado 
                 console.log("lineas");
                 console.log($scope.jsonEdicion.lineas);   
@@ -496,7 +496,13 @@ angular.module('myApp.editarOrden', ['ngRoute'])
 
            $scope.jsonEntrega  = $scope.jsonEdicion.datosEntregaRecogida;
            var dateResP   = new Date($scope.jsonEntrega.fechaMaxima);
-           $scope.jsonEntrega.fechaTexto =  " "+ dateResP.getDate() + "/"+  (dateResP.getMonth()+1) + "/" +   dateResP.getFullYear();
+           if(dateResP.getFullYear() === 1969){
+              $scope.jsonEntrega.fechaTexto =  "No confirmada";
+
+           }else{
+            $scope.jsonEntrega.fechaTexto =  " "+ dateResP.getDate() + "/"+  (dateResP.getMonth()+1) + "/" +   dateResP.getFullYear();
+           }
+           
 
 
            $scope.lineas = $scope.jsonEdicion.lineas ; 
@@ -1196,7 +1202,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                                               });
         }  
         /*******************************Combo destino  *********************************************/   
-        $scope.destino = [];
+        $rootScope.destino = [];
         $scope.cargaDestinosEnvio = function (){
             console.log("entra cargar destinos envio ");
             console.log("")
@@ -1210,9 +1216,10 @@ angular.module('myApp.editarOrden', ['ngRoute'])
             
               })
               .then(function(response){               
-                 $scope.destino= response.data;
+                 $rootScope.destino= response.data;
                  console.log("json cargado destino ===> " );
-                 console.log(angular.toJson($scope.destino, true)) ; 
+                 console.log($rootScope.destino);
+                 //console.log(angular.toJson($rootScope.destino, true)) ; 
             });    
         }
 
@@ -1269,9 +1276,9 @@ angular.module('myApp.editarOrden', ['ngRoute'])
 
 
    /*******************************Combo productos  por  cliente  *********************************************/
-        $scope.productosCliente = [];
-        $scope.dataCombo = [];
-        $scope.cargarProductosCliente = function (cliente,tipoServicio){            
+        $rootScope.productosCliente = [];
+        $rootScope.dataCombo = [];
+        $rootScope.cargarProductosCliente = function (cliente,tipoServicio){            
             $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/productos-x-cliente?id_cliente='+cliente+'&id_tipo_servicio='+tipoServicio)
               
               .error(function(data, status, headers, config){
@@ -1284,22 +1291,22 @@ angular.module('myApp.editarOrden', ['ngRoute'])
               })
               .then(function(response){
                
-                  $scope.productosCliente= response.data;
-                  console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/productos-x-cliente?id_cliente='+cliente+'&id_tipo_servicio='+tipoServicio);
+                  $rootScope.productosCliente= response.data;
+                  
                   console.log("json cargado productos ===> " );
-                  console.log($scope.productosCliente);
+                  console.log($rootScope.productosCliente);
               
-                  for (var i =0; i < $scope.productosCliente.length; i++) {
-                     $scope.dataCombo= $scope.dataCombo.concat(
+                  for (var i =0; i < $rootScope.productosCliente.length; i++) {
+                     $rootScope.dataCombo= $rootScope.dataCombo.concat(
                                                                 {
-                                                                  id:      $scope.productosCliente[i].id  , 
-                                                                  value :   $scope.productosCliente[i].nombreLargo + " | " +$scope.productosCliente[i].codigo +" @" +  $scope.productosCliente[i].id                                                                
+                                                                  id:      $rootScope.productosCliente[i].id  , 
+                                                                  value :   $rootScope.productosCliente[i].nombreLargo + " | " +$rootScope.productosCliente[i].codigo +" @" +  $rootScope.productosCliente[i].id                                                                
                                                                 }
                                                               );
                   }
                   
                   $scope.gridOptions.columnDefs[1].editDropdownIdLabel  = 'value';
-                  $scope.gridOptions.columnDefs[1].editDropdownOptionsArray =   $scope.dataCombo;
+                  $scope.gridOptions.columnDefs[1].editDropdownOptionsArray =   $rootScope.dataCombo;
             });    
     }
       /*******************************Combo jornada  *********************************************/
@@ -1409,6 +1416,17 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                     console.log("Entra");
                     $scope.jsonEntrega.horaMinima = $scope.jornadaEntrega[i].horaMinima;
                     $scope.jsonEntrega.horaMaxima = $scope.jornadaEntrega[i].horaMaxima
+                }
+             };
+         }
+
+         $scope.cargaHoras2 = function (){
+             for (var i =  0; i < $scope.jornadaEntrega.length; i++) {
+                if($scope.jsonEntrega.jornada2 ===$scope.jornadaEntrega[i].codigo )
+                {
+                    console.log("Entra");
+                    $scope.jsonEntrega.horaMinima2 = $scope.jornadaEntrega[i].horaMinima;
+                    $scope.jsonEntrega.horaMaxima2 = $scope.jornadaEntrega[i].horaMaxima
                 }
              };
          }
@@ -2238,6 +2256,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                       tipoUbicacionLineaOrden: $scope.tipoUbicacionLineaOrden , 
                       ciudad : $scope.ciudad ,
                       productosCliente : $scope.productosCliente
+
                      }
           })
           .then(function(answer) {
@@ -2253,7 +2272,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
           });
         };
 
-        function DialogCotrollerNuevoProducto($scope, $mdDialog ,serverData,jsonFacturacion,productosTemporales,imprimir,tabla ,jsonEntregaRetorno , login ,gridOptions  ,esEdicion ,ordenSeleccionada , productosCliente) 
+        function DialogCotrollerNuevoProducto($scope ,$rootScope , $mdDialog ,serverData,jsonFacturacion,productosTemporales,imprimir,tabla ,jsonEntregaRetorno , login ,gridOptions  ,esEdicion ,ordenSeleccionada , productosCliente) 
         {
              //$scope.mensajesServidor = mensajesServidor;
               $scope.login = login ; 
@@ -2402,13 +2421,12 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                           $scope.respuesta= response.data;
                            console.log("respuesta ==>");
                            console.log($scope.respuesta);
-                     
-                     
+                                        
                        if ($scope.respuesta.mensajes.severidadMaxima != 'INFO') {
                             alert("error" + $scope.respuesta.mensajes.mensajes[0].texto )
 
                            }else{
-                           
+                          $rootScope.cargarProductosCliente( window.localStorage.getItem('clienteCache'),window.localStorage.getItem('tipoServicioCache'));
                            $scope.cerrarModal();
                            $scope.mostrarMensajeCreacionProductoExitosa();
                       }
@@ -2669,7 +2687,7 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                }
                 $scope.faltanDatosShip = false ;
                 $scope.validarCreacion = function (){
-                  alert("entra");
+                //  alert("entra");
                  if($scope.jsonFacturacion.destinatario === undefined){
                   
                          $scope.campoValidacionDestinoShip = "Destinatario";
@@ -2736,8 +2754,26 @@ angular.module('myApp.editarOrden', ['ngRoute'])
                           if ($scope.respuesta.mensajes.severidadMaxima != 'INFO') {
                             alert("error" + $scope.respuesta.mensajes.mensajes[0].texto )
 
+                           
                            }else{
-                             
+                          console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/destinos_origenes-x-destinatario_remitente-x-ciudad?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_ciudad='+$scope.jsonDestinoOrigen.ciudadId+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)              
+                           $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/destinos_origenes-x-destinatario_remitente-x-ciudad?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_ciudad='+$scope.jsonDestinoOrigen.ciudadId+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio)              
+                                .error(function(data, status, headers, config){
+                                    console.log("error ===>");
+                                    console.log(status);
+                                    console.log(data);
+                                    console.log(headers);
+                                    console.log(config);
+                              
+                                })
+                                .then(function(response){        
+                                  $rootScope.destino=[];
+                                  $rootScope.destino= response.data;       
+                                  
+                                  
+                                   console.log("json cargado destino ===> " );
+                                   console.log( $rootScope.destino) ; 
+                              });    
                                $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/ciudades-x-destinatario_remitente?id_destinatario_remitente='+$scope.jsonFacturacion.destinatario+'&id_tipo_servicio='+$scope.jsonFacturacion.tipoServicio )
                                          
                                             .error(function(data, status, headers, config){

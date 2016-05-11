@@ -288,7 +288,7 @@
                       </md-tooltip>
                         <label>{{ 'CIUDAD' | translate }}*</label>
                            <md-select ng-model="jsonEnvio.ciudad" ng-change="cargaDestinosEnvio()">
-                            <md-option value="" > </md-option>
+                            <!--<md-option value="" > </md-option>-->
                              <md-option ng-repeat="ciud in ciudad" value="{{ciud.id}}">
                               {{ciud.nombreAlterno}}
                             </md-option>
@@ -301,7 +301,7 @@
                       </md-tooltip>
                         <label>{{ 'PUNTO_DESTINO' | translate }}*</label>
                            <md-select ng-model="jsonEnvio.destino" ng-change="cargaInfoDestinoEnvio()">
-                            <md-option value="" > </md-option>
+                            <!--<md-option value="" > </md-option>-->
                              <md-option ng-repeat="des in destino"  value="{{des.id}}">
                               {{des.nombreAuxiliar}}
                             </md-option>                              
@@ -419,36 +419,75 @@
                <label>{{ 'EN_QUE_HORARIO' | translate }}</label>
                <div layout="row">
                     <!-- Combo de  jornada -->
-              <md-input-container class="md-block" flex-gt-sm>
-                        <label>{{ 'JORNADA' | translate }}</label> 
+                    <md-input-container class="md-block" flex-gt-sm>
+                              <label>{{ 'JORNADA' | translate }}</label> 
+                                <md-tooltip md-direction="bottom">
+                                 {{ 'JORNADA' | translate }}
+                                </md-tooltip>
+                              <md-select ng-model="jsonEntrega.jornada" ng-change="cargaHoras()">
+                                   <md-option ng-repeat="des in jornadaEntrega" value="{{des.codigo}}">
+                                    {{des.codigo}}
+                                  </md-option>
+                              </md-select>
+                    </md-input-container>
+
+                     <!-- campo  hora minima-->
+                       <md-input-container class="md-block" flex-gt-sm>
+                            <md-tooltip md-direction="bottom">
+                                 {{ 'HORA_MINIMA' | translate }}
+                            </md-tooltip>
+                          <label>{{ 'HORA_MINIMA' | translate }}</label>
+
+                          <input type="text" ng-model="jsonEntrega.horaMinima" >
+                      </md-input-container>
+
+                       <!-- campo  hora maxima-->
+                       <md-input-container class="md-block" flex-gt-sm>
                           <md-tooltip md-direction="bottom">
-                           {{ 'JORNADA' | translate }}
-                          </md-tooltip>
-                        <md-select ng-model="jsonEntrega.jornada" ng-change="cargaHoras()">
-                             <md-option ng-repeat="des in jornadaEntrega" value="{{des.codigo}}">
-                              {{des.codigo}}
-                            </md-option>
-                        </md-select>
-              </md-input-container>
+                                 {{ 'HORA_MAXIMA' | translate }}
+                            </md-tooltip>
+                          <label>{{ 'HORA_MAXIMA' | translate }}</label>
+                          <input type="text" ng-model="jsonEntrega.horaMaxima" >
+                      </md-input-container>
+              
+             </div>
+                  
+              <md-checkbox ng-model="info.dataHorario" aria-label="check">
+              ¿ Se puede entregar en el mismo horario ? 
+              </md-checkbox>
+                
+              <div layout="row" ng-show="info.dataHorario">
+                    <!-- Combo de  jornada -->
+                    <md-input-container class="md-block" flex-gt-sm>
+                              <label>{{ 'JORNADA' | translate }}</label> 
+                                <md-tooltip md-direction="bottom">
+                                 {{ 'JORNADA' | translate }}
+                                </md-tooltip>
+                              <md-select ng-model="jsonEntrega.jornada2" ng-change="cargaHoras2()">
+                                   <md-option ng-repeat="des in jornadaEntrega" value="{{des.codigo}}">
+                                    {{des.codigo}}
+                                  </md-option>
+                              </md-select>
+                    </md-input-container>
 
-               <!-- campo  hora minima-->
-                 <md-input-container class="md-block" flex-gt-sm>
-                      <md-tooltip md-direction="bottom">
-                           {{ 'HORA_MINIMA' | translate }}
-                      </md-tooltip>
-                    <label>{{ 'HORA_MINIMA' | translate }}</label>
+                     <!-- campo  hora minima-->
+                       <md-input-container class="md-block" flex-gt-sm>
+                            <md-tooltip md-direction="bottom">
+                                 {{ 'HORA_MINIMA' | translate }}
+                            </md-tooltip>
+                          <label>{{ 'HORA_MINIMA' | translate }}</label>
 
-                    <input type="text" ng-model="jsonEntrega.horaMinima" >
-                </md-input-container>
+                          <input type="text" ng-model="jsonEntrega.horaMinima2" >
+                      </md-input-container>
 
-                 <!-- campo  hora maxima-->
-                 <md-input-container class="md-block" flex-gt-sm>
-                    <md-tooltip md-direction="bottom">
-                           {{ 'HORA_MAXIMA' | translate }}
-                      </md-tooltip>
-                    <label>{{ 'HORA_MAXIMA' | translate }}</label>
-                    <input type="text" ng-model="jsonEntrega.horaMaxima" >
-                </md-input-container>
+                       <!-- campo  hora maxima-->
+                       <md-input-container class="md-block" flex-gt-sm>
+                          <md-tooltip md-direction="bottom">
+                                 {{ 'HORA_MAXIMA' | translate }}
+                            </md-tooltip>
+                          <label>{{ 'HORA_MAXIMA' | translate }}</label>
+                          <input type="text" ng-model="jsonEntrega.horaMaxima2" >
+                      </md-input-container>
               
              </div>
 
@@ -489,7 +528,7 @@
                       </div>
                     </md-input-container>
                     <label>{{ 'NOTAS_REQUERIMIENTOS_ENTREGA' | translate }}</label>
-                    <md-input-container class="md-block" flex-gt-sm>
+                    <md-input-container class="md-block felx-gt-sm md-input-focused" flex-gt-sm>
                           <md-tooltip md-direction="bottom">
                                {{ 'NOTAS_REQUERIMIENTOS_ENTREGA' | translate }}
                           </md-tooltip>                      
@@ -512,7 +551,7 @@
                       </div>
                     </md-input-container>
                         <label>{{ 'NOTAS_REQUERIMIENTOS_MAQUILA' | translate }}</label>
-                    <md-input-container class="md-block" flex-gt-sm>
+                    <md-input-container class="md-block felx-gt-sm md-input-focused" flex-gt-sm>
                         <md-tooltip md-direction="bottom">
                                {{ 'NOTAS_REQUERIMIENTOS_MAQUILA' | translate }}
                           </md-tooltip>                      
@@ -524,7 +563,7 @@
           </div>
           <label>{{ 'NOTAS' | translate }}</label>
          
-            <md-input-container class="md-block" flex-gt-sm>    
+            <md-input-container  class="md-block felx-gt-sm md-input-focused" flex-gt-sm>    
               <md-tooltip md-direction="bottom">
                      {{ 'NOTAS_GENERALES' | translate }}
               </md-tooltip>                    
