@@ -1,0 +1,44 @@
+<md-dialog style="width:30%;height:35%;"  ng-cloak >
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Cambiar estado de ordenes.</h2>
+        <span flex></span>
+       
+      </div>
+    </md-toolbar>
+    <md-dialog-content  >
+      <md-content layout-padding >
+      
+              
+
+            
+               <md-input-container class="md-block"  flex-gt-sm>
+                        <label>Nuevo estado</label>
+                            <md-tooltip md-direction="bottom">
+                                Nuevo estado de la orden
+                            </md-tooltip>
+                           <md-select   ng-model="jsonEstado.estadoSeleccionado" >
+                          <md-option ng-repeat="td in estados" value="{{td.nombre}}">
+                                      {{td.nombre}}
+                                    </md-option>
+                          </md-select>
+                    </md-input-container>
+
+
+
+      </md-content>                       
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+       <h5  ng-show="faltanDatos" style="color: red">El campo '{{campoValidacionDestinoBill}}' es requerido.</h5>    
+      
+      <span flex></span>
+      <md-button ng-click="cerrarModal()">
+       Cancelar
+      </md-button>
+      <md-button ng-click="confirmarOrdenes()" style="margin-right:20px;">
+       Agregar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

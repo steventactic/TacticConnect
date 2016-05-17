@@ -82,18 +82,17 @@
                        <!--  autocompletar de ciudad -->                      
                       <md-autocomplete style="width: 100%"
                           md-selected-item="ciudad.selectedItem"
-                          md-search-text="ciudad.searchText.nombre"
-                          md-items="ciudad in  ciudades | filter:ciudad.searchText.nombre" 
-                          md-item-text="ciudad.nombre"                         
+                          md-search-text="ciudad.searchText.nombreAlterno"
+                          md-items="ciudad in  ciudades | filter:ciudad.searchText.nombreAlterno" md-item-text="ciudad.nombreAlterno"                         
                           placeholder="Seleccione ciudad..."                          
                           md-selected-item-change="setCiudad(ciudad.id)"      
                            md-min-length="0"              
                          >
                       <md-item-template>
                         <span
-                            md-highlight-text="ciudad.searchText.nombre"
+                            md-highlight-text="ciudad.searchText.nombreAlterno"
                             md-highlight-flags="i">
-                              {{ciudad.nombre}}                       
+                              {{ciudad.nombreAlterno}}                       
                         </span>
                       </md-item-template>2
                     </md-autocomplete>

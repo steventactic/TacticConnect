@@ -622,7 +622,7 @@
                  <!--<md-button md-no-ink class="md-raised md-primary" ng-click="validaTabEnvio()">Continuar a datos entrega </md-button>-->
         </md-content>
       </md-tab>
-         <!--   Datos de envio bodega  ng-if="admiteBodegasDestino == 1" -->
+      <!--   Datos de envio bodega  ng-if="admiteBodegasDestino == 1" -->
       <md-tab label="Ship to bodega" ng-if="tipoUbicacion == 'BODEGA'"  ng-show="false" ng-disabled="dataTabs.tabEnvio">
         <md-content class="md-padding">
            <!-- Combo de  ciudad -->
@@ -927,12 +927,11 @@
                     <strong>{{ 'NOMBRE_CONTACTO' | translate }}:</strong>{{jsonEnvio.nombre}}
                   </td>
                   <td>
-                    <strong>{{ 'TELEFONOS_CONTACTO' | translate }}:</strong>{{jsonEnvio.telefono}}
+                    <strong>{{ 'TELEFONOS_CONTACTO' | translate }}:</strong>{{jsonEnvio.telefonos}}
                   </td>
                   <td>
                     <strong>{{ 'EMAIL_CONTACTO' | translate }}:</strong>{{jsonEnvio.email}}
-                  </td>
-                 
+                  </td>                 
                 </tr>                   
               </table>
             </center>
@@ -984,15 +983,31 @@
                     <strong>{{ 'NOTAS' | translate }}  : </strong>{{jsonEnvio.notasRequerimientosMaquila}}
                   </td>
                  </tr>
-                <tr ng-repeat="en in maquila">
-                  <td style="width: 50%;">
-                  <strong>{{en.nombre}}</strong>
-                  </td>
-                                
-                </tr> 
+                  <tr ng-repeat="en in maquila">
+                    <td style="width: 50%;">
+                    <strong>{{en.nombre}}</strong>
+                    </td>                                
+                  </tr> 
               </table>
             </center>
         </fieldset>
+         <fieldset class="standard" >          
+            <legend>{{ 'LINEAS' | translate }}</legend>
+            <table class="tablaResumen" border="1">
+                <tr>
+                  <td style="width: 50%;"><strong>Producto</strong></td>                       
+                  <td style="width: 25%;"><strong>Cantidad</strong></td>          
+                  <td style="width: 25%;"><strong>Valor declarado</strong></td>        
+                </tr>
+                <tr ng-repeat="e in jsonEdicion.lineas">
+                  <td> {{e.codigoProducto}} | {{e.nombreProducto}} </td>                                
+                  <td> {{e.cantidad}} </td>                                
+                  <td ng-if="e.valorDeclaradoPorUnidad != null"> {{ obtenerValorMascara(e.valorDeclaradoPorUnidad) }} </td>                                
+                  <td ng-if="e.valorDeclaradoPorUnidad == null " > 0</td>
+                </tr> 
+            </table>
+         </fieldset>
+         <br><br>
   
           <fieldset class="standard" >          
             <legend>{{ 'OBSERVACIONES_GENERALES' | translate }}</legend>

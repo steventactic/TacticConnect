@@ -41,14 +41,14 @@
                                           </md-input-container>
                                        
                      
+
                            <!-- Combo ciudades -->
                           <md-input-container class="md-block" flex-gt-sm>
                             <md-tooltip md-direction="bottom">
                                               Ciudad
                             </md-tooltip> 
                             <label>Ciudades</label>
-                              <md-select ng-model="jsonDataProducto.ciudad" ng-change="cargaBodegas()">
-                              <md-option value="" > </md-option>
+                              <md-select ng-model="jsonDataProducto.ciudad" ng-change="cargaBodegasNuevoProducto()">
                                  <md-option ng-repeat="td in ciudades" value="{{td.id}}">
                                   {{td.nombreAlterno}}
                                 </md-option>
@@ -62,7 +62,7 @@
                             <label>Bodega</label>
                                <md-select ng-model="jsonDataProducto.bodega" ng-change="cargaDatosBodega()">
                                <md-option value="" > </md-option>
-                                 <md-option ng-repeat="td in bodegasProducto" value="{{td.id}}">
+                                 <md-option ng-repeat="td in bodegasNuevoProducto" value="{{td.id}}">
                                   {{td.codigo}}-{{td.nombre}}
                                 </md-option>
                               </md-select>

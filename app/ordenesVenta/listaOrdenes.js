@@ -9,7 +9,7 @@
     });
   }])
 
-  .controller('listaOrdenesCtrl', [ '$scope', 'datatable', '$location','$http','Scopes','$mdDialog','$mdMedia','$rootScope','$mdToast',function($scope   ,datatable ,$location ,$http ,Scopes,$mdDialog,$mdMedia ,$rootScope  , $mdToast ) {
+  .controller('listaOrdenesCtrl', [ '$scope', 'datatable', '$location','$http','Scopes','$mdDialog','$mdMedia','$rootScope','$mdToast','uiGridConstants',function($scope   ,datatable ,$location ,$http ,Scopes,$mdDialog,$mdMedia ,$rootScope  , $mdToast ,uiGridConstants) {
   Scopes.store('listaOrdenesCtrl', $scope);
  
   $scope.mensajeServidor =  $rootScope.mensajesServidor;    
@@ -96,8 +96,7 @@
           console.log(headers);
           console.log(config);            
         })
-        .then(function(response){
-         
+        .then(function(response){         
           $scope.estadoOrden = response.data;
           console.log("json cargado estados de la orden ===>" +  $scope.estadoOrden.length);
           console.log( $scope.estadoOrden);             
@@ -127,48 +126,75 @@
             //console.log($scope.selections);
 
          }
+         
      
 
           /*************************Objeto que  alamance la  io y el  puerto al cual conectarme****************************/
  
-            function rowTemplate() {
-                  return '<div ng-dblclick="grid.appScope.rowDblClick(row)" >' +
-                               '  <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell></div>' +
-                               '</div>';
-                }
-
-          $scope.rowDblClick = function(row) {
-       //   alert(JSON.stringify(row.entity)); 
-            $scope.cargarEdicion();
+          function rowTemplate() {
+                return '<div ng-dblclick="grid.appScope.rowDblClick(row)" >' +
+                      ' <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell></div>' +
+                       '</div>';
           }
 
-        $scope.gridOptions = {
-                                  enableFiltering: true,
+        $scope.rowDblClick = function(row) {
+          //alert(JSON.stringify(row.entity)); 
+          //console.log("ROW ===> ");
+          //console.log(row);
+          $scope.ordenSeleccionada =  row.entity ;
+          //$scope.gridApi.selection.selectRow(row.grid.selection.selectedCount);
+          $scope.cargarEdicion();
+        }
+
+        $scope.gridOptions = {                                  
+                                 
+                                  
                                   enableRowSelection: true, 
-                                  enableRowHeaderSelection: false,
+                                  enableSelectAll: true,
+                                  enableRowHeaderSelection: true,
+                                  enableFiltering: true,
                                   enableColumnResize: true,
+                                  multiSelect: true ,
                                   selectedItems: $scope.selections,
-                                  enableRowSelection: true,
+                                  enableRowSelection: true,                                  
                                   rowTemplate: rowTemplate()
                               };
+      
+
         $scope.gridOptions.onRegisterApi = function( gridApi ) {
-            $scope.gridApi = gridApi;
-              $scope.gridApi.selection.on.rowSelectionChanged($scope, function(row){
-
-                console.log("entra");
+              $scope.gridApi = gridApi;            
+              $scope.gridApi.selection.on.rowSelectionChanged($scope, function(row){                
                 console.log( row.entity.idOrden);
+                console.log("seleccionados");
+                console.log($scope.gridApi.selection.getSelectedRows());
                 $scope.ordenSeleccionada =  row.entity ;
-                $scope.datos.seleccionado =  0 ; 
-
                 console.log(row);
+                if($scope.gridApi.selection.getSelectedRows().length === 1 ){
+                  $scope.datos.seleccionado =  0 ; 
+                }else{
+                  $scope.datos.seleccionado =  1 ; 
+                }           
+
+                if($scope.gridApi.selection.getSelectedRows().length > 0 ){
+                  $scope.datos.confirmado  = 0 ;
+                }else{
+                  $scope.datos.confirmado  = 1 ;
+                }
+
+
               });
+            $scope.gridApi.selection.setMultiSelect(true);    
+            
+              $scope.gridOptions.enableFiltering = true;
+            $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+
         };
    
-        $scope.toggleRowSelection = function() {
+       /* $scope.toggleRowSelection = function() {
           $scope.gridApi.selection.clearSelectedRows();
           $scope.gridOptions.enableRowSelection = !$scope.gridOptions.enableRowSelection;
           $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.OPTIONS);
-        };
+        };*/
 
         $scope.gridOptions.multiSelect = false;
        /* console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/satelite/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio=1&estadoOrden=NO_CONFIRMADA&id_usuario='+$scope.usuario.id);
@@ -206,8 +232,6 @@
                                        fecha_actualizacion : $scope.respuesta[i].fechaActualizacion
                                    }]);
 
-
-
                  };
                 //  console.log("json solo ordenes===> " + $scope.respuesta[0].datosFacturacion );
                  console.log( $scope.datatableData) ; 
@@ -221,28 +245,22 @@
                                    
 
           });    */
-
-        $scope.cargaClientes = function(){
-        
-
-        console.log("carga cliente lista ordenes ")
+        $scope.cargaClientes = function(){        
+          console.log("carga cliente lista ordenes ")
           console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio);
-         $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio)          
+          $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio)          
               .error(function(data, status, headers, config){
                 //alert("**** Verificar conexion a internet ****");
                 console.log("error ===>");
                 console.log(status);
                 console.log(data);
                 console.log(headers);
-                console.log(config);
-            
+                console.log(config);            
               })
-              .then(function(response){
-               
-               $scope.clientes = response.data;
-               console.log("json cargado cliente ===> "  );
-               console.log($scope.clientes) ; 
-             
+              .then(function(response){               
+                $scope.clientes = response.data;
+                console.log("json cargado cliente ===> "  );
+                console.log($scope.clientes) ;              
           });    
 
       }
@@ -259,8 +277,7 @@
        if(window.localStorage.getItem("estadoOrdenCache")  === null){
           console.log("no exite cache ESTADO ORDEN ");
           $scope.jsonListaOrdenes.estadoOrden = "NO_CONFIRMADA";
-       }else{
-          
+       }else{          
           $scope.jsonListaOrdenes.estadoOrden = window.localStorage.getItem("estadoOrdenCache");
           console.log("Ya existe cache de  la variable ESTADO ORDEN " +  $scope.jsonListaOrdenes.estadoOrden);
        }
@@ -271,22 +288,16 @@
           console.log("no exite cache TIPO SERVICIO ==>");
           console.log(window.localStorage.getItem("tipoServicioCache"));
           //$scope.jsonListaOrdenes.tipoServicio = "";
-          $scope.jsonListaOrdenes.idServicio = "";
-          
-          
-           console.log("activar ==>" + $scope.datos.activarCrearOrden);
+          $scope.jsonListaOrdenes.idServicio = "";          
+          console.log("activar ==>" + $scope.datos.activarCrearOrden);
        }else{          
           //$scope.jsonListaOrdenes.tipoServicio =window.localStorage.getItem("tipoServicioCache");
           $scope.jsonListaOrdenes.idServicio = parseInt(window.localStorage.getItem("tipoServicioCache"));
-          console.log("Ya existe cache de  la variable  TIPO SERVICIO " + window.localStorage.getItem("tipoServicioCache"));
-          
-       }
-
-
-        if(window.localStorage.getItem("clienteCache")  === null){
+          console.log("Ya existe cache de  la variable  TIPO SERVICIO " + window.localStorage.getItem("tipoServicioCache"));          
+       }      
+       if(window.localStorage.getItem("clienteCache")  === null){
           console.log("no exite cache  CLIENTE");
-          $scope.jsonListaOrdenes.idCliente = "";
-          
+          $scope.jsonListaOrdenes.idCliente = "";          
        }else{
           $scope.jsonListaOrdenes.idCliente =window.localStorage.getItem("clienteCache");
           console.log("Ya existe cache de  la variable CLIENTE " + $scope.jsonListaOrdenes.idCliente );
@@ -294,8 +305,7 @@
          
       $scope.jsonListaOrdenes.tipoServicio = 4 ;
       
-      $scope.cargarOrdenes = function (){
-
+      $rootScope.cargarOrdenes = function (){
           window.localStorage.setItem('estadoOrdenCache',$scope.jsonListaOrdenes.estadoOrden);
           //window.localStorage.setItem('tipoServicioCache',$scope.jsonListaOrdenes.tipoServicio);
           window.localStorage.setItem('tipoServicioCache',$scope.jsonListaOrdenes.idServicio);
@@ -303,24 +313,17 @@
           console.log("valor" + window.localStorage.getItem('tipoServicioCache'));
           if(window.localStorage.getItem('tipoServicioCache') != ''){
                 $scope.datos.activarCrearOrden = 1; 
-
           }else{
-
             console.log("no existe ");
-          }
-      
-         
+          }               
          $scope.cadena = ""; 
          if($scope.jsonListaOrdenes.idCliente === ''){
             $scope.datos.activarCrearOrden = 0 ; 
           }
          if ($scope.jsonListaOrdenes.idCliente != undefined ){
-          $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id+'&id_cliente='+$scope.jsonListaOrdenes.idCliente ; 
-
-         }else{
-
-             
-          $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id ;   
+            $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id+'&id_cliente='+$scope.jsonListaOrdenes.idCliente ; 
+         }else{             
+            $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id ;   
          }
           console.log($scope.cadena);
           $http.get($scope.cadena)
@@ -329,12 +332,10 @@
                       console.log(status);
                       console.log(data);
                       console.log(headers);
-                      console.log(config);
-              
+                      console.log(config);              
                 })
-                .then(function(response){
-                
-                $scope.respuesta= response.data;
+                .then(function(response){                
+                 $scope.respuesta= response.data;
                  console.log("json cargado todas las ordenes ===> " );
                  console.log($scope.respuesta) ; 
                  $scope.datatableData = [] ; 
@@ -352,10 +353,7 @@
                                        usuario : $scope.respuesta[i].usuarioActualizacion,
                                        fecha_actualizacion : $scope.respuesta[i].fechaActualizacion
                                    }]);
-
-
-
-                 };
+                 }                 
                  console.log("json datatable ===> " );
                  console.log( $scope.datatableData) ; 
                  $scope.refrescar = 1 ; 
@@ -365,9 +363,7 @@
                  $scope.totalRegistrosLista  =  $scope.gridOptions.data.length ; 
                   //alert($scope.gridOptions.data.length) ;                                              
           });    
-
-      }
-      
+      }      
     /*********************************Carga los tipos de sevicio por usaurio  ****************************************************/
     console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.usuario.id)
          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.usuario.id)             
@@ -385,7 +381,137 @@
                 $scope.cargaClientes();
          });   
 
-      $scope.cargarOrdenes();
+        $rootScope.cargarOrdenes();
 
-  }]);
+        $scope.showConfirmacion = function(ev) {        
+          var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+          $mdDialog.show({
+                          controller: DialogCotrollerNuevoProducto,
+                          templateUrl: './ordenesVenta/seleccionarNuevoEstado.tmpl.html',
+                          parent: angular.element(document.body),
+                          targetEvent: ev,
+                          clickOutsideToClose:false,
+                          fullscreen: useFullScreen,
+                          locals: { 
+                                      serverData: $scope.serverData,
+                                      estados  :  $scope.estadoOrden,
+                                      gridApi :$scope.gridApi,
+                                      login : $scope.login                    
+                                  }
+          })
+          .then(function(answer) {
+            $scope.status = 'You said the information was "' + answer + '".';
+
+          }, function() {
+            $scope.status = 'You cancelled the dialog.';
+          });
+          $scope.$watch(function() {
+            return $mdMedia('xs') || $mdMedia('sm');
+          }, function(wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
+          });
+        };
+
+        function DialogCotrollerNuevoProducto($scope ,$rootScope , $mdDialog ,serverData,estados ,gridApi , login ) 
+        {
+             console.log("entra controlador seleccion  ");
+             $scope.estados = [
+                                {id:'CONFIRMADA', nombre:'CONFIRMADA' },
+                                {id:'ACEPTADA' , nombre:'ACEPTADA'}
+                              ];
+             $scope.gridApi = gridApi ; 
+             $scope.serverData = serverData;
+             $scope.login = login ; 
+            
+             $scope.cerrarModal = function (){
+                  $mdDialog.hide();
+             }
+
+             $scope.mostrarMensajeCambioEstado  = function(ev) {                
+                $mdDialog.show(
+                    $mdDialog.alert()
+                      .parent(angular.element(document.querySelector('#popupContainer')))
+                      .clickOutsideToClose(true)
+                      .title('informacion')
+                      .textContent('Se han realizado los cambios  correctamente.')
+                      .ariaLabel('Mensaje')
+                      .ok('OK')                     
+                      .targetEvent(ev)                      
+                 ).finally(function() {                      
+                      $rootScope.cargarOrdenes();                      
+                });
+              }
+
+              $scope.confirmarOrdenes = function (ev){
+                      var confirm = $mdDialog.confirm()
+                        .title('Información')
+                        .textContent('¿ Desea confirmar las ordenes seleccionadas ?')
+                        .ariaLabel('Mensaje')
+                        .targetEvent(ev)
+                        .ok('ok')
+                        .cancel('Cancelar');
+                        $mdDialog.show(confirm).then(function() {
+                        $scope.dataConfirmacion = $scope.gridApi.selection.getSelectedRows() 
+                              for (var i = 0; i <  $scope.dataConfirmacion.length ; i++) {
+                                   console.log($scope.dataConfirmacion[i].idOrden);
+                                    $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/'+$scope.dataConfirmacion[i].idOrden)                   
+                                    .error(function(data, status, headers, config){
+                                      console.log("error ===>");
+                                      console.log(status);
+                                      console.log(data);
+                                      console.log(headers);
+                                      console.log(config);            
+                                    })
+                                    .then(function(response){   
+
+                                           $scope.jsonAceptacion = { 
+                                                                      idOrden: parseInt(response.data.idOrden),
+                                                                      datosFacturacion :response.data.datosFacturacion,
+                                                                      destinoOrigen : response.data.destinoOrigen,
+                                                                      destinoOrigenBodega : response.data.bodegaDestinoOrigen,
+                                                                      datosEntregaRecogida  :response.data.datosEntregaRecogida,
+                                                                      datosOtros: response.data.datosOtros,
+                                                                      lineas : response.data.lineas ,
+                                                                      usuarioActualizacion:$scope.login.usuario,
+                                                                      idUsuarioActualizacion : parseInt( window.localStorage.getItem("idUsuario")),                                 
+                                                                      nuevoEstadoOrden : $scope.jsonEstado.estadoSeleccionado //"CONFIRMADA"
+                                                                   };
+
+
+                                         console.log($scope.jsonAceptacion);
+                                         console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/save',$scope.jsonAceptacion);
+                                         $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/save',$scope.jsonAceptacion)                    
+                                                .error(function(data, status, headers, config){
+                                                    console.log("error ===>");
+                                                    console.log(status);
+                                                    console.log(data);
+                                                    console.log(headers);
+                                                    console.log(config);                  
+                                                })
+                                                .then(function(response){                     
+                                                    $scope.aceptacionRetorno= response.data;
+                                                    console.log("json edicion retorno ===> " );
+                                                    console.log(angular.toJson($scope.aceptacionRetorno, true));
+                                                    if ($scope.aceptacionRetorno.mensajes.severidadMaxima != 'INFO') {
+                                                          alert("error" + $scope.aceptacionRetorno.mensajes.mensajes[0].texto )
+                                                    }else{
+
+                                                      $rootScope.cargarOrdenes();
+                                                    }
+                                                    
+                                                    
+                                        });   
+
+
+                                    });
+                              }       
+                              
+                              $scope.mostrarMensajeCambioEstado();         
+
+                        }, function() {                
+                          console.log("no hace nada");
+                        });
+         }
+    }
+}]);
   		
