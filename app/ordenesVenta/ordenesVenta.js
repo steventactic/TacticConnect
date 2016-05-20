@@ -48,7 +48,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
          }
       }
 
-        $scope.cerrarSesion =  function (){
+      $scope.cerrarSesion =  function (){
          window.localStorage.setItem("usuario" ,"");
          window.localStorage.setItem("clave" , "");
          window.localStorage.setItem("idUsuario" , "");
@@ -57,11 +57,10 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
          window.localStorage.setItem('clienteCache',"");
          console.log("cerrar sesion  ok  ");
          $location.path('/login');
-  }
+      }
 
      $scope.volver = function (ev){
-
-           var confirm = $mdDialog.confirm()
+          var confirm = $mdDialog.confirm()
                 .title('Informacion')
                 .textContent('Si retrocede se perderan todos los cambios.')
                 .ariaLabel('Mensaje')
@@ -75,7 +74,6 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
             
             console.log("no hace nada");
           });
-
     }
         
     /*************************Loguica  para  bloqueo  y desbloqueo de  las tabs ****************************************/

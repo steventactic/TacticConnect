@@ -25,6 +25,7 @@ angular.module('myApp', [
   'ui.grid.rowEdit',
   'ui.grid.cellNav',
   'pascalprecht.translate',
+  'ui.grid.pagination',
   'base64'
    
 ]).config(['$routeProvider', '$mdThemingProvider','$translateProvider','$httpProvider', function($routeProvider ,$mdThemingProvider ,$translateProvider ,$httpProvider) {

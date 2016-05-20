@@ -3,62 +3,12 @@
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>Crear nuevo  {{origenDestinoTitulo}} </h2>
-        <span flex></span>
-       
+        <span flex></span>       
       </div>
     </md-toolbar>
     <md-dialog-content  >
-      <md-content layout-padding >
-            <!-- campo de cliente -->
-           <!-- <md-input-container class="md-block" flex-gt-sm>
-              <label>Cliente*</label>
-              <input   ng-disabled="true"  style="color:black;" ng-model="jsonFacturacion.nombreCliente" >
-            </md-input-container>-->
-             <!-- campo de segementos -->
-           <!-- <md-input-container class="md-block" flex-gt-sm>
-              <label>Segmentos*</label>
-              <input   ng-disabled="true"  style="color:black;" ng-model="jsonFacturacion.nombreSegmento" >
-            </md-input-container>-->
-             <!-- campo de destinatario -->
-          <!--  <md-input-container class="md-block" flex-gt-sm>
-              <label>Destinatario*</label>
-              <input   ng-disabled="true"  style="color:black;" ng-model="jsonFacturacion.nombreDestinatario" >
-            </md-input-container>-->
-            <!-- lista de segmentos -->
-          <!--  <md-input-container class="md-block" flex-gt-sm>
-                        <label>Segmentos</label>
-                           <md-select ng-disabled="true" ng-model="jsonDestinoOrigen.segmentoId"  ng-change="cargarDestinatario()">
-                             <md-option ng-repeat="des in segmentosDestinoOrigen" 
-                                value="{{des.id}}">
-                              {{des.nombre}}
-                            </md-option>                              
-                          </md-select>                      
-            </md-input-container>-->
-            
-            <!--  autocompletar de  productos -->                      
-             <!-- <md-autocomplete style="width: 100%"
-                  md-selected-item="prodCli.selectedItem"
-                  md-search-text="prodCli.searchText.nombre"
-                  md-items="prodCli in  destinatarioOrigen | filter:prodCli.searchText.nombre"  md-item-text="prodCli.nombreComercial"                         
-                  placeholder="Seleccione destinatario..."                          
-                  md-selected-item-change="setDestinatario(prodCli.id)"
-                   md-min-length="0"                    
-                 >
-              <md-item-template>
-                <span
-                    md-highlight-text="prodCli.searchText.nombreComercial"
-                    md-highlight-flags="i">
-                      {{prodCli.id}},  {{prodCli.nombreComercial}}                       
-                </span>
-              </md-item-template>
-            </md-autocomplete>-->
+    <md-content layout-padding >
             <div layout="row">
-                <!-- campo de codigo -->
-               <!-- <md-input-container class="md-block" flex-gt-sm>
-                  <label>Codigo</label>
-                  <input   ng-model="jsonDestinoOrigen.codigo" >
-                </md-input-container>-->
-                <!-- campo de nombre -->
                 <md-input-container class="md-block" flex-gt-sm>
                    <md-tooltip md-direction="bottom">
                               Nombre del punto de destino
@@ -67,38 +17,35 @@
                   <input   ng-model="jsonDestinoOrigen.nombre" >
                 </md-input-container>
             </div>
-            <fieldset class="standard" >
-            
-            <legend>Datos de contacto del punto de entrega</legend>
+            <fieldset class="standard" >            
+                  <legend>Datos de contacto del punto de entrega</legend>
+              
               <div layout="row" >
-                  <div layout="column" style="width: 50%;">
-                   
-                    <md-input-container class="md-block" flex-gt-sm>
-                     <md-icon md-svg-src="img/city.svg" class="email"></md-icon>
-                     <md-tooltip md-direction="bottom">
-                              Ciudad
-                   </md-tooltip> 
-                      <label>Ciudad</label>
+                  <div layout="column" style="width: 50%;">                   
+                         <md-input-container class="md-block" flex-gt-sm>
+                         <md-icon md-svg-src="img/city.svg" class="email"></md-icon>
+                         <md-tooltip md-direction="bottom">
+                                  Ciudad
+                          </md-tooltip> 
+                          <label>Ciudad</label>
                        <!--  autocompletar de ciudad -->                      
-                      <md-autocomplete style="width: 100%"
-                          md-selected-item="ciudad.selectedItem"
-                          md-search-text="ciudad.searchText.nombreAlterno"
-                          md-items="ciudad in  ciudades | filter:ciudad.searchText.nombreAlterno" md-item-text="ciudad.nombreAlterno"                         
-                          placeholder="Seleccione ciudad..."                          
-                          md-selected-item-change="setCiudad(ciudad.id)"      
-                           md-min-length="0"              
-                         >
-                      <md-item-template>
-                        <span
-                            md-highlight-text="ciudad.searchText.nombreAlterno"
-                            md-highlight-flags="i">
-                              {{ciudad.nombreAlterno}}                       
-                        </span>
-                      </md-item-template>2
-                    </md-autocomplete>
-                    </md-input-container>
-                    
-                   
+                        <md-autocomplete style="width: 100%"
+                            md-selected-item="ciudad.selectedItem"
+                            md-search-text="ciudad.searchText.nombreAlterno"
+                            md-items="ciudad in  ciudades | filter:ciudad.searchText.nombreAlterno" md-item-text="ciudad.nombreAlterno"                         
+                            placeholder="Seleccione ciudad..."                          
+                            md-selected-item-change="setCiudad(ciudad.id)"      
+                             md-min-length="0"              
+                           >
+                        <md-item-template>
+                          <span
+                              md-highlight-text="ciudad.searchText.nombreAlterno"
+                              md-highlight-flags="i">
+                                {{ciudad.nombreAlterno}}                       
+                          </span>
+                        </md-item-template>2
+                      </md-autocomplete>
+                    </md-input-container>                                     
                     <br>
                     <!-- campo de direccion -->
                     <md-input-container class="md-block" flex-gt-sm>
@@ -154,10 +101,6 @@
 
               </div>
             </fieldset>
-
-              
-            
-
       </md-content>                       
     </md-dialog-content>
     <md-dialog-actions layout="row">

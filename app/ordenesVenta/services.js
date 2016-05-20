@@ -1,7 +1,5 @@
 angular.module('tactic.services', [])
 
-
-
 .factory('Scopes', function ($rootScope) {
     var mem = {};
  

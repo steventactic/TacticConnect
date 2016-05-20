@@ -31,20 +31,18 @@
                     <label>Descripcion de contenido</label>
                     <input type="number" ng-model="jsonPaqueteo.numeroPaquetes" >
                 </md-input-container>              
-
                 <!--  lista de tipo de mercancia -->      
-                      <fieldset class="standard" >
-                        <legend>Tipos de mercancia </legend>
-                        <div layout="row" layout-wrap flex>
-                          <div flex="50" ng-repeat="item in items">
-                            <md-checkbox >
-                              {{ item }} <span ng-if="exists(item, selected)">selected</span>
-                            </md-checkbox>
-                          </div>
+                    <fieldset class="standard" >
+                      <legend>Tipos de mercancia </legend>
+                      <div layout="row" layout-wrap flex>
+                        <div flex="50" ng-repeat="item in items">
+                          <md-checkbox >
+                            {{ item }} <span ng-if="exists(item, selected)">selected</span>
+                          </md-checkbox>
                         </div>
-                      </fieldset>
-
-                      <!-- informcion de productos -->
+                      </div>
+                    </fieldset>
+                      <!-- informacion de productos -->
                     <fieldset class="standard" >
                       <legend>Medidas </legend>
                         <div layout="row">

@@ -80,15 +80,12 @@
 
                       </div>
                     </md-toolbar>
-                       <div ng-show="datos.verOpciones" class="md-toolbar-tools" style="width: 100%">
-                    
+                       <div ng-show="datos.verOpciones" class="md-toolbar-tools" style="width: 100%">             
                             <h2>
                               <span>Opciones busqueda</span>
-                            </h2>
-                    
-                                
-
+                            </h2>                    
                            <span flex></span>
+
                               <md-button   class="md-fab md-primary  md-mini md-hue-2" aria-label="refrecar" ng-click="cargarOrdenes()">
                                <md-tooltip md-direction="left">
                                 Refrescar
@@ -162,15 +159,15 @@
                               <md-icon md-svg-src="img/add-circular-outlined-button.svg"></md-icon>
                             </md-button>
                              <md-button   ng-if="datos.seleccionado == '0'" class="md-fab md-primary md-hue-2" ng-click="cargarEdicion()" aria-label="Editar producto">
-                          <md-tooltip md-direction="left">
-                               Editar orden
+                              <md-tooltip md-direction="left">
+                                Editar orden
                               </md-tooltip>
                               <md-icon md-svg-src="img/pencil.svg"></md-icon>
                             </md-button>
-                            <md-button   ng-if="datos.confirmado == '0'" class="md-fab md-primary md-hue-2" ng-click="showConfirmacion()" aria-label="Cambiar estado orden">
-                          <md-tooltip md-direction="left">
-                               Cambiar estado orden
-                              </md-tooltip>
+                            <md-button   ng-if="gridApi.selection.getSelectedRows().length > 0 " class="md-fab md-primary md-hue-2" ng-click="showConfirmacion()" aria-label="Cambiar estado orden">
+                                <md-tooltip md-direction="left">
+                                   Cambiar estado orden
+                                </md-tooltip>
                               <md-icon md-svg-src="img/confirmar.svg"></md-icon>
                             </md-button>                                                                         
                       </div>
@@ -187,7 +184,7 @@
                
                        <!--<div  style="width:100%;height:80%;" id="grid1" ui-grid="{ data: datatableData }" class="grid"></div>-->
                   
-                  <div ui-grid="gridOptions"   style="width:99%;height:550px;"  ui-grid-selection  class="grid">
+                  <div ui-grid="gridOptions"   style="width:99%;height:535px;"  ui-grid-selection  ui-grid-pagination   class="grid">
                     <div class="watermark" ng-show="!gridOptions.data.length">No se encontraron resultados</div>
 
                   </div>

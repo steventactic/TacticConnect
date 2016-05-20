@@ -31,17 +31,15 @@
     window.localStorage.getItem("clave") === "" ||
     window.localStorage.getItem("idUsuario") === ""){
     console.log("usuario no logueado");
-      $location.path('/login');
-
-  }else{
-    
-  //$scope.login = Scopes.get('loginCtrl').login ; 
-  $scope.login = {};
-  $scope.login.usuario = window.localStorage.getItem("usuario");
-  $scope.login.clave = window.localStorage.getItem("clave");
-  $scope.login.mostrarMenu = true ;
-  $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
- // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
+    $location.path('/login');
+  }else{    
+    //$scope.login = Scopes.get('loginCtrl').login ; 
+    $scope.login = {};
+    $scope.login.usuario = window.localStorage.getItem("usuario");
+    $scope.login.clave = window.localStorage.getItem("clave");
+    $scope.login.mostrarMenu = true ;
+    $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
+   // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
   }
 
   var last = {
@@ -112,7 +110,7 @@
   	 /****************************** metodos  para  el funcionamiento de  las datatables*******************************Scopes*/
 
          $scope.Ordenes = [];
-           //Simple exemple of data
+           //Simple exemple of data>
          $scope.datatableData =[];
      
          $scope.ordenSeleccionada = {}; 
@@ -125,17 +123,13 @@
             //$scope.seleccion = $scope.gridOptions.selection.getSelectedRows();
             //console.log($scope.selections);
 
-         }
-         
-     
-
-          /*************************Objeto que  alamance la  io y el  puerto al cual conectarme****************************/
- 
-          function rowTemplate() {
-                return '<div ng-dblclick="grid.appScope.rowDblClick(row)" >' +
-                      ' <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell></div>' +
-                       '</div>';
-          }
+         }         
+        /*************************Objeto que  alamance la  io y el  puerto al cual conectarme****************************/
+        function rowTemplate() {
+              return '<div ng-dblclick="grid.appScope.rowDblClick(row)" >' +
+                    ' <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell></div>' +
+                     '</div>';
+        }
 
         $scope.rowDblClick = function(row) {
           //alert(JSON.stringify(row.entity)); 
@@ -146,19 +140,50 @@
           $scope.cargarEdicion();
         }
 
-        $scope.gridOptions = {                                  
-                                 
-                                  
-                                  enableRowSelection: true, 
-                                  enableSelectAll: true,
-                                  enableRowHeaderSelection: true,
-                                  enableFiltering: true,
+          /*
+                idOrden :$scope.respuesta[i].idOrden,
+                                       estadoOrden : $scope.respuesta[i].nuevoEstadoOrden , 
+                                       tipoServicio: $scope.respuesta[i].datosFacturacion.nombreTipoServicio,
+                                       cliente: $scope.respuesta[i].datosFacturacion.codigoCliente,
+                                       numeroDocumentoOrdenCliente: $scope.respuesta[i].datosFacturacion.numeroDocumentoOrdenCliente,
+                                       destinatario: $scope.respuesta[i].datosFacturacion.nombreDestinatario,
+                                       nit : $scope.respuesta[i].datosFacturacion.numeroIdentificacionDestinatario,
+                                       //ciudad : $scope.respuesta[i].destinoOrigen.nombreAlternoCiudad,
+                                       direccion : $scope.respuesta[i].destinoOrigen.direccion,
+                                       usuario : $scope.respuesta[i].usuarioActualizacion,
+                                       fecha_ac
+          */
+
+          $scope.columnDefs= [
+                       {field:'idOrden', displayName: 'Id orden',visible: true , width : '7%'},
+                       {field:'estadoOrden', displayName: 'Estado orden',visible: true , width : '10%' },
+                       {field:'tipoServicio', displayName: 'Tipo servicio',visible: true , width : '10%' },
+                       {field:'cliente', displayName: 'Cliente',visible: true , width : '8%' },
+                       {field:'numeroDocumentoOrdenCliente', displayName: 'Numero documento',visible: true , width : '10%' },
+                       {field:'destinatario', displayName: 'Destinatario',visible: true , width : '10%' },
+                       {field:'nit', displayName: 'Nit',visible: true , width : '10%' },
+                       {field:'direccion', displayName: 'Direccion',visible: true , width : '10%' },
+                       {field:'usuario', displayName: 'Usuario',visible: true , width : '10%' },
+                       {field:'fecha_actualizacion', displayName: 'Fecha actualizacion',visible: true , width : '12%' }
+                             ]                                  
+
+        $scope.gridOptions = {     
+                                  columnDefs : $scope.columnDefs , 
+                                  enableSelectAll: true,                               
                                   enableColumnResize: true,
                                   multiSelect: true ,
                                   selectedItems: $scope.selections,
                                   enableRowSelection: true,                                  
-                                  rowTemplate: rowTemplate()
+                                  rowTemplate: rowTemplate(),                                      
+                                  //enableRowSelection: true, 
+                                  //enableRowHeaderSelection: true,                                  
+                                  paginationPageSize: 100,                                  
+                                  enablePaginationControls: true
+                                 
+                                  
+
                               };
+        $scope.gridOptions.enableFiltering = true;
       
 
         $scope.gridOptions.onRegisterApi = function( gridApi ) {
@@ -181,13 +206,10 @@
                   $scope.datos.confirmado  = 1 ;
                 }
 
-
               });
-            $scope.gridApi.selection.setMultiSelect(true);    
-            
+              $scope.gridApi.selection.setMultiSelect(true);                
               $scope.gridOptions.enableFiltering = true;
-            $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
-
+              $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
         };
    
        /* $scope.toggleRowSelection = function() {
@@ -233,12 +255,11 @@
                                    }]);
 
                  };
-                //  console.log("json solo ordenes===> " + $scope.respuesta[0].datosFacturacion );
-                 console.log( $scope.datatableData) ; 
-               
+                //console.log("json solo ordenes===> " + $scope.respuesta[0].datosFacturacion );
+                  console.log( $scope.datatableData) ;                
                   $scope.gridOptions.data = $scope.datatableData ;
                   $scope.gridApi.core.refresh();
-                 //Init the datatable with his configuration
+                //Init the datatable with his configuration
                 //$scope.datatable = datatable(datatableConfig);
                 //Set the data to the datatable
                 //$scope.datatable.setData($scope.datatableData);
@@ -262,7 +283,6 @@
                 console.log("json cargado cliente ===> "  );
                 console.log($scope.clientes) ;              
           });    
-
       }
       
       $scope.setidCliente = function( val ){
@@ -303,8 +323,8 @@
           console.log("Ya existe cache de  la variable CLIENTE " + $scope.jsonListaOrdenes.idCliente );
        }
          
-      $scope.jsonListaOrdenes.tipoServicio = 4 ;
-      
+      $scope.jsonListaOrdenes.tipoServicio = 4 ;   
+         
       $rootScope.cargarOrdenes = function (){
           window.localStorage.setItem('estadoOrdenCache',$scope.jsonListaOrdenes.estadoOrden);
           //window.localStorage.setItem('tipoServicioCache',$scope.jsonListaOrdenes.tipoServicio);
@@ -338,8 +358,8 @@
                  $scope.respuesta= response.data;
                  console.log("json cargado todas las ordenes ===> " );
                  console.log($scope.respuesta) ; 
-                 $scope.datatableData = [] ; 
-                 for (var i = 0; i < $scope.respuesta.length; i++) {
+              $scope.datatableData = [] ;    
+                 for (var i = 0; i < $scope.respuesta.length; i++) {              
                        $scope.datatableData =  $scope.datatableData.concat([{
                                        idOrden :$scope.respuesta[i].idOrden,
                                        estadoOrden : $scope.respuesta[i].nuevoEstadoOrden , 
@@ -357,13 +377,20 @@
                  console.log("json datatable ===> " );
                  console.log( $scope.datatableData) ; 
                  $scope.refrescar = 1 ; 
-                 $scope.gridOptions.data = [];//$scope.datatableData ;
-                 $scope.gridOptions.data = $scope.datatableData ;
+             
+                 $scope.gridOptions.data = [];//$scope.datatableData ;             
+                 $scope.gridOptions.data = $scope.datatableData ;                                  
                  $scope.gridApi.core.refresh();
                  $scope.totalRegistrosLista  =  $scope.gridOptions.data.length ; 
+                 $scope.gridOptions.enableFiltering = true;
+                 $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
                   //alert($scope.gridOptions.data.length) ;                                              
           });    
       }      
+       $scope.toggleFiltering = function(){
+    $scope.gridOptions.enableFiltering = !$scope.gridOptions.enableFiltering;
+    $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+  };
     /*********************************Carga los tipos de sevicio por usaurio  ****************************************************/
     console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.usuario.id)
          $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/tipos_servicio-x-usuario?id_usuario='+$scope.usuario.id)             
@@ -381,7 +408,8 @@
                 $scope.cargaClientes();
          });   
 
-        $rootScope.cargarOrdenes();
+       $rootScope.cargarOrdenes();
+
 
         $scope.showConfirmacion = function(ev) {        
           var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
