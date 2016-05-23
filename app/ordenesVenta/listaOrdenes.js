@@ -9,7 +9,7 @@
     });
   }])
 
-  .controller('listaOrdenesCtrl', [ '$scope', 'datatable', '$location','$http','Scopes','$mdDialog','$mdMedia','$rootScope','$mdToast','uiGridConstants',function($scope   ,datatable ,$location ,$http ,Scopes,$mdDialog,$mdMedia ,$rootScope  , $mdToast ,uiGridConstants) {
+  .controller('listaOrdenesCtrl', [ '$scope', 'datatable', '$location','$http','Scopes','$mdDialog','$mdMedia','$rootScope','$mdToast','uiGridConstants','$filter', '$q',function($scope   ,datatable ,$location ,$http ,Scopes,$mdDialog,$mdMedia ,$rootScope  , $mdToast ,uiGridConstants ,  $filter ,$q ) {
   Scopes.store('listaOrdenesCtrl', $scope);
  
   $scope.mensajeServidor =  $rootScope.mensajesServidor;    
@@ -42,12 +42,43 @@
    // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
   }
 
-  var last = {
-      bottom: true,
-      top: false,
-      left: true,
-      right: false
-    };
+
+  $scope.cantidadFiltrar = [
+                              {id :"1" , nombre:"Mostrar 500"},
+                              {id :"2" , nombre:"Mostrar 1000"},
+                              {id :"3" , nombre:"Mostrar 5000"},
+                              {id :"4" , nombre:"Mostrar todos"}
+                           ];
+  
+  $scope.cargarCantidad  = function (){          
+         $scope.cantidadAbuscar  =  9999;
+         if(parseInt($scope.jsonListaOrdenes.cantidad) === 1){        
+          $scope.cantidadAbuscar  =  500;
+         }else if(parseInt($scope.jsonListaOrdenes.cantidad) === 2){ 
+          $scope.cantidadAbuscar  =  1000;          
+         }
+         else if(parseInt($scope.jsonListaOrdenes.cantidad) === 3){ 
+          $scope.cantidadAbuscar  =  5000;      
+         }
+         else if(parseInt($scope.jsonListaOrdenes.cantidad) === 4){ 
+          $scope.cantidadAbuscar  =  9999;          
+         }
+         
+         $scope.gridOptions.data = [];//$scope.datatableData ;             
+         $scope.ResultadoLimit =   $filter('limitTo')($scope.datatableData, $scope.cantidadAbuscar);
+         $scope.gridOptions.data = $scope.ResultadoLimit ;                                  
+         $scope.gridApi.core.refresh(); 
+         $scope.totalRegistrosLista = $scope.gridOptions.data.length;
+  }
+
+  var last =  {
+                  bottom: true,
+                  top: false,
+                  left: true,
+                  right: false
+              };
+
+
   $scope.toastPosition = angular.extend({},last);
   $scope.getToastPosition = function() {
     sanitizePosition();
@@ -140,51 +171,37 @@
           $scope.cargarEdicion();
         }
 
-          /*
-                idOrden :$scope.respuesta[i].idOrden,
-                                       estadoOrden : $scope.respuesta[i].nuevoEstadoOrden , 
-                                       tipoServicio: $scope.respuesta[i].datosFacturacion.nombreTipoServicio,
-                                       cliente: $scope.respuesta[i].datosFacturacion.codigoCliente,
-                                       numeroDocumentoOrdenCliente: $scope.respuesta[i].datosFacturacion.numeroDocumentoOrdenCliente,
-                                       destinatario: $scope.respuesta[i].datosFacturacion.nombreDestinatario,
-                                       nit : $scope.respuesta[i].datosFacturacion.numeroIdentificacionDestinatario,
-                                       //ciudad : $scope.respuesta[i].destinoOrigen.nombreAlternoCiudad,
-                                       direccion : $scope.respuesta[i].destinoOrigen.direccion,
-                                       usuario : $scope.respuesta[i].usuarioActualizacion,
-                                       fecha_ac
-          */
-
           $scope.columnDefs= [
-                       {field:'idOrden', displayName: 'Id orden',visible: true , width : '7%'},
-                       {field:'estadoOrden', displayName: 'Estado orden',visible: true , width : '10%' },
-                       {field:'tipoServicio', displayName: 'Tipo servicio',visible: true , width : '10%' },
-                       {field:'cliente', displayName: 'Cliente',visible: true , width : '8%' },
-                       {field:'numeroDocumentoOrdenCliente', displayName: 'Numero documento',visible: true , width : '10%' },
-                       {field:'destinatario', displayName: 'Destinatario',visible: true , width : '10%' },
-                       {field:'nit', displayName: 'Nit',visible: true , width : '10%' },
-                       {field:'direccion', displayName: 'Direccion',visible: true , width : '10%' },
-                       {field:'usuario', displayName: 'Usuario',visible: true , width : '10%' },
-                       {field:'fecha_actualizacion', displayName: 'Fecha actualizacion',visible: true , width : '12%' }
+                               {field:'idOrden', displayName: 'Id orden',visible: true , width : '6%' ,pinnedLeft:true },
+                               {field:'estadoOrden', displayName: 'Estado orden',visible: true , width : '12%' },
+                               {field:'tipoServicio', displayName: 'Tipo servicio',visible: true , width : '18%' },
+                               {field:'cliente', displayName: 'Cliente',visible: true , width : '8%' },
+                               {field:'numeroDocumentoOrdenCliente', displayName: 'Numero documento',visible: true , width : '10%' },
+                               {field:'destinatario', displayName: 'Destinatario',visible: true , width : '35%' },
+                               {field:'nit', displayName: 'Nit',visible: true , width : '10%' },
+                               {field:'ciudad', displayName: 'Ciudad',visible: true , width : '10%' },
+                               {field:'direccion', displayName: 'Direccion',visible: true , width : '30%' },
+                               {field:'usuario', displayName: 'Usuario',visible: true , width : '10%' },
+                               {field:'fecha_actualizacion', displayName: 'Fecha actualizacion',visible: true , width : '15%' }
                              ]                                  
 
         $scope.gridOptions = {     
                                   columnDefs : $scope.columnDefs , 
-                                  enableSelectAll: true,                               
-                                  enableColumnResize: true,
-                                  multiSelect: true ,
+                                  enableSelectAll:true,                               
+                                  enableColumnResize:true,
+                                  multiSelect:true ,
                                   selectedItems: $scope.selections,
-                                  enableRowSelection: true,                                  
+                                  enableRowSelection:true,                                  
                                   rowTemplate: rowTemplate(),                                      
                                   //enableRowSelection: true, 
-                                  //enableRowHeaderSelection: true,                                  
-                                  paginationPageSize: 100,                                  
-                                  enablePaginationControls: true
-                                 
-                                  
-
+                                  //enableRowHeaderSelection: true,
+                                  useExternalPagination: true,
+                                  //useExternalSorting: true,                                  
+                                  paginationPageSize:100,     
+                                  showGridFooter: true,                             
+                                  enablePaginationControls: true                                                                 
                               };
-        $scope.gridOptions.enableFiltering = true;
-      
+        $scope.gridOptions.enableFiltering = true;      
 
         $scope.gridOptions.onRegisterApi = function( gridApi ) {
               $scope.gridApi = gridApi;            
@@ -199,14 +216,25 @@
                 }else{
                   $scope.datos.seleccionado =  1 ; 
                 }           
-
                 if($scope.gridApi.selection.getSelectedRows().length > 0 ){
                   $scope.datos.confirmado  = 0 ;
                 }else{
                   $scope.datos.confirmado  = 1 ;
                 }
+              });
+
+              $scope.gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+                  console.log("entra evento  pagina nueva = " +  newPage   + "  pagesize = "+ pageSize);
+                  paginationOptions.pageNumber = newPage;
+                  paginationOptions.pageSize = pageSize;
+                  //alert(paginationOptions.pageNumber);
+                  //alert(paginationOptions.pageSize);
+                  var firstRow = (paginationOptions.pageNumber - 1) * paginationOptions.pageSize;
+                  $rootScope.cargarOrdenes();
+                  //$scope.gridOptions.data = $scope.datatableData.slice(firstRow, firstRow + paginationOptions.pageSize);
 
               });
+
               $scope.gridApi.selection.setMultiSelect(true);                
               $scope.gridOptions.enableFiltering = true;
               $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
@@ -266,7 +294,7 @@
                                    
 
           });    */
-        $scope.cargaClientes = function(){        
+      $scope.cargaClientes = function(){        
           console.log("carga cliente lista ordenes ")
           console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio);
           $http.get('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/clientes-x-usuario?id_usuario='+$scope.usuario.id+'&id_tipo_servicio='+$scope.jsonListaOrdenes.tipoServicio)          
@@ -324,7 +352,14 @@
        }
          
       $scope.jsonListaOrdenes.tipoServicio = 4 ;   
-         
+        
+         var paginationOptions = {
+                                   pageNumber: 1,
+                                   pageSize: 100,
+                                   sort: null
+                                 }; 
+
+
       $rootScope.cargarOrdenes = function (){
           window.localStorage.setItem('estadoOrdenCache',$scope.jsonListaOrdenes.estadoOrden);
           //window.localStorage.setItem('tipoServicioCache',$scope.jsonListaOrdenes.tipoServicio);
@@ -341,12 +376,14 @@
             $scope.datos.activarCrearOrden = 0 ; 
           }
          if ($scope.jsonListaOrdenes.idCliente != undefined ){
-            $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id+'&id_cliente='+$scope.jsonListaOrdenes.idCliente ; 
+            $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id+'&id_cliente='+$scope.jsonListaOrdenes.idCliente+'&pageNumber='+ paginationOptions.pageNumber+'&pageSize='+ paginationOptions.pageSize; 
          }else{             
-            $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id ;   
+            $scope.cadena ='http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/ordenes-x-tipo_servicio-x-estado-x-usuario?id_tipo_servicio='+$scope.jsonListaOrdenes.idServicio+'&id_estado_orden='+$scope.jsonListaOrdenes.estadoOrden+'&id_usuario='+$scope.usuario.id+'&pageNumber='+ paginationOptions.pageNumber+'&pageSize='+ paginationOptions.pageSize ;   
          }
+           
+          //var canceler = $q.defer();
           console.log($scope.cadena);
-          $http.get($scope.cadena)
+          $http.get($scope.cadena )// , {timeout: canceler.promise})
                 .error(function(data, status, headers, config){
                       console.log("error ===>");
                       console.log(status);
@@ -358,7 +395,7 @@
                  $scope.respuesta= response.data;
                  console.log("json cargado todas las ordenes ===> " );
                  console.log($scope.respuesta) ; 
-              $scope.datatableData = [] ;    
+                 $scope.datatableData = [] ;    
                  for (var i = 0; i < $scope.respuesta.length; i++) {              
                        $scope.datatableData =  $scope.datatableData.concat([{
                                        idOrden :$scope.respuesta[i].idOrden,
@@ -368,7 +405,7 @@
                                        numeroDocumentoOrdenCliente: $scope.respuesta[i].datosFacturacion.numeroDocumentoOrdenCliente,
                                        destinatario: $scope.respuesta[i].datosFacturacion.nombreDestinatario,
                                        nit : $scope.respuesta[i].datosFacturacion.numeroIdentificacionDestinatario,
-                                       //ciudad : $scope.respuesta[i].destinoOrigen.nombreAlternoCiudad,
+                                       ciudad : $scope.respuesta[i].destinoOrigen.ciudadNombreAlterno,
                                        direccion : $scope.respuesta[i].destinoOrigen.direccion,
                                        usuario : $scope.respuesta[i].usuarioActualizacion,
                                        fecha_actualizacion : $scope.respuesta[i].fechaActualizacion
@@ -376,18 +413,24 @@
                  }                 
                  console.log("json datatable ===> " );
                  console.log( $scope.datatableData) ; 
-                 $scope.refrescar = 1 ; 
-             
-                 $scope.gridOptions.data = [];//$scope.datatableData ;             
-                 $scope.gridOptions.data = $scope.datatableData ;                                  
+                 $scope.refrescar = 1 ;              
+                 $scope.gridOptions.data = [];//$scope.datatableData ;   
+                 var firstRow = (paginationOptions.pageNumber - 1) * paginationOptions.pageSize;
+                 $scope.gridOptions.data = $scope.datatableData.slice(firstRow, firstRow + paginationOptions.pageSize);          
+                // $scope.gridOptions.data = $scope.datatableData ;                                  
                  $scope.gridApi.core.refresh();
                  $scope.totalRegistrosLista  =  $scope.gridOptions.data.length ; 
                  $scope.gridOptions.enableFiltering = true;
                  $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
                   //alert($scope.gridOptions.data.length) ;                                              
           });    
+
+        /*   $scope.$on('$destroy', function(){
+            canceler.resolve();  // Aborts the $http request if it isn't finished.
+          });*/
+
       }      
-       $scope.toggleFiltering = function(){
+    $scope.toggleFiltering = function(){
     $scope.gridOptions.enableFiltering = !$scope.gridOptions.enableFiltering;
     $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
   };
@@ -492,50 +535,44 @@
                                     })
                                     .then(function(response){   
 
-                                           $scope.jsonAceptacion = { 
-                                                                      idOrden: parseInt(response.data.idOrden),
-                                                                      datosFacturacion :response.data.datosFacturacion,
-                                                                      destinoOrigen : response.data.destinoOrigen,
-                                                                      destinoOrigenBodega : response.data.bodegaDestinoOrigen,
-                                                                      datosEntregaRecogida  :response.data.datosEntregaRecogida,
-                                                                      datosOtros: response.data.datosOtros,
-                                                                      lineas : response.data.lineas ,
-                                                                      usuarioActualizacion:$scope.login.usuario,
-                                                                      idUsuarioActualizacion : parseInt( window.localStorage.getItem("idUsuario")),                                 
-                                                                      nuevoEstadoOrden : $scope.jsonEstado.estadoSeleccionado //"CONFIRMADA"
-                                                                   };
+                                     $scope.jsonAceptacion = { 
+                                                                idOrden: parseInt(response.data.idOrden),
+                                                                datosFacturacion :response.data.datosFacturacion,
+                                                                destinoOrigen : response.data.destinoOrigen,
+                                                                destinoOrigenBodega : response.data.bodegaDestinoOrigen,
+                                                                datosEntregaRecogida  :response.data.datosEntregaRecogida,
+                                                                datosOtros: response.data.datosOtros,
+                                                                lineas : response.data.lineas ,
+                                                                usuarioActualizacion:$scope.login.usuario,
+                                                                idUsuarioActualizacion : parseInt( window.localStorage.getItem("idUsuario")),                                 
+                                                                nuevoEstadoOrden : $scope.jsonEstado.estadoSeleccionado //"CONFIRMADA"
+                                                             };
 
 
-                                         console.log($scope.jsonAceptacion);
-                                         console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/save',$scope.jsonAceptacion);
-                                         $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/save',$scope.jsonAceptacion)                    
-                                                .error(function(data, status, headers, config){
-                                                    console.log("error ===>");
-                                                    console.log(status);
-                                                    console.log(data);
-                                                    console.log(headers);
-                                                    console.log(config);                  
-                                                })
-                                                .then(function(response){                     
-                                                    $scope.aceptacionRetorno= response.data;
-                                                    console.log("json edicion retorno ===> " );
-                                                    console.log(angular.toJson($scope.aceptacionRetorno, true));
-                                                    if ($scope.aceptacionRetorno.mensajes.severidadMaxima != 'INFO') {
-                                                          alert("error" + $scope.aceptacionRetorno.mensajes.mensajes[0].texto )
-                                                    }else{
+                                       console.log($scope.jsonAceptacion);
+                                       console.log('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/save',$scope.jsonAceptacion);
+                                       $http.post('http://'+ $scope.serverData.ip+':'+ $scope.serverData.puerto+'/'+contexto+'/ordenes/save',$scope.jsonAceptacion)                    
+                                              .error(function(data, status, headers, config){
+                                                  console.log("error ===>");
+                                                  console.log(status);
+                                                  console.log(data);
+                                                  console.log(headers);
+                                                  console.log(config);                  
+                                              })
+                                              .then(function(response){                     
+                                                  $scope.aceptacionRetorno= response.data;
+                                                  console.log("json edicion retorno ===> " );
+                                                  console.log(angular.toJson($scope.aceptacionRetorno, true));
+                                                  if ($scope.aceptacionRetorno.mensajes.severidadMaxima != 'INFO') {
+                                                        alert("error" + $scope.aceptacionRetorno.mensajes.mensajes[0].texto )
+                                                  }else{
 
-                                                      $rootScope.cargarOrdenes();
-                                                    }
-                                                    
-                                                    
-                                        });   
-
-
+                                                    $rootScope.cargarOrdenes();
+                                                  }                                                                                                    
+                                      });   
                                     });
-                              }       
-                              
+                              }                                     
                               $scope.mostrarMensajeCambioEstado();         
-
                         }, function() {                
                           console.log("no hace nada");
                         });

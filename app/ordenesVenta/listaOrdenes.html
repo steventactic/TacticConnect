@@ -54,13 +54,10 @@
                   </md-fab-actions>
               </md-fab-speed-dial>
 
-            <div style="width: 95%">
-              
-
-           
+            <div style="width: 94%">
+                         
                 <md-toolbar>
-                      <div class="md-toolbar-tools" style="width: 100%">
-                      
+                      <div class="md-toolbar-tools" style="width: 100%">                      
                         <h2>
                           <span>{{ 'GESTION_ORDENES' | translate }}</span>
                         </h2>
@@ -77,21 +74,21 @@
                           <md-switch ng-model="datos.verOpciones"  aria-label="Switch 2" ng-true-value="true" ng-false-value="false"  class="md-fab">
                                 Ver opciones
                           </md-switch>
-
                       </div>
-                    </md-toolbar>
+                </md-toolbar>
                        <div ng-show="datos.verOpciones" class="md-toolbar-tools" style="width: 100%">             
                             <h2>
                               <span>Opciones busqueda</span>
                             </h2>                    
                            <span flex></span>
 
-                              <md-button   class="md-fab md-primary  md-mini md-hue-2" aria-label="refrecar" ng-click="cargarOrdenes()">
+                            <md-button   class="md-fab md-primary  md-mini md-hue-2" aria-label="refrecar" ng-click="cargarOrdenes()">
                                <md-tooltip md-direction="left">
                                 Refrescar
                               </md-tooltip>
                               <md-icon md-svg-src="img/update-arrows.svg"></md-icon>
                             </md-button>
+                    
 
                               <!-- Combo de  Tipos de servicio -->
                           <md-input-container class="md-block" flex-gt-sm>
@@ -184,17 +181,24 @@
                
                        <!--<div  style="width:100%;height:80%;" id="grid1" ui-grid="{ data: datatableData }" class="grid"></div>-->
                   
-                  <div ui-grid="gridOptions"   style="width:99%;height:535px;"  ui-grid-selection  ui-grid-pagination   class="grid">
+                  <div ui-grid="gridOptions"   style="width:99%;height:505px;"  ui-grid-selection  ui-grid-pagination  ui-grid-pinning  class="grid">
                     <div class="watermark" ng-show="!gridOptions.data.length">No se encontraron resultados</div>
-
                   </div>
-                  <label>Total: {{totalRegistrosLista}}</label>
-          
 
-           </div>
-
-      
+                     <!-- cantidad registros -->
+                      <md-input-container style="width:95%;" class="md-block" flex-gt-sm>
+                          <label style="color:white;">Cantidad a mostrar</label>
+                          <md-select ng-model="jsonListaOrdenes.cantidad" ng-change="cargarCantidad()">
+                      <md-tooltip md-direction="bottom">
+                          Mostrar
+                      </md-tooltip>                                 
+                               <md-option ng-repeat="td in cantidadFiltrar" value="{{td.id}}">
+                                {{td.nombre}}
+                              </md-option>
+                            </md-select>
+                      </md-input-container>
+                       <!--<label >Total: {{totalRegistrosLista}}</label>-->                
+           </div>      
         </div>
-
   </md-content>
 </div>
