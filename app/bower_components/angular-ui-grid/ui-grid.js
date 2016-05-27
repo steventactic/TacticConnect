@@ -12096,7 +12096,7 @@ module.filter('px', function() {
             pageForward: 'Page forward',
             pageToLast: 'Page to last'
           },
-          sizes: 'items per page',
+          sizes: 'items por pagina',
           totalItems: 'items',
           through: 'through',
           of: 'of'
@@ -12828,7 +12828,7 @@ module.filter('px', function() {
           showingItems: 'Getoonde items:',
           selectedItems: 'Geselecteerde items:',
           totalItems: 'Totaal aantal items:',
-          size: 'Items per pagina:',
+          size: 'Items por pagina:',
           first: 'Eerste pagina',
           next: 'Volgende pagina',
           previous: 'Vorige pagina',
@@ -12876,7 +12876,7 @@ module.filter('px', function() {
           jsonNotArray: 'Het json bestand moet een array bevatten. De actie wordt geannuleerd.'
         },
         pagination: {
-            sizes: 'items per pagina',
+            sizes: 'items por pagina',
             totalItems: 'items',
             of: 'van de'
         },

@@ -13,23 +13,9 @@ angular.module('myApp.login', ['ngRoute'])
     Scopes.store('loginCtrl', $scope);
     console.log("variable global " + hostName) ;
       $scope.login = {};   
-      $scope.login.mostrarMenu = false ;
-   
-    //var t  = $location.path($location.path() + '/getusers');
-    //alert($location.absUrl().substr(0, $location.absUrl().lastIndexOf("#")) + "/getusers");
-    //alert($location.absUrl());
-    //alert($location.host());
-    //alert($location.path());
-    //alert($location.port());
-    //alert($location.protocol());
-    var contextoApp  = $location.protocol()+"://"+$location.host()+":"+$location.port();
-    //alert(t);
-     
-
-
-      
-
-
+      $scope.login.mostrarMenu = false ;  
+      var contextoApp  = $location.protocol()+"://"+$location.host()+":"+$location.port();
+  
     /* $scope.showConfirm = function(ev) {
         // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
@@ -72,13 +58,7 @@ angular.module('myApp.login', ['ngRoute'])
 
     console.log('http://'+hostName+':'+puerto+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
     $http.defaults.useXDomain = true;
-    $http.get('http://'+hostName+':'+puerto+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
-    //alert(contextoApp+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
-    //$http.get(contextoApp+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)
-              .success(function(data, status, headers, config){
-                //alert("**** SUCCESS ****");
-               // alert(status);
-              })
+    $http.get('http://'+hostName+':'+puerto+'/'+contexto+'/login?usuario='+$scope.login.usuario+'&pwd='+$scope.login.clave)    
               .error(function(data, status, headers, config){
                 console.log("error ===>");
                 console.log(status);
@@ -87,51 +67,31 @@ angular.module('myApp.login', ['ngRoute'])
                 }
                 console.log(data);
                 console.log(headers);
-                console.log(config);
-            
+                console.log(config);            
               })
               .then(function(response){
                 console.log("respuiesta");
-               $scope.jsonRespuesta = response.data;
-               console.log("respuiesta");
-               console.log(  $scope.jsonRespuesta);
-               console.log(  $scope.jsonRespuesta.ok);
-              $scope.bodegas  =   $scope.jsonRespuesta.bodegas;
-
-          
-               if($scope.jsonRespuesta.ok){
-                 
-                  console.log($scope.jsonRespuesta);
-                  window.localStorage.setItem("usuario" , $scope.login.usuario);
-                  window.localStorage.setItem("clave" , $scope.login.clave);
-                  window.localStorage.setItem("idUsuario" , $scope.jsonRespuesta.usuario.id);
-                  window.localStorage.setItem("objetoUsuario" , JSON.stringify($scope.jsonRespuesta.usuario));
+                $scope.jsonRespuesta = response.data;
+                console.log("respuiesta");
+                console.log(  $scope.jsonRespuesta);
+                console.log(  $scope.jsonRespuesta.ok);
+                $scope.bodegas  =   $scope.jsonRespuesta.bodegas;
+                if($scope.jsonRespuesta.ok){                 
+                   console.log($scope.jsonRespuesta);
+                   window.localStorage.setItem("usuario" , $scope.login.usuario);
+                   window.localStorage.setItem("clave" , $scope.login.clave);
+                   window.localStorage.setItem("idUsuario" , $scope.jsonRespuesta.usuario.id);
+                   window.localStorage.setItem("objetoUsuario" , JSON.stringify($scope.jsonRespuesta.usuario));
                    console.log("respues de  login  ==>" +$scope.jsonRespuesta.usuario.id);
                    console.log("usuario =" + window.localStorage.getItem("usuario"));
                    console.log("clave =" + window.localStorage.getItem("clave"));
                    console.log("id =" + window.localStorage.getItem("idUsuario"));
                    $scope.login.mostrarMenu = true ;
-                  $location.path('/listaOrdenes');     
-
-
-                 
-
-                } else
-               {
+                   $location.path('/listaOrdenes');     
+                }else{
                  alert("Usuario  o clave  incorrecto");
-
-               }
-
-             
-                
-                
+                }
          });
-
-
-//           
-
     }
-
-
 }]);
 		

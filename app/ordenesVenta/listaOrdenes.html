@@ -48,9 +48,7 @@
                                 Cerrar sesion
                             </md-tooltip>
                           <md-icon md-svg-src="img/cerrarSesion.svg" aria-label="Cerrar sesion"></md-icon>
-                    </md-button>
-                
-                  
+                    </md-button>                                  
                   </md-fab-actions>
               </md-fab-speed-dial>
 
@@ -60,8 +58,7 @@
                       <div class="md-toolbar-tools" style="width: 100%">                      
                         <h2>
                           <span>{{ 'GESTION_ORDENES' | translate }}</span>
-                        </h2>
-                                        
+                        </h2>                                        
                        <span flex></span>
 
                          <md-button   class="md-fab md-primary  md-mini md-hue-2" aria-label="refrecar" ng-click="mostrarInfoUsuario()">
@@ -177,15 +174,15 @@
                               </div>
                           </div>
                       </div>
-                    </div>   -->
-               
+                    </div>   -->               
                        <!--<div  style="width:100%;height:80%;" id="grid1" ui-grid="{ data: datatableData }" class="grid"></div>-->
                   
-                  <div ui-grid="gridOptions"   style="width:99%;height:505px;"  ui-grid-selection  ui-grid-pagination  ui-grid-pinning  class="grid">
+                  <div ui-grid="gridOptions"   style="width:99%;height:500px;"  ui-grid-selection  ui-grid-pagination  ui-grid-pinning  class="grid">
                     <div class="watermark" ng-show="!gridOptions.data.length">No se encontraron resultados</div>
                   </div>
-
-                     <!-- cantidad registros -->
+                   <h6 style="text-align: right; ">Fecha compilación 27/05/2016</h6>
+                 
+                     <!-- cantidad registros
                       <md-input-container style="width:95%;" class="md-block" flex-gt-sm>
                           <label style="color:white;">Cantidad a mostrar</label>
                           <md-select ng-model="jsonListaOrdenes.cantidad" ng-change="cargarCantidad()">
@@ -196,7 +193,7 @@
                                 {{td.nombre}}
                               </md-option>
                             </md-select>
-                      </md-input-container>
+                      </md-input-container> -->
                        <!--<label >Total: {{totalRegistrosLista}}</label>-->                
            </div>      
         </div>

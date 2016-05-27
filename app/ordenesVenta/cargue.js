@@ -10,32 +10,30 @@ angular.module('myApp.cargue', ['ngRoute'])
 }])
 
 .controller('cargueCtrl', [ '$scope', 'datatable', '$location','$http', 'Scopes' ,'$mdDialog', function($scope,datatable ,$location  ,$http , Scopes , $mdDialog ) {
-    Scopes.store('cargueCtrl', $scope);
-    console.log("variable global " + hostName) ;
+  Scopes.store('cargueCtrl', $scope);
+  console.log("variable global " + hostName) ;
 
     if(window.localStorage.getItem("usuario") === "" ||
-    window.localStorage.getItem("clave") === "" ||
-    window.localStorage.getItem("idUsuario") === ""){
-    console.log("usuario no logueado");
+      window.localStorage.getItem("clave") === "" ||
+      window.localStorage.getItem("idUsuario") === ""){
+      console.log("usuario no logueado");
       $location.path('/login');
+    }else{
+      //$scope.login = Scopes.get('loginCtrl').login ; 
+      $scope.login = {};
+      $scope.login.usuario = window.localStorage.getItem("usuario");
+      $scope.login.clave = window.localStorage.getItem("clave");
+      $scope.login.mostrarMenu = true ;
+      $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
+      // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
+    }
 
-  }else{
-    
-  //$scope.login = Scopes.get('loginCtrl').login ; 
-  $scope.login = {};
-  $scope.login.usuario = window.localStorage.getItem("usuario");
-  $scope.login.clave = window.localStorage.getItem("clave");
-  $scope.login.mostrarMenu = true ;
-  $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
-
- // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
-  }
    $scope.data = {};   
    $scope.data.cantidadFacturas = 0 ;
    $scope.data.fecha =  new Date(); 
    $scope.jsonCargue = [];
- var total ;
-    $scope.contarFacturas = function (){
+   var total ;
+   $scope.contarFacturas = function (){
        var facturas = $scope.data.texto ;
        total  =  facturas.split('\n');
        console.log("cantidad = " + total.length );
@@ -50,7 +48,6 @@ angular.module('myApp.cargue', ['ngRoute'])
     }
      
     $scope.envioData =function(){
-
       $scope.jsonCargue=  {                                    
                             "fecha":  new Date($scope.data.fecha), 
                             "numeroOrdenList": total
@@ -60,7 +57,7 @@ angular.module('myApp.cargue', ['ngRoute'])
       console.log(angular.toJson($scope.jsonCargue, true));
       console.log('http://'+hostName+':'+puerto+'/'+contexto+'/cpr/cortes/corte')
       $http.defaults.useXDomain = true;
-        $http.post('http://'+hostName+':'+puerto+'/'+contexto+'/cpr/cortes/corte' , $scope.jsonCargue)
+      $http.post('http://'+hostName+':'+puerto+'/'+contexto+'/cpr/cortes/corte' , $scope.jsonCargue)
               .success(function(data, status, headers, config){
                 //alert("**** SUCCESS ****");
                // alert(status);
@@ -74,29 +71,18 @@ angular.module('myApp.cargue', ['ngRoute'])
             
               })
               .then(function(response){
-                console.log("respuesta");
-               $scope.jsonRespuesta = response.data;
-               console.log($scope.jsonRespuesta) ;
-           
+                 console.log("respuesta");
+                 $scope.jsonRespuesta = response.data;
+                 console.log($scope.jsonRespuesta) ;
                  if ($scope.jsonRespuesta.mensajes.severidadMaxima != 'INFO') {
                   alert("error" + $scope.jsonRespuesta.mensajes.mensajes[0].texto );
-
-                 }else{
-                 
+                 }else{                 
                   $scope.data.texto = "";
                   $scope.data.cantidadFacturas = 0 ;
-                  $scope.data.fecha =  new Date(); 
-                    
-                  alert("Operacion correcta");
-                  
-                }       
-               
-                           
-                
-                
-         });
+                  $scope.data.fecha =  new Date();                     
+                  alert("Operacion correcta");                  
+                }                                                                     
+              });
     }
-   
-
 }]);
 		

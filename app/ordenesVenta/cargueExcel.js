@@ -12,26 +12,22 @@ angular.module('myApp.cargueExcel', ['ngRoute'])
 .controller('cargueCtrl', [ '$scope', 'datatable', '$location','$http', 'Scopes' ,'$mdDialog', function($scope,datatable ,$location  ,$http , Scopes , $mdDialog ) {
     Scopes.store('cargueCtrl', $scope);
     console.log("variable global " + hostName) ;
-
     if(window.localStorage.getItem("usuario") === "" ||
-    window.localStorage.getItem("clave") === "" ||
-    window.localStorage.getItem("idUsuario") === ""){
-    console.log("usuario no logueado");
-      $location.path('/login');
+       window.localStorage.getItem("clave") === "" ||
+       window.localStorage.getItem("idUsuario") === ""){
+          console.log("usuario no logueado");
+          $location.path('/login');
+    }else{    
+      //$scope.login = Scopes.get('loginCtrl').login ; 
+      $scope.login = {};
+      $scope.login.usuario = window.localStorage.getItem("usuario");
+      $scope.login.clave = window.localStorage.getItem("clave");
+      $scope.login.mostrarMenu = true ;
+      $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
+      // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
+    }
 
-  }else{
-    
-  //$scope.login = Scopes.get('loginCtrl').login ; 
-  $scope.login = {};
-  $scope.login.usuario = window.localStorage.getItem("usuario");
-  $scope.login.clave = window.localStorage.getItem("clave");
-  $scope.login.mostrarMenu = true ;
-  $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
-
- // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
-  }
-
-  $scope.dataEsqueleto = [
+    $scope.dataEsqueleto = [
                             {nombre :'col1',requerido :true},
                             {nombre :'col2',requerido :true},
                             {nombre :'col3',requerido :true},
@@ -44,31 +40,24 @@ angular.module('myApp.cargueExcel', ['ngRoute'])
                             {nombre :'col10',requerido :true}
                           ]; 
 
-  $scope.dataMatch =[];
-  $scope.dataNoMatch =[     
-                        {nombre :'vacio',requerido:false}
-                      ];
-   $scope.data = {};   
-   $scope.data.cantidadFacturas = 0 ;
-   $scope.data.fecha =  new Date(); 
-   $scope.jsonCargue = [];
-  
-  
-   var total ;
-   var columnas  ; 
-   $scope.dataDeLinea = [];
+    $scope.dataMatch =[];
+    $scope.dataNoMatch =[     
+                          {nombre :'vacio',requerido:false}
+                        ];
+    $scope.data = {};   
+    $scope.data.cantidadFacturas = 0 ;
+    $scope.data.fecha =  new Date(); 
+    $scope.jsonCargue = [];
+    var total ;
+    var columnas  ; 
+    $scope.dataDeLinea = [];
     $scope.jsonTemp = "";
     $scope.contarFacturas = function (){
-      $scope.dataMatch =[];
-    
+       $scope.dataMatch =[];    
        var facturas = $scope.data.texto ;
        total  =  facturas.split('\n');
        console.log("cantidad = " + total.length );
        $scope.listaOrdenes = "[";
-      
-
-
-
        //recorre todos los saltos de linea
        for (var i = 0 ; i < total.length ; i++) {
         //si es la primera linea  entra para veriricar  match de  columnas
@@ -98,34 +87,22 @@ angular.module('myApp.cargueExcel', ['ngRoute'])
              }else{
                 columnas = total[i].split('\t');
                 $scope.datacomas = total[i].replace(" \t " , ",");
-
-                $scope.dataDeLinea.push(total[i].split('\t'));
-            
-                
-
+                $scope.dataDeLinea.push(total[i].split('\t'));                            
              }
           $scope.listaOrdenes += total[i] + ",";  
-        }
-
-
-
-
-
-     
+        }     
       $scope.listaOrdenes += $scope.listaOrdenes.substr(0, $scope.listaOrdenes.length -1 );
-      $scope.listaOrdenes += "]";
-      
-       $scope.data.cantidadFacturas =  total.length  - 1  ; 
-       console.log("data match ==>");
-       console.log($scope.dataMatch);
-       console.log("data no match ==>");
-       console.log($scope.dataNoMatch);
-      }
+      $scope.listaOrdenes += "]";      
+      $scope.data.cantidadFacturas =  total.length  - 1  ; 
+      console.log("data match ==>");
+      console.log($scope.dataMatch);
+      console.log("data no match ==>");
+      console.log($scope.dataNoMatch);
+    }
 
-$scope.jsonData = {};
+    $scope.jsonData = {};
 
-      $scope.refrescarCombos = function (nombre ,index){
-
+    $scope.refrescarCombos = function (nombre ,index){
         console.log("eliminar posicion " + nombre );
         for (var i = 0 ; i < $scope.dataNoMatch.length ; i++) {
  
@@ -133,21 +110,14 @@ $scope.jsonData = {};
                   $scope.dataNoMatch.splice(i, 1);   
                   $scope.dataMatch[index].recibido = nombre ;
                   return;
-                }
-              
-         }
-            
-        
-
-      }
+                }            
+         }          
+    }
      
-    $scope.envioData =function(){
-
-      
+    $scope.envioData =function(){      
       $scope.asignaciones = [];
 
       for (var i = 0; i < $scope.dataMatch.length; i++) {
-
         $scope.asignaciones = $scope.asignaciones.concat(
                                                           {
                                                             id : i,
@@ -157,21 +127,12 @@ $scope.jsonData = {};
                                                             
                                                           }
                                               );
-      }
-      //console.log(angular.toJson($scope.asignaciones,true));
-       // console.log("data linea ");
-
-         // console.log(angular.toJson( $scope.dataDeLinea,true));
-
-          $scope.envio = {
-                            asignacion : $scope.asignaciones,
-                            data : [$scope.dataDeLinea]
-                          }
-      console.log(angular.toJson( $scope.envio,true));
-                          
-
-
-     
+      }   
+       $scope.envio = {
+                        asignacion : $scope.asignaciones,
+                        data : [$scope.dataDeLinea]
+                      }
+      console.log(angular.toJson( $scope.envio,true));        
     }   
 }]);
 		

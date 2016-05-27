@@ -12,24 +12,17 @@ angular.module('myApp.componenteDireccion', ['ngRoute'])
 .controller('direccionCtrl', [ '$scope', 'datatable', '$location','$http', 'Scopes' ,'$mdDialog', function($scope,datatable ,$location  ,$http , Scopes , $mdDialog ) {
     Scopes.store('cargueCtrl', $scope);
     console.log("variable global " + hostName) ;
-
-
     if(window.localStorage.getItem("usuario") === "" ||
-    window.localStorage.getItem("clave") === "" ||
-    window.localStorage.getItem("idUsuario") === ""){
-    console.log("usuario no logueado");
-      $location.path('/login');
-
-  }else{
-    
-  //$scope.login = Scopes.get('loginCtrl').login ; 
-  $scope.login = {};
-  $scope.login.usuario = window.localStorage.getItem("usuario");
-  $scope.login.clave = window.localStorage.getItem("clave");
-  $scope.login.mostrarMenu = true ;
-  $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
-
- // $scope.jsonRespuesta = Scopes.get('loginCtrl').jsonRespuesta ; 
+       window.localStorage.getItem("clave") === "" ||
+       window.localStorage.getItem("idUsuario") === ""){
+         console.log("usuario no logueado");
+         $location.path('/login');
+  }else{    
+    $scope.login = {};
+    $scope.login.usuario = window.localStorage.getItem("usuario");
+    $scope.login.clave = window.localStorage.getItem("clave");
+    $scope.login.mostrarMenu = true ;
+    $scope.usuario = JSON.parse(window.localStorage.getItem("objetoUsuario"));
   }
 
   $scope.jsonDireccion = {};
@@ -47,9 +40,8 @@ angular.module('myApp.componenteDireccion', ['ngRoute'])
   $scope.jsonDireccion.combo10 = "" ; 
   $scope.jsonDireccion.combo1Val   ="";
   $scope.jsonDireccion.complemento = "";
-
-
   $scope.direccionCompleta  =  "";
+
   $scope.cambiaCombo1 = function (){
     $scope.direccionCompleta  =   $scope.jsonDireccion.combo1Val  + " " + 
                                   $scope.jsonDireccion.campo2 + 
@@ -64,28 +56,27 @@ angular.module('myApp.componenteDireccion', ['ngRoute'])
      console.log( $scope.direccionCompleta ) ; 
   }
  
- $scope.jsonDireccion.textoComplemento = ""; 
-  $scope.agregarComplemento = function (){
-  $scope.direccionCompleta  +=  " " + $scope.jsonDireccion.complemento  + " " +   
-                                      $scope.jsonDireccion.textoComplemento  + " ";
   $scope.jsonDireccion.textoComplemento = ""; 
-  $scope.jsonDireccion.complemento = ""; 
-}
+  $scope.agregarComplemento = function (){
+    $scope.direccionCompleta  +=  " " + $scope.jsonDireccion.complemento  + " " +   
+                                        $scope.jsonDireccion.textoComplemento  + " ";
+    $scope.jsonDireccion.textoComplemento = ""; 
+    $scope.jsonDireccion.complemento = ""; 
+  }
 
-$scope.borrar = function (){
-   $scope.direccionCompleta = "" ;
-   $scope.jsonDireccion.combo1Val  ="" ; 
-   $scope.jsonDireccion.campo2  = ""  ; 
-   $scope.jsonDireccion.combo2  = "" ;
-   $scope.jsonDireccion.combo3 ="" ; 
-   $scope.jsonDireccion.combo4 = "";
-   $scope.jsonDireccion.combo5 = "";
-   $scope.jsonDireccion.campo7 = "";
-   $scope.jsonDireccion.combo7  = ""; 
-   $scope.jsonDireccion.campo8  = ""; 
-   $scope.jsonDireccion.combo10 = "";
-
-}
+  $scope.borrar = function (){
+     $scope.direccionCompleta = "" ;
+     $scope.jsonDireccion.combo1Val  ="" ; 
+     $scope.jsonDireccion.campo2  = ""  ; 
+     $scope.jsonDireccion.combo2  = "" ;
+     $scope.jsonDireccion.combo3 ="" ; 
+     $scope.jsonDireccion.combo4 = "";
+     $scope.jsonDireccion.combo5 = "";
+     $scope.jsonDireccion.campo7 = "";
+     $scope.jsonDireccion.combo7  = ""; 
+     $scope.jsonDireccion.campo8  = ""; 
+     $scope.jsonDireccion.combo10 = "";
+  }
 
   $scope.sentidos = [
                       {nombre: "Escoja una opción" , id: 1},
@@ -193,8 +184,5 @@ $scope.borrar = function (){
                           {nombre: "Zona" , id: "Zona"},
                        ];
 
-
- 
-  
 }]);
 		
