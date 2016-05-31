@@ -190,8 +190,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 console.log("json cargado retorno  insert factura  ===> ");
                                 console.log($scope.jsonFacturacionRetorno);
                                 console.log("severidad maxima  ==>" + $scope.jsonFacturacionRetorno.mensajes.severidadMaxima);
-                                if ($scope.jsonFacturacionRetorno.mensajes.severidadMaxima !== 'INFO') {
-                                    alert("error" + $scope.jsonFacturacionRetorno.mensajes.mensajes[0].texto);
+                                if ($scope.jsonFacturacionRetorno.mensajes.severidadMaxima != 'INFO') {
+                                    alert("error" + $scope.jsonFacturacionRetorno.mensajes.mensajes[0].texto)
                                 } else {
                                     $scope.dataTabs.tabEnvio = false;
                                     edicionNueva = "si";
@@ -307,11 +307,13 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 console.log($scope.jsonEntregaRetorno);
 
                                 if ($scope.jsonEntregaRetorno.mensajes.severidadMaxima !== 'INFO') {
-                                    alert("error" + $scope.jsonEntregaRetorno.mensajes.mensajes[0].texto);
+                                    alert("error" + $scope.jsonEntregaRetorno.mensajes.mensajes[0].texto)
+
                                 } else {
                                     $scope.dataTabs.tabProductos = false;
                                     $scope.dataTabs.tabSeleccionada = 3;
                                 }
+
                             });
                     //$scope.dataTabs.tabEntrega = true;      
                 };
@@ -343,6 +345,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 console.log(data);
                                 console.log(headers);
                                 console.log(config);
+
                             })
                             .then(function (response) {
                                 $scope.tipoServicioData = response.data;
@@ -443,7 +446,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 console.log("json cargado segmento ===> ");
                                 console.log($scope.segmento);
                             });
-                };
+                }
                 $scope.cargaSegmentos();
                 /*************************Combo deestinartario por  tipo de servicio y clientes*******************************/
                 /* $scope.destinatario= [
@@ -471,7 +474,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 console.log("json cargado deestinartario ===> ");
                                 console.log($rootScope.destinatario);
                             });
-                };
+                }
                 //$scope.cargaDestinatarios();
                 /*************************Combo ciudad*******************************************/
 
@@ -494,7 +497,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 $scope.ciudad = response.data;
                                 console.log("json cargado ciudad ===> " + $scope.destinatario[0].id + "----" + $scope.jsonFacturacion.destinatario);
                                 console.log($scope.ciudad);
-                                console.log("Destina                                                                                                                                                                                                     tarios ==>");
+                                console.log("Destinatarios ==>");
                                 console.log($scope.destinatario);
                                 for (var i = 0; i < $scope.destinatario.length; i++) {
                                     if (parseInt($scope.destinatario[i].id) === parseInt($scope.jsonFacturacion.destinatario)) {
@@ -509,7 +512,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 ;
                             });
                     $scope.cargaCiudadEnvioShiptToBodega();
-                };
+                }
                 /*************************Combo ciudad shipto bodega *******************************************/
                 /* $scope.ciudad= [
                  {"id":"1", "codigo":"bogota" ,"nombreAlterno" :"Bogota" ,"ordinal":"ordinal"},
@@ -547,7 +550,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 $scope.bodegasShipToBodega = response.data;
                                 console.log($scope.bodegasShipToBodega);
                             });
-                };
+                }
 
                 /*******************************Combo destino  *********************************************/
                 // DestinosOrigenes Por Destinatario Por Ciudad idDestinatarioRemitente,idCiudad,idTipoServicio
@@ -574,7 +577,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 console.log($scope.destino);
 
                             });
-                };
+                }
 
                 /******************************Cargar informacion destino envio***************/
                 $scope.cargaInfoDestinoEnvio = function (val) {
@@ -591,7 +594,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                             $scope.jsonEnvio.email = $scope.destino[i].contacto.email;
                         }
                     }
-                };
+                }
 
 
                 /*******************************Combo productos  por  cliente  *********************************************/
@@ -611,7 +614,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 console.log('http://' + $scope.serverData.ip + ':' + $scope.serverData.puerto + '/' + contexto + '/ordenes/productos-x-cliente?id_cliente=' + cliente + '&id_tipo_servicio=' + tipoServicio);
                                 console.log($scope.productosCliente);
                             });
-                };
+                }
 
                 /*******************************Combo jornada  *********************************************/
                 $scope.configuracionData = [];
@@ -637,7 +640,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                                 console.log($scope.configuracionData[1].requerimientosDocumentales);
                             });
-                };
+                }
 
                 /*********************Cargar  hora apartir de  la  seleccion de  jornada******************************/
                 $scope.cargaHoras = function () {
@@ -646,11 +649,11 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                         {
                             console.log("Entra");
                             $scope.jsonEntrega.horaMinima = $scope.jornadaEntrega[i].horaMinima;
-                            $scope.jsonEntrega.horaMaxima = $scope.jornadaEntrega[i].horaMaxima;
+                            $scope.jsonEntrega.horaMaxima = $scope.jornadaEntrega[i].horaMaxima
                         }
                     }
                     ;
-                };
+                }
 
                 $scope.estadoEntrega = [
                     {"id": "1", "texto": "En elaboracion"}
@@ -698,7 +701,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                     enableRowSelection: true,
                     enableRowHeaderSelection: false,
                     selectedItems: $scope.selections,
-                    enableColumnResize: true,
+                    enableRowSelection: true,
+                            enableColumnResize: true,
                     columnDefs: $scope.columnDefs
                 };
                 $scope.gridOptions.multiSelect = false;
@@ -753,7 +757,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                 $scope.gridOptionsPaqueteo = {enableRowSelection: true,
                     enableRowHeaderSelection: false,
                     selectedItems: $scope.selections,
-                    enableColumnResize: true,
+                    enableRowSelection: true,
+                            enableColumnResize: true,
                     columnDefs: $scope.columnDefsPaqueteo
 
                 };
@@ -796,7 +801,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                     //console.log(angular.toJson($scope.productosTemporales, true));
                     $scope.gridOptions.data = $scope.productosTemporales;
 
-                };
+                }
 
                 /*********************eliminar linea ******************************/
                 $scope.eliminarLinea = function ()
@@ -820,8 +825,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                 $scope.respuestaEliminacion = response.data;
                                 console.log("json respuesta eliminar  linea ===> ");
                                 console.log($scope.respuestaEliminacion);
-                                if ($scope.respuestaEliminacion.mensajes.severidadMaxima !== 'INFO') {
-                                    alert("error" + $scope.respuestaEliminacion.mensajes.mensajes[0].texto);
+                                if ($scope.respuestaEliminacion.mensajes.severidadMaxima != 'INFO') {
+                                    alert("error" + $scope.respuestaEliminacion.mensajes.mensajes[0].texto)
 
                                 } else {
 
@@ -832,7 +837,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                             });
 
 
-                };
+                }
 
                 /************editar evento ********************/
                 $scope.esEdicion = 0;
@@ -845,7 +850,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                     //  $scope.jsonProductoAdd.unidad = "";
 
 
-                };
+                }
                 /**************Agregar producto**********************/
 
                 $scope.agregarLinea = function () {
@@ -857,7 +862,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                     //  $scope.jsonProductoAdd.unidad = "";
 
 
-                };
+                }
 
 
 
@@ -901,9 +906,9 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
                 $scope.cerrarAdvanced = function () {
                     console.log("entra");
-                    $mdDialog.hide();
+                    $mdDialog.hide()
                     $scope.esEdicion = 0;
-                };
+                }
 
 
                 function DialogController($scope, $mdDialog, serverData, jsonFacturacion, productosTemporales, imprimir, tabla, jsonEntregaRetorno, login, gridOptions, esEdicion)
@@ -912,7 +917,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                     $scope.login = login;
                     $scope.serverData = serverData;
                     $scope.jsonFacturacion = jsonFacturacion;
-                    $scope.datatable = [];
+                    $scope.datatable = []
                     $scope.productosTemporales = productosTemporales;
                     $scope.imprimir = imprimir;
                     $scope.datatable = tabla;
@@ -1002,13 +1007,13 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
                                 });
                         $scope.cargaUnidades();
-                    };
+                    }
                     $scope.cargaValorBodega = function (val) {
                         console.log("entra a asignar valor de bodega");
                         $scope.jsonProductoAdd.bodega = val;
 
                         /**************************Carga unidades por producto*************************************************/
-                    };
+                    }
                     $scope.cargaUnidades = function () {
                         $http.get('http://' + $scope.serverData.ip + ':' + $scope.serverData.puerto + '/' + contexto + '/ordenes/unidades-x-producto?id_producto=' + $scope.jsonProductoAdd.producto)
 
@@ -1031,12 +1036,12 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
 
 
                                 });
-                    };
+                    }
 
                     $scope.cerrarModal = function () {
 
                         $mdDialog.hide();
-                    };
+                    }
 
 
                     $scope.agregarProductoTemporal = function () {
@@ -1086,7 +1091,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                     //  idLineaOrden = $scope.jsonProductoRetorno.orden.lineas[0].idLineaOrden;
                                     // console.log("id linea orden cargado  =>" +$scope.valor ); 
 
-                                    if ($scope.jsonProductoRetorno.mensajes.severidadMaxima !== 'INFO') {
+                                    if ($scope.jsonProductoRetorno.mensajes.severidadMaxima != 'INFO') {
                                         alert("error" + $scope.jsonProductoRetorno.mensajes.mensajes[0].texto)
 
                                     } else {
@@ -1158,7 +1163,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                     console.log("entra");
                     $mdDialog.hide()
                     $scope.esEdicion = 0;
-                };
+                }
 
 
                 function DialogCotrollerPaqueteo($scope, $mdDialog, serverData, jsonFacturacion, productosTemporales, imprimir, tabla, jsonEntregaRetorno, login, gridOptions, esEdicion)
@@ -1167,7 +1172,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                     $scope.login = login;
                     $scope.serverData = serverData;
                     $scope.jsonFacturacion = jsonFacturacion;
-                    $scope.datatable = [];
+                    $scope.datatable = []
                     $scope.productosTemporales = productosTemporales;
                     $scope.imprimir = imprimir;
                     $scope.datatable = tabla;
@@ -1355,8 +1360,8 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                     //  idLineaOrden = $scope.jsonProductoRetorno.orden.lineas[0].idLineaOrden;
                                     // console.log("id linea orden cargado  =>" +$scope.valor ); 
 
-                                    if ($scope.jsonProductoRetorno.mensajes.severidadMaxima !== 'INFO') {
-                                        alert("error" + $scope.jsonProductoRetorno.mensajes.mensajes[0].texto);
+                                    if ($scope.jsonProductoRetorno.mensajes.severidadMaxima != 'INFO') {
+                                        alert("error" + $scope.jsonProductoRetorno.mensajes.mensajes[0].texto)
 
                                     } else {
                                         //$scope.imprimir();
@@ -1379,7 +1384,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                         $scope.jsonProductoAdd.notas = "";
                                     }
                                 });
-                    };
+                    }
 
                 }
 
@@ -1425,7 +1430,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                     $scope.login = login;
                     $scope.serverData = serverData;
                     $scope.jsonFacturacion = jsonFacturacion;
-                    $scope.datatable = [];
+                    $scope.datatable = []
                     $scope.productosTemporales = productosTemporales;
                     $scope.imprimir = imprimir;
                     $scope.datatable = tabla;
@@ -1546,7 +1551,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                             //console.log("llamar crear ");
                         }
 
-                    };
+                    }
 
                     $scope.jsonDestinosBillTo = {};
                     $scope.crearDestinatario = function () {
@@ -1555,7 +1560,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                         $scope.jsonDestinosBillTo.idCliente = parseInt(window.localStorage.getItem('clienteCache'));
                         //$scope.jsonDestinosBillTo.segmentos =$scope.jsonFacturacion.segmento;
                         $scope.jsonDestinosBillTo.segmentos = $scope.selected;
-                        $scope.jsonDestinosBillTo.usuarioActualizacion = $scope.login.usuario;
+                        $scope.jsonDestinosBillTo.usuarioActualizacion = $scope.login.usuario
                         console.log(angular.toJson($scope.jsonDestinosBillTo, true));
 
                         $http.post('http://' + $scope.serverData.ip + ':' + $scope.serverData.puerto + '/' + contexto + '/destinatarios_remitentes/save', $scope.jsonDestinosBillTo)
@@ -1573,7 +1578,7 @@ angular.module('myApp.ordenesVenta', ['ngRoute'])
                                     console.log("respuesta =>");
                                     console.log($scope.respuesta);
 
-                                    if ($scope.respuesta.mensajes.severidadMaxima !== 'INFO') {
+                                    if ($scope.respuesta.mensajes.severidadMaxima != 'INFO') {
                                         alert("error" + $scope.respuesta.mensajes.mensajes[0].texto)
                                     } else {
                                         $rootScope.cargaDestinatarios($scope.jsonFacturacion.segmento, "df");

@@ -565,8 +565,10 @@
             $mdDialog.show(confirm).then(function() {
               $scope.dataConfirmacion = $scope.gridApi.selection.getSelectedRows() 
               for (var i = 0; i <  $scope.dataConfirmacion.length ; i++) {
-               console.log($scope.dataConfirmacion[i].idOrden);
-               $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/'+$scope.dataConfirmacion[i].idOrden)                   
+               
+               console.log($scope.dataConfirmacion[i].id);
+               console.log('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/'+$scope.dataConfirmacion[i].id)
+               $http.get('http://'+$scope.serverData.ip+':'+$scope.serverData.puerto+'/'+contexto+'/ordenes/'+$scope.dataConfirmacion[i].id)
                .error(function(data, status, headers, config){
                 console.log("error ===>");
                 console.log(status);
@@ -576,7 +578,7 @@
               })
                .then(function(response){   
                  $scope.jsonAceptacion = { 
-                  idOrden: parseñl-Int(response.data.idOrden),
+                  idOrden: parseInt(response.data.idOrden),
                   datosFacturacion :response.data.datosFacturacion,
                   destinoOrigen : response.data.destinoOrigen,
                   destinoOrigenBodega : response.data.bodegaDestinoOrigen,

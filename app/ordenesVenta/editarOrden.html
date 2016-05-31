@@ -395,7 +395,7 @@
                       <md-tooltip md-direction="bottom">
                           {{ 'CUANDO_NECESITA_QUE_SEA_ENTREGADO' | translate }}
                       </md-tooltip>
-                  <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"  md-min-date="minDate" md-max-date="maxDate"  >
+                  <md-datepicker ng-model="jsonEntrega.fechaMaxima1" md-placeholder="Enter date"  md-min-date="minDate" md-max-date="maxDate"  >
                   </md-datepicker>
                 </div>
               
@@ -407,9 +407,9 @@
                  <br><br>
                    <label>{{ 'DESDE' | translate }}</label>
                    
-                  <md-datepicker ng-model="jsonEntrega.fechaMinima" md-placeholder="Enter date"   md-min-date="minDate" md-max-date="maxDate" ></md-datepicker>
+                  <md-datepicker ng-model="jsonEntrega.fechaMinima1" md-placeholder="Enter date"   md-min-date="minDate" md-max-date="maxDate" ></md-datepicker>
                    <label>{{ 'HASTA' | translate }}</label>
-                  <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"   md-min-date="minDate" md-max-date="maxDate"></md-datepicker>
+                  <md-datepicker ng-model="jsonEntrega.fechaMaxima1" md-placeholder="Enter date"   md-min-date="minDate" md-max-date="maxDate"></md-datepicker>
                 </div>
                 </div>
                </div>
@@ -727,14 +727,14 @@
               <!--ENTREGAR PREFERIBLEMTEN-->
               <div class="md-block" ng-if="data.info == 0">
                  <label>Entregar preferiblemente</label>
-                <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"></md-datepicker>
+                <md-datepicker ng-model="jsonEntrega.fechaMaxima1" md-placeholder="Enter date"></md-datepicker>
               </div>
               <!--Rango de fechas -->
               <div class="md-block" ng-if="data.info == 1">
                  <label>Desde</label>
-                <md-datepicker ng-model="jsonEntrega.fechaMinima" md-placeholder="Enter date"></md-datepicker>
+                <md-datepicker ng-model="jsonEntrega.fechaMinima1" md-placeholder="Enter date"></md-datepicker>
                  <label>Hasta</label>
-                <md-datepicker ng-model="jsonEntrega.fechaMaxima" md-placeholder="Enter date"></md-datepicker>
+                <md-datepicker ng-model="jsonEntrega.fechaMaxima1" md-placeholder="Enter date"></md-datepicker>
               </div>
               <!-- Combo de  jornada -->
               <md-input-container class="md-block" flex-gt-sm>

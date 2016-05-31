@@ -1,0 +1,86 @@
+<div ng-cloak>
+<md-content>
+        <div layout="row">
+                <md-fab-speed-dial  ng-if="login.mostrarMenu"
+                   style="left:0%  ;width: 5%" 
+                   md-open="true"
+                    md-direction="down" class="md-fling"
+                   >
+                  <md-fab-trigger>
+                          <md-button aria-label="menu" class="md-fab md-primary">
+                            <md-icon md-svg-src="img/interface.svg"></md-icon>
+                          </md-button>
+                   </md-fab-trigger>
+
+                   <md-fab-actions>
+                    <md-button aria-label="Gestion de ordenes" href="#/listaOrdenes" class="md-fab md-primary md-mini">
+                            <md-tooltip md-direction="right">
+                                Gestion de ordenes
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/arrows.svg" aria-label="Gestion de ordenes"></md-icon>
+                    </md-button>
+                  
+                       <md-button aria-label="Crear orden" href="#/cargue" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                                Cargue
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/delivery.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                     <md-button aria-label="Crear orden" href="#/corteDicermex" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                                Corte Dicermex
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/cut.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                      <md-button aria-label="Crear orden" href="#/moviles" class="md-fab md-primary md-mini"  >
+                            <md-tooltip md-direction="right">
+                               Moviles
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/transport.svg" aria-label="Cargue"></md-icon>
+                    </md-button>
+                     <md-button aria-label="Crear orden" class="md-fab md-primary md-mini" ng-click="cerrarSesion()" >
+                            <md-tooltip md-direction="right">
+                                Cerrar sesion
+                            </md-tooltip>
+                          <md-icon md-svg-src="img/cerrarSesion.svg" aria-label="Cerrar sesion"></md-icon>
+                    </md-button>
+                
+                  
+                  </md-fab-actions>
+              </md-fab-speed-dial>
+
+            <div style="width: 94%">
+                      <md-toolbar>
+                        <div class="md-toolbar-tools" >
+                        
+                          <h2>
+                            <span>Cargue</span>
+                          </h2>
+                       </div>
+                     </md-toolbar>
+                      <label>Fecha</label>
+                      <md-datepicker ng-model="data.fecha" md-placeholder="Enter date"></md-datepicker>
+                      <br>
+                      <br>
+                      <textarea  ng-model="data.texto"  rows="15" class="form-control" placeholder="Pegar texto aqui" ng-change="contarFacturas()" required="" autofocus="">      </textarea> 
+                      <br>   
+                      <br>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Numero de facturas</label>
+                    <input ng-disabled="true"  style="color:black;" ng-model="data.cantidadFacturas">
+                </md-input-container>       
+                  <md-button md-no-ink class="md-raised  md-primary btn-block"   ng-click="envioData()">Realizar corte </md-button>
+                  <br>
+                  <br>
+                  <textarea  ng-disabled="true"  rows="15" class="form-control" placeholder="Respuesta" required="" autofocus=""></textarea> 
+                
+                
+
+
+           </div>
+
+      
+        </div>
+</md-content>
+      
+</div>
